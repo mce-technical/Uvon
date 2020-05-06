@@ -32,3 +32,5 @@ D:\Serob\Uvon\Uvon\Uvon\bin\Debug\netstandard2.0\Mono.Android.xml
 D:\Serob\Uvon\Uvon\Uvon\obj\Debug\netstandard2.0\Uvon.csproj.CopyComplete
 D:\Serob\Uvon\Uvon\Uvon\obj\Debug\netstandard2.0\Uvon.csproj.CoreCompileInputs.cache
 D:\Serob\Uvon\Uvon\Uvon\obj\Debug\netstandard2.0\XamlC.stamp
+C:\Users\serob\Desktop\UVON\Uvon\Uvon\obj\Debug\netstandard2.0\DeviceList.xaml.g.cs
+C:\Users\serob\Desktop\UVON\Uvon\Uvon\obj\Debug\netstandard2.0\GetConnect.xaml.g.cs

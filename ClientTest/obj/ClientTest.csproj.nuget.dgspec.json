@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Serob\\Uvon\\ClientTest\\ClientTest.csproj": {}
+    "C:\\Users\\serob\\Desktop\\Uvon\\ClientTest\\ClientTest.csproj": {}
   },
   "projects": {
-    "D:\\Serob\\Uvon\\ClientTest\\ClientTest.csproj": {
+    "C:\\Users\\serob\\Desktop\\Uvon\\ClientTest\\ClientTest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Serob\\Uvon\\ClientTest\\ClientTest.csproj",
+        "projectUniqueName": "C:\\Users\\serob\\Desktop\\Uvon\\ClientTest\\ClientTest.csproj",
         "projectName": "ClientTest",
-        "projectPath": "D:\\Serob\\Uvon\\ClientTest\\ClientTest.csproj",
+        "projectPath": "C:\\Users\\serob\\Desktop\\Uvon\\ClientTest\\ClientTest.csproj",
         "packagesPath": "C:\\Users\\serob\\.nuget\\packages\\",
-        "outputPath": "D:\\Serob\\Uvon\\ClientTest\\obj\\",
+        "outputPath": "C:\\Users\\serob\\Desktop\\Uvon\\ClientTest\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "D:\\Microsoft\\Xamarin\\NuGet\\"

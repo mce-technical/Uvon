@@ -12,8 +12,8 @@
             <Label x:Name="instruction" FontSize="Title"/>
             <Entry x:Name="user_input" Placeholder="Enter Ip Address or Scan interval" TextChanged="ChangedText"/>
             <StackLayout Orientation="Horizontal">
-                <Button Text="Submit" x:Name="submit" Clicked="submit_Clicked" HorizontalOptions="StartAndExpand" WidthRequest="130" CornerRadius="20"/>
-                <Button Text="Scan" x:Name="scan" Clicked="scan_Clicked" HorizontalOptions="EndAndExpand" WidthRequest="130" CornerRadius="20"/>
+                <Button Text="Submit" x:Name="submit" Clicked="submit_Clicked" HorizontalOptions="StartAndExpand" WidthRequest="130" CornerRadius="20" TextColor="White" BackgroundColor="#409FE4"/>
+                <Button Text="Scan" x:Name="scan" Clicked="scan_Clicked" HorizontalOptions="EndAndExpand" WidthRequest="130" CornerRadius="20"  TextColor="White" BackgroundColor="#409FE4"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

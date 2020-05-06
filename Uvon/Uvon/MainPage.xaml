@@ -15,12 +15,12 @@
         </StackLayout>
         
         <StackLayout Orientation="Horizontal">
-            <Button Text="Switch" WidthRequest="110" HeightRequest="70" x:Name="switch" Clicked="switch_Clicked" CornerRadius="20"/>
+            <Button Text="Switch" WidthRequest="110" HeightRequest="70" x:Name="switch" Clicked="switch_Clicked" CornerRadius="20" TextColor="White" BackgroundColor="#409FE4"/>
             <StackLayout Orientation="Vertical">
                 <Label x:Name="port_view" HeightRequest="30" Text="Enable UV light" FontSize="Medium"></Label>
-                <Switch x:Name="switch_uv" HorizontalOptions="CenterAndExpand" Toggled="switch_uv_Toggled"></Switch>
+                <Switch x:Name="switch_uv" HorizontalOptions="CenterAndExpand" Toggled="switch_uv_Toggled" ></Switch>
             </StackLayout>
-            <Button Text="Disconnect" WidthRequest="110" HeightRequest="70" HorizontalOptions="EndAndExpand" x:Name="disconnect" Clicked="disconnect_Clicked" TextColor="Red" CornerRadius="20"/>
+            <Button Text="Disconnect" WidthRequest="110" HeightRequest="70" HorizontalOptions="EndAndExpand" x:Name="disconnect" Clicked="disconnect_Clicked" CornerRadius="20" TextColor="White" BackgroundColor="#409FE4"/>
         </StackLayout>
         
         <Grid VerticalOptions="EndAndExpand" HeightRequest="300" >

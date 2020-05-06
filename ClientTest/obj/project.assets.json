@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Serob\\Uvon\\ClientTest\\ClientTest.csproj",
+      "projectUniqueName": "C:\\Users\\serob\\Desktop\\UVON\\ClientTest\\ClientTest.csproj",
       "projectName": "ClientTest",
-      "projectPath": "D:\\Serob\\Uvon\\ClientTest\\ClientTest.csproj",
+      "projectPath": "C:\\Users\\serob\\Desktop\\UVON\\ClientTest\\ClientTest.csproj",
       "packagesPath": "C:\\Users\\serob\\.nuget\\packages\\",
-      "outputPath": "D:\\Serob\\Uvon\\ClientTest\\obj\\",
+      "outputPath": "C:\\Users\\serob\\Desktop\\UVON\\ClientTest\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "D:\\Microsoft\\Xamarin\\NuGet\\"

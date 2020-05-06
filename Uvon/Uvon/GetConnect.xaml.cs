@@ -75,8 +75,8 @@ namespace Uvon
             {
                 Ping myping = new Ping();
 
-                var address = Devices.GetLocalIPAddress();
-                //string address = "192.168.1.1";
+                //var address = Devices.GetLocalIPAddress();
+                string address = "192.168.1.1";
                 if (interval == 0)
                 {
                     interval = 255;
