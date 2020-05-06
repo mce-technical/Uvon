@@ -1,0 +1,13 @@
+D:\Serob\Uvon\ClientTest\bin\Release\netcoreapp3.1\ClientTest.exe
+D:\Serob\Uvon\ClientTest\bin\Release\netcoreapp3.1\ClientTest.deps.json
+D:\Serob\Uvon\ClientTest\bin\Release\netcoreapp3.1\ClientTest.runtimeconfig.json
+D:\Serob\Uvon\ClientTest\bin\Release\netcoreapp3.1\ClientTest.runtimeconfig.dev.json
+D:\Serob\Uvon\ClientTest\bin\Release\netcoreapp3.1\ClientTest.dll
+D:\Serob\Uvon\ClientTest\bin\Release\netcoreapp3.1\ClientTest.pdb
+D:\Serob\Uvon\ClientTest\obj\Release\netcoreapp3.1\ClientTest.csprojAssemblyReference.cache
+D:\Serob\Uvon\ClientTest\obj\Release\netcoreapp3.1\ClientTest.csproj.CoreCompileInputs.cache
+D:\Serob\Uvon\ClientTest\obj\Release\netcoreapp3.1\ClientTest.AssemblyInfoInputs.cache
+D:\Serob\Uvon\ClientTest\obj\Release\netcoreapp3.1\ClientTest.AssemblyInfo.cs
+D:\Serob\Uvon\ClientTest\obj\Release\netcoreapp3.1\ClientTest.dll
+D:\Serob\Uvon\ClientTest\obj\Release\netcoreapp3.1\ClientTest.pdb
+D:\Serob\Uvon\ClientTest\obj\Release\netcoreapp3.1\ClientTest.genruntimeconfig.cache

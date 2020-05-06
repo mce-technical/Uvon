@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Uvon.GetConnect"
+             Title="UVON">
+    <ContentPage.Content>
+        <StackLayout Padding="20" Spacing="10">
+            <Label x:Name="warning" FontSize="Title" TextColor="Red" BackgroundColor="#FFD800"/>
+            <Label x:Name="instruction" FontSize="Title"/>
+            <Entry x:Name="user_input" Placeholder="Enter Ip Address or Scan interval" TextChanged="ChangedText"/>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Submit" x:Name="submit" Clicked="submit_Clicked" HorizontalOptions="StartAndExpand" WidthRequest="130" CornerRadius="20"/>
+                <Button Text="Scan" x:Name="scan" Clicked="scan_Clicked" HorizontalOptions="EndAndExpand" WidthRequest="130" CornerRadius="20"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
