@@ -42,9 +42,9 @@ namespace Uvon
             preview.Source = im;
             port_view.Text = Devices.GetLocalIPAddress();
 
-            //Get_image();
+            Get_image();
 
-            //SendSignal();
+            SendSignal();
 
         }
 
@@ -66,11 +66,19 @@ namespace Uvon
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-            cancelMotorPreview.Cancel();
 
             uv_data = Encoding.UTF8.GetBytes("20");
+            signal_data = Encoding.UTF8.GetBytes("34");
+
             Thread.Sleep(100);
-            cancelUv.Cancel();
+            if(cancelUv != null)
+            {
+                cancelUv.Cancel();
+            }
+            if (cancelMotorPreview != null)
+            {
+                cancelMotorPreview.Cancel();
+            }
             address = null;
         }
 
@@ -141,26 +149,34 @@ namespace Uvon
             //TO Do...
         }
 
-        /// <summary>
-        /// Disconnect from server/robot
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private async void disconnect_Clicked(object sender, EventArgs e)
         {
             port_view.Text = "disconnect";
-            cancelMotorPreview.Cancel();
 
             uv_data = Encoding.UTF8.GetBytes("20");
-            Thread.Sleep(100);
-            cancelUv.Cancel();
+            signal_data = Encoding.UTF8.GetBytes("34");
 
-            await Navigation.PushAsync(new GetConnect());   
+            Thread.Sleep(100);
+            if (cancelUv != null)
+            {
+                cancelUv.Cancel();
+            }
+            if(cancelMotorPreview != null)
+            {
+                cancelMotorPreview.Cancel();
+            }
+
+            await Navigation.PushAsync(new GetConnect());
         }
+
 
         #endregion
 
-
+        /// <summary>
+        /// UV light turn on/off event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void switch_uv_Toggled(object sender, ToggledEventArgs e)
         {
             if (switch_uv.IsToggled)
@@ -183,7 +199,10 @@ namespace Uvon
             {
                 uv_data = Encoding.UTF8.GetBytes("20");
                 Thread.Sleep(100);
-                cancelUv.Cancel();
+                if (cancelUv != null)
+                {
+                    cancelUv.Cancel();
+                }
                 Thread.Sleep(100);
             }
         }
@@ -244,6 +263,7 @@ namespace Uvon
                 }
             });
         }
+
 
         /// <summary>
         /// Converts byte array to image source

@@ -28,7 +28,7 @@
     <item name="colorAccent">#FF4081</item>
   </style>
 <style name="MyTheme.Splash" parent="Theme.AppCompat.Light.NoActionBar">
- <item name="android:windowBackground">@drawable/splash_background</item> 
+ <item name="android:windowBackground">@drawable/splash_background</item>
   <item name="colorPrimaryDark">#000000</item>
  </style>
 </resources>

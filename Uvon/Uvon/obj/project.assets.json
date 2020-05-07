@@ -710,11 +710,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\serob\\Desktop\\UVON\\Uvon\\Uvon\\Uvon.csproj",
+      "projectUniqueName": "D:\\Serob\\Uvon\\Uvon\\Uvon\\Uvon.csproj",
       "projectName": "Uvon",
-      "projectPath": "C:\\Users\\serob\\Desktop\\UVON\\Uvon\\Uvon\\Uvon.csproj",
+      "projectPath": "D:\\Serob\\Uvon\\Uvon\\Uvon\\Uvon.csproj",
       "packagesPath": "C:\\Users\\serob\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\serob\\Desktop\\UVON\\Uvon\\Uvon\\obj\\",
+      "outputPath": "D:\\Serob\\Uvon\\Uvon\\Uvon\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "D:\\Microsoft\\Xamarin\\NuGet\\"

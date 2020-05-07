@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "fIvOo5ndeDwyOicgeJwPIw6WHYvkpBa286FuLhVeHUGr7MjHdpDOz9kIR1DRMHFAsnRw3k/wPXL3savtvYysPw==",
+  "dgSpecHash": "u4dqNcEdwKVAq+k5lotgcvSRd5zarFY4BJdVJlUf07r8E+fAKMxG24fjoMJ0ASAFVFm9l6Q/l6VlwQjNysPJag==",
   "success": true,
-  "projectFilePath": "C:\\Users\\serob\\Desktop\\Uvon\\Uvon\\Uvon\\Uvon.csproj",
+  "projectFilePath": "D:\\Serob\\Uvon\\Uvon\\Uvon\\Uvon.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\serob\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\serob\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",

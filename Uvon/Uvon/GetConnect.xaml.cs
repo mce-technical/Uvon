@@ -32,7 +32,7 @@ namespace Uvon
             devs = new Devices();
         }
 
-        private void ChangedText(object sender,EventArgs e)
+        private void ChangedText(object sender, EventArgs e)
         {
             address = user_input.Text;
         }
@@ -44,7 +44,7 @@ namespace Uvon
             Addresses.addresses.Clear();
         }
 
-        private async  void submit_Clicked(object sender, EventArgs e)
+        private async void submit_Clicked(object sender, EventArgs e)
         {
             bool validateIP = IPAddress.TryParse(address, out ip);
             string[] add = address.ToString().Split('.');
@@ -58,16 +58,16 @@ namespace Uvon
                 SendCheckingSignal();
                 var mainPage = new MainPage(ip);
                 await Navigation.PushAsync(mainPage);
-            }   
+            }
         }
 
-        
+
         private async void scan_Clicked(object sender, EventArgs e)
         {
             ActivityIndicator activityIndicator = new ActivityIndicator { IsRunning = true, IsVisible = true };
 
             var good = int.TryParse(user_input.Text, out interval);
-            if(!good || interval > 255)
+            if (!good || interval > 255)
             {
                 await DisplayAlert("Warning!", "Please, enter number in [0,255].", "OK");
             }
@@ -113,7 +113,7 @@ namespace Uvon
             {
                 string[] address_array = address.Split('.');
 
-                for(int i = 0; i < interval; i++)
+                for (int i = 0; i <= interval; i++)
                 {
                     try
                     {
@@ -132,8 +132,8 @@ namespace Uvon
 
                     }
                 }
-                
-            });       
+
+            });
         }
     }
 }

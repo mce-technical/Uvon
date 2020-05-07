@@ -3,43 +3,47 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Uvon.MainPage"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms">
-    
+
     <StackLayout Orientation="Vertical" Padding="15" Spacing="10">
         <StackLayout HorizontalOptions="StartAndExpand" HeightRequest="300">
-            <Frame Padding="0" HorizontalOptions="StartAndExpand">
+            <Frame Padding="0" HorizontalOptions="StartAndExpand" CornerRadius="15">
                 <ffimageloading:CachedImage x:Name="preview"
                     CacheDuration= "1"
                     WidthRequest="400" HeightRequest="300"
                     DownsampleToViewSize = "true"/>
             </Frame>
         </StackLayout>
-        
-        <StackLayout Orientation="Horizontal">
-            <Button Text="Switch" WidthRequest="110" HeightRequest="70" x:Name="switch" Clicked="switch_Clicked" CornerRadius="20" TextColor="White" BackgroundColor="#409FE4"/>
-            <StackLayout Orientation="Vertical">
-                <Label x:Name="port_view" HeightRequest="30" Text="Enable UV light" FontSize="Medium"></Label>
-                <Switch x:Name="switch_uv" HorizontalOptions="CenterAndExpand" Toggled="switch_uv_Toggled" ></Switch>
-            </StackLayout>
-            <Button Text="Disconnect" WidthRequest="110" HeightRequest="70" HorizontalOptions="EndAndExpand" x:Name="disconnect" Clicked="disconnect_Clicked" CornerRadius="20" TextColor="White" BackgroundColor="#409FE4"/>
-        </StackLayout>
-        
-        <Grid VerticalOptions="EndAndExpand" HeightRequest="300" >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
 
-            <Button Text="Left" Grid.Column="0" Grid.Row="1" x:Name="Left" Clicked="Left_Clicked" />
-            <Button Text="Go" Grid.Column="1" Grid.Row="0" x:Name="Go" Clicked="Go_Clicked"/>
-            <Button Text="Stop" Grid.Column="1" Grid.Row="1" x:Name="stop" Clicked="stop_Clicked"/>
-            <Button Text="Back" Grid.Column="1" Grid.Row="2" x:Name="back" Clicked="back_Clicked"/>
-            <Button Text="Right" Grid.Column="2" Grid.Row="1"  x:Name="Right" Clicked="Right_Clicked"/>
-        </Grid>
+        <Frame Padding="6" CornerRadius="15">
+            <StackLayout Orientation="Horizontal" HeightRequest="55">
+                <Button Text="Switch" WidthRequest="110" HeightRequest="70" x:Name="switch" Clicked="switch_Clicked" CornerRadius="15" TextColor="White" BackgroundColor="#409FE4"/>
+                <StackLayout Orientation="Vertical">
+                    <Label x:Name="port_view" HeightRequest="30" Text="Enable UV light" FontSize="Medium"></Label>
+                    <Switch x:Name="switch_uv" HorizontalOptions="CenterAndExpand" IsToggled="False" Toggled="switch_uv_Toggled"></Switch>
+                </StackLayout>
+                <Button Text="Disconnect" WidthRequest="110" HeightRequest="70" x:Name="disconnect" Clicked="disconnect_Clicked" CornerRadius="15" TextColor="Red" BackgroundColor="#409FE4" HorizontalOptions="EndAndExpand"/>
+            </StackLayout>
+        </Frame>
+
+        <Frame Padding="6" CornerRadius="15">
+            <Grid VerticalOptions="EndAndExpand" HeightRequest="300" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button Text="Left" Grid.Column="0" Grid.Row="1" x:Name="Left" Clicked="Left_Clicked"/>
+                <Button Text="Go" Grid.Column="1" Grid.Row="0" x:Name="Go" Clicked="Go_Clicked"/>
+                <Button Text="Stop" Grid.Column="1" Grid.Row="1" x:Name="stop" Clicked="stop_Clicked"/>
+                <Button Text="Back" Grid.Column="1" Grid.Row="2" x:Name="back" Clicked="back_Clicked"/>
+                <Button Text="Right" Grid.Column="2" Grid.Row="1"  x:Name="Right" Clicked="Right_Clicked"/>
+            </Grid>
+        </Frame>
     </StackLayout>
 </ContentPage>

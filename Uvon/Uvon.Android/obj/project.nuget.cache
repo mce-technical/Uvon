@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3T58HdLMUFUtLF9cpTNYMmvWzkaf3rnmGu3donmDeGKbF0hyz1xNCb8ThNaLgdPO+8W9Duig1Y95IoNSWpIF/A==",
+  "dgSpecHash": "KWyeR541mORN1OcgCY6NMbiwRsYBVntrJxmYAahrZoMfHiX3ZOH++Op6CmeGqZSJ9GCPhkFAd98HLYXr7Vf37w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\serob\\Desktop\\Uvon\\Uvon\\Uvon.Android\\Uvon.Android.csproj",
+  "projectFilePath": "D:\\Serob\\Uvon\\Uvon\\Uvon.Android\\Uvon.Android.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\serob\\.nuget\\packages\\hockeysdk.xamarin\\5.2.0\\hockeysdk.xamarin.5.2.0.nupkg.sha512",
     "C:\\Users\\serob\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",

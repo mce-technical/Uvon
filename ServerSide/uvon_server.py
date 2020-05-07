@@ -17,31 +17,30 @@ port_send_image = 55556
 port_get = 55555 
 port_listen = 55554
 port_uv = 59472
-terminate_connections = False
+
 
 motor_signal = ""
 uv_signal = False
-
+close_preview_motor = "b'34'"
+isTerminatedRequest = False
 
 
 #To get signal from client
 def Get_Signal():
-    global terminate_connections
+    global isTerminatedRequest
     sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
     sock.bind((own_ip,port_get))
 
     print("Getting signal from clients...")
 
-    while terminate_connections == False:   
-        print(terminate_connections)
+    while True:   
         data, addr = sock.recvfrom(1024)
         print("Data from server: " + str(data))
-        if data.count == 0:
-            terminate_connections == True
-            
+        if str(data)==close_preview_motor:
+            isTerminatedRequest = True
+            break
         time.sleep(0.1)
-    listening = th.Thread(target=Listen)
-    listening.start()
+
     sock.close()
 
 def Enable_Uv():
@@ -67,7 +66,7 @@ def Enable_Uv():
 
 #To send video translation to clients
 def Send_Image():
-    global terminate_connections
+    global isTerminatedRequest
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) 
     video_capturing = cv2.VideoCapture(0)
     #video_capturing.set(cv2.CAP_PROP_FPS, 50)
@@ -85,7 +84,7 @@ def Send_Image():
 
     print("Sending video frames data...")
 
-    while True:        
+    while isTerminatedRequest == False:        
         sock.sendto(byte_image, (phone_ip,port_send_image))
 
         isread, pic = video_capturing.read()
@@ -99,7 +98,7 @@ def Send_Image():
             f = image.read()
             byte_image = bytearray(f)
             time.sleep(0.01)
-    
+    isTerminatedRequest = False
     sock.close()
 
 send_image = th.Thread(target=Send_Image)
@@ -108,7 +107,8 @@ get_signal = th.Thread(target=Get_Signal)
 
 def Listen():
     global phone_ip
-    global terminate_connections
+    global send_image
+    global get_signal
     sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
     sock.bind((own_ip,port_listen))
 
@@ -123,19 +123,20 @@ def Listen():
             phone_ip = data_list.split('\'')[1]
             print(phone_ip)
             print("End listening..")
-
-            #get_signal.start()
-            #send_image.start()
+            
+            if get_signal.is_alive()==False:
+                get_signal = th.Thread(target=Get_Signal)
+                get_signal.start()
+            
+            if send_image.is_alive() == False:
+                send_image = th.Thread(target=Send_Image)
+                send_image.start()
 
             get_uv = th.Thread(target=Enable_Uv)
             get_uv.start()
             break
         time.sleep(0.1)
 
-
-
-#send_video = th.Thread(target=Send_Image)
-#send_video.start()
 
 listening = th.Thread(target=Listen)
 listening.start()
