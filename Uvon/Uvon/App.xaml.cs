@@ -1,4 +1,5 @@
 ﻿using System;
+using Uvon.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,7 +11,7 @@ namespace Uvon
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new GetConnect());
+            MainPage = new MyMenu();
         }
 
         protected override void OnStart()

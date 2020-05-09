@@ -3,6 +3,8 @@ FFImageLoading.Platform
 FormsViewGroup
 HockeySDK.AndroidBindings
 HockeySDK
+MonkeyCache
+MonkeyCache.FileStore
 Xamarin.Android.Arch.Core.Common
 Xamarin.Android.Arch.Core.Runtime
 Xamarin.Android.Arch.Lifecycle.Common

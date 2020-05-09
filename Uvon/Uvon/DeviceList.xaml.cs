@@ -1,13 +1,9 @@
-﻿using System;
+﻿using MonkeyCache.FileStore;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
-using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,41 +16,59 @@ namespace Uvon
         private int port = 55554;
         private byte[] address_bytes = new byte[1024];
 
+
         public DeviceList(List<string> devices)
         {
-            address_bytes = Encoding.UTF8.GetBytes(Devices.GetLocalIPAddress());
-            Label header = new Label
-            {
-                Text = "Available devices",
-                FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
-                HorizontalOptions = LayoutOptions.Center
-            };
+            InitializeComponent();
 
-            ListView listView = new ListView() { ItemsSource = Addresses.addresses};
-            listView.ItemTapped += ListView_ItemTapped;
-            this.Content = new StackLayout { Children = { header, listView} };
+            address_bytes = Encoding.UTF8.GetBytes(Devices.GetLocalIPAddress());
+            var devices_list = Addresses.addresses;
+
+            Devices_list.ItemsSource = devices_list;
         }
 
+
+        /// <summary>
+        /// Works when user clicks on Add button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void OnAdd(object sender, EventArgs e)
+        {
+            var mi = (MenuItem)sender;
+            string address = mi.CommandParameter.ToString();
+            Debug.WriteLine("On more " + address);
+
+            if (Addresses.favorites.Contains(address))
+            {
+                await DisplayAlert("Fine", "You have already added this address to your favorite list", "OK");
+            }
+            else
+            {
+                Addresses.favorites.Add(address);
+                Barrel.Current.Empty("devices");
+                Barrel.Current.Add(key: "devices", data: Addresses.favorites, expireIn: TimeSpan.FromDays(1));
+
+                await DisplayAlert("Congratulations", "You added this address to your favorite list", "OK");
+            }
+        }
+
+
+        /// <summary>
+        /// Works when user tapps on item from List View
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             string address = e.Item.ToString();
             ip = IPAddress.Parse(address);
 
-            SendCheckingSignal();
+            Devices.SendCheckingSignal(this.port, this.ip, this.address_bytes);
 
             var mainPage = new MainPage(ip);
             await Navigation.PushAsync(mainPage);
         }
 
-        private async void SendCheckingSignal()
-        {
-            await Task.Run(() =>
-            {
-                UdpClient client = new UdpClient(this.port);
-                IPEndPoint ipendpoint = new IPEndPoint(this.ip, this.port);
-
-                client.Send(address_bytes, address_bytes.Length, ipendpoint);
-            });
-        }
     }
 }

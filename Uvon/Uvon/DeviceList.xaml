@@ -4,10 +4,27 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="Uvon.DeviceList">
+             x:Class="Uvon.DeviceList"
+             Title="Scan">
     <ContentPage.Content>
         <StackLayout>
-            
+            <Frame Padding="10" CornerRadius="20">
+                <Label Text="Available devices" TextColor="Black" FontSize="Title" HorizontalOptions="Center"/>
+            </Frame>
+            <Frame Padding="10" CornerRadius="20">
+                <ListView x:Name="Devices_list" ItemsSource="{Binding devices_list}" ItemTapped="ListView_ItemTapped">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.ContextActions>
+                                    <MenuItem Clicked="OnAdd" CommandParameter="{Binding .}" Text="Add to favorites " />
+                                </ViewCell.ContextActions>
+                                <Label Text="{Binding .}" />
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Frame>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

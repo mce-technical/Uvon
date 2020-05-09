@@ -9,10 +9,10 @@
     <ContentPage.Content>
         <StackLayout Padding="20" Spacing="10">
             <Frame CornerRadius="20" BackgroundColor="#FFD800">
-                <Label x:Name="warning" FontSize="Title" TextColor="Red" BackgroundColor="#FFD800"  />
+                <Label x:Name="warning" FontSize="Subtitle" TextColor="Red" BackgroundColor="#FFD800"  />
             </Frame>
             <Frame CornerRadius="20">
-                <Label x:Name="instruction" FontSize="Title"/>
+                <Label x:Name="instruction" FontSize="Subtitle"/>
             </Frame>
             <Frame CornerRadius="20">
                 <Entry x:Name="user_input" Placeholder="Enter Ip Address or Scan interval" TextChanged="ChangedText"/>

@@ -10,13 +10,13 @@
                 <ffimageloading:CachedImage x:Name="preview"
                     CacheDuration= "1"
                     WidthRequest="400" HeightRequest="300"
-                    DownsampleToViewSize = "true"/>
+                    DownsampleToViewSize = "False"/>
             </Frame>
         </StackLayout>
 
         <Frame Padding="6" CornerRadius="15">
             <StackLayout Orientation="Horizontal" HeightRequest="55">
-                <Button Text="Switch" WidthRequest="110" HeightRequest="70" x:Name="switch" Clicked="switch_Clicked" CornerRadius="15" TextColor="White" BackgroundColor="#409FE4"/>
+                <Button Text="Switch" WidthRequest="110" HeightRequest="70" x:Name="switch" Clicked="switch_Clicked" CornerRadius="15" TextColor="White" BackgroundColor="#409FE4"/> 
                 <StackLayout Orientation="Vertical">
                     <Label x:Name="port_view" HeightRequest="30" Text="Enable UV light" FontSize="Medium"></Label>
                     <Switch x:Name="switch_uv" HorizontalOptions="CenterAndExpand" IsToggled="False" Toggled="switch_uv_Toggled"></Switch>

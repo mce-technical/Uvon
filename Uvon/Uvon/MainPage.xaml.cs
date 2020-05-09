@@ -8,8 +8,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-using System.Drawing;
 
 namespace Uvon
 {
@@ -42,10 +40,9 @@ namespace Uvon
             preview.Source = im;
             port_view.Text = Devices.GetLocalIPAddress();
 
-            Get_image();
+            Get_image();    //Starting new task to get preview from server/robot
 
-            SendSignal();
-
+            SendSignal();   //Starting new task to send signal to control motors of robor.
         }
 
 
@@ -79,9 +76,14 @@ namespace Uvon
             {
                 cancelMotorPreview.Cancel();
             }
-            address = null;
         }
 
+        
+        protected override bool OnBackButtonPressed()
+        {
+            base.OnBackButtonPressed();
+            return true;
+        }
 
         /// <summary>
         /// Works when user clicks on Left button
@@ -149,6 +151,11 @@ namespace Uvon
             //TO Do...
         }
 
+        /// <summary>
+        /// Works when user clicks on Disconnect button, and closes all connections with server/robot.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void disconnect_Clicked(object sender, EventArgs e)
         {
             port_view.Text = "disconnect";

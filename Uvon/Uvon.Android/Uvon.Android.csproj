@@ -103,9 +103,6 @@
     <AndroidResource Include="Resources\drawable\splash_background.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\uv.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\logo.png" />
   </ItemGroup>
   <ItemGroup>
@@ -115,7 +112,6 @@
     <AndroidResource Include="Resources\landscape.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="landscape.txt" />
     <AndroidResource Include="Resources\drawable\icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

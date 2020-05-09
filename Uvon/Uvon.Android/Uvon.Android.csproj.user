@@ -4,5 +4,6 @@
     <SelectedDevice>Android Samsung</SelectedDevice>
     <AndroidDesignerPreferredTheme>Theme.AppCompat.Light.NoActionBar</AndroidDesignerPreferredTheme>
     <DefaultDevice>pixel_2_kit_kat_4_4_-_api_19</DefaultDevice>
+    <AndroidDesignerPreferredDevice>Nexus 4</AndroidDesignerPreferredDevice>
   </PropertyGroup>
 </Project>

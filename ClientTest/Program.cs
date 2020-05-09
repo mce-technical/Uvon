@@ -12,9 +12,10 @@ namespace ClientTest
     {
         static Devices devs;
         static void Main(string[] args)
-        {
-            Console.WriteLine("Starting server...");
+        {                                                       //Not included in project.
+            Console.WriteLine("Starting server...");            //Here i tested some functions.
 
+           Console.WriteLine(GetName(IPAddress.Parse("192.168.1.6")));
             devs = new Devices();
             //devs.Addresses.Add("erku");
             Ping_all();
@@ -29,6 +30,7 @@ namespace ClientTest
         {
             string port = null;
             var host = Dns.GetHostEntry(Dns.GetHostName());
+
             foreach (var ip in host.AddressList)
             {
                 Console.WriteLine(ip);
@@ -49,7 +51,6 @@ namespace ClientTest
             {
 
                 string ping_ip_address = array[0] + "." + array[1] + "." + array[2] + "." + i;
-
                 //time in milliseconds           
                 Ping(ping_ip_address, 4, 5000);
 
@@ -103,6 +104,12 @@ namespace ClientTest
             {
                 // MessageBox.Show(e.Reply.Status.ToString());
             }
+        }
+
+        public static string GetName(IPAddress ip)
+        {
+            string name = Dns.GetHostByAddress(ip).HostName;
+            return name;
         }
 
         public static string GetHostName(string ipAddress)

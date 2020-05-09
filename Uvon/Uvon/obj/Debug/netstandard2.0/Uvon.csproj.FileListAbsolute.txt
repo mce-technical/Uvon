@@ -30,5 +30,10 @@ D:\Serob\Uvon\Uvon\Uvon\bin\Debug\netstandard2.0\Mono.Android.dll
 D:\Serob\Uvon\Uvon\Uvon\bin\Debug\netstandard2.0\Mono.Android.pdb
 D:\Serob\Uvon\Uvon\Uvon\bin\Debug\netstandard2.0\Mono.Android.xml
 D:\Serob\Uvon\Uvon\Uvon\obj\Debug\netstandard2.0\Uvon.csproj.CopyComplete
+D:\Serob\Uvon\Uvon\Uvon\obj\Debug\netstandard2.0\Views\About.xaml.g.cs
+D:\Serob\Uvon\Uvon\Uvon\obj\Debug\netstandard2.0\Views\MyList.xaml.g.cs
+D:\Serob\Uvon\Uvon\Uvon\obj\Debug\netstandard2.0\Views\MyMenu.xaml.g.cs
+D:\Serob\Uvon\Uvon\Uvon\obj\Debug\netstandard2.0\Views\MyMenuDetail.xaml.g.cs
+D:\Serob\Uvon\Uvon\Uvon\obj\Debug\netstandard2.0\Views\MyMenuMaster.xaml.g.cs
 D:\Serob\Uvon\Uvon\Uvon\obj\Debug\netstandard2.0\Uvon.csproj.CoreCompileInputs.cache
 D:\Serob\Uvon\Uvon\Uvon\obj\Debug\netstandard2.0\XamlC.stamp

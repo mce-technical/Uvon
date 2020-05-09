@@ -3,4 +3,9 @@
   <PropertyGroup>
     <_LastSelectedProfileId>D:\Serob\Uvon\Uvon\Uvon\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="Views\MyMenuMasterMenuItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
 </Project>

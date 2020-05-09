@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MonkeyCache.FileStore;
+using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net;
 using System.Net.NetworkInformation;
-using System.Net.Sockets;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -26,6 +25,13 @@ namespace Uvon
         public GetConnect()
         {
             InitializeComponent();
+            Barrel.ApplicationId = "Uvon";
+            Addresses.favorites = Barrel.Current.Get<ObservableCollection<string>>("devices");  //getting my list from cashes
+
+            if (Addresses.favorites == null)
+            {
+                Addresses.favorites = new ObservableCollection<string>();
+            }
             warning.Text = "WARNING!!! UV LEDs\nHigh intensity ultraviolet light. Avoid exposure to eyes/skin. Do not look direclty at light, go out from room while UV is on.";
             instruction.Text = "Welcome to Uvon. If you want to connect your robot turn on it and enter the ip address to connect with him. If you want to do automatic ip addresses detecion please enter interval of search";
             address_bytes = Encoding.UTF8.GetBytes(Devices.GetLocalIPAddress());
@@ -37,6 +43,9 @@ namespace Uvon
             address = user_input.Text;
         }
 
+        /// <summary>
+        /// Works when the page appears
+        /// </summary>
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -44,6 +53,22 @@ namespace Uvon
             Addresses.addresses.Clear();
         }
 
+        /// <summary>
+        /// Works when the page disappers
+        /// </summary>
+        /// <returns></returns>
+        protected override bool OnBackButtonPressed()
+        {
+            base.OnBackButtonPressed();
+            return true;
+        }
+
+
+        /// <summary>
+        /// Works when user clicks on Submit button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void submit_Clicked(object sender, EventArgs e)
         {
             bool validateIP = IPAddress.TryParse(address, out ip);
@@ -55,13 +80,18 @@ namespace Uvon
             }
             else
             {
-                SendCheckingSignal();
+                Devices.SendCheckingSignal(this.port, this.ip, this.address_bytes);
                 var mainPage = new MainPage(ip);
                 await Navigation.PushAsync(mainPage);
             }
         }
 
 
+        /// <summary>
+        /// Works when user clicks on Scan button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void scan_Clicked(object sender, EventArgs e)
         {
             ActivityIndicator activityIndicator = new ActivityIndicator { IsRunning = true, IsVisible = true };
@@ -87,19 +117,6 @@ namespace Uvon
             }
         }
 
-        /// <summary>
-        /// Sends own ip address to host
-        /// </summary>
-        private async void SendCheckingSignal()
-        {
-            await Task.Run(() =>
-            {
-                UdpClient client = new UdpClient(this.port);
-                IPEndPoint ipendpoint = new IPEndPoint(this.ip, this.port);
-
-                client.Send(address_bytes, address_bytes.Length, ipendpoint);
-            });
-        }
 
         /// <summary>
         /// Scans LAN connected devices and returnes list of IP addresses
@@ -124,6 +141,7 @@ namespace Uvon
                         {
                             Debug.WriteLine("Status :  " + reply.Status + ",  Time : " + reply.RoundtripTime.ToString() + ",  Address : " + reply.Address + "\n");
                             //devs.Addresses.Add(reply.Address.ToString());
+
                             Addresses.addresses.Add(reply.Address.ToString());
                         }
                     }
