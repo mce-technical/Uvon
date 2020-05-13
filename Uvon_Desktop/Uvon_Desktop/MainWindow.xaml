@@ -1,0 +1,31 @@
+﻿<Window x:Class="Uvon_Desktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Uvon_Desktop"
+        mc:Ignorable="d"
+        Title="UVON" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <StackPanel Margin="20">
+        <TextBlock Name="warning_text" Padding="5" Margin="20" Height="100" TextWrapping="Wrap" Background="#FFFFEB3F" Foreground="Red" FontSize="15"/>
+        <TextBlock Name="instruction_text" Padding="5" Margin="20" Height="91" TextWrapping="Wrap" FontSize="15" Width="710"/>
+
+        <TextBox Name="user_input" Text="Please, enter ip address or scan interval" HorizontalAlignment="Center" Width="700">
+            
+        </TextBox>
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Grid.Row="1" Content="Autoconnection" Height="50" Name="autoconnect" Width="200" Click="Autoconnect_Click"/>
+            <Button Grid.Column="1" Grid.Row="1" Content="Scan WLAN" Height="50" Width="200" Name="scan" Click="Scan_Click"/>
+            <Button Grid.Column="2" Grid.Row="1" Content="Connect" Height="50" Width="200" Name="connect" Click="Connect_Click"/>
+        </Grid>
+    </StackPanel>
+</Window>
