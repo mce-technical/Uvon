@@ -16,12 +16,11 @@ phone_ip = ""
 port_send_image = 55556         # this ports must be same as in the android application: Android side uses this ports:
 port_get = 55555                    # 55555 to get motor controlling signals
 port_listen = 55554                 # 55554 to listen incoming connection requests
-port_uv = 59472                     # 59472 to turn ON or OFF UV light
 
 
 motor_signal = ""               #   any motor controlling command has its specific bytes command (incoming type: byte[], used type: string)
-uv_signal = False               #   UV light must be turned ON or OFF, (incoming type: byte[], used type: boolean)
-close_motor_request = "b'34'"   #   command which demands to close motor control and preview from here(robot side), (incoming type: byte[], used type: string )
+uv_signal = ""                  #   UV light must be turned ON or OFF, (incoming type: byte[], used type: boolean)
+close_motor_request = "34"      #   command which demands to close motor control and preview from here(robot side), (incoming type: byte[], used type: string )
 close_preview_request = False   #   command to open or close camera preview (incoming type: _, used type: boolean)
 
 
@@ -29,6 +28,7 @@ close_preview_request = False   #   command to open or close camera preview (inc
 def Get_Signal():
     global close_preview_request
     global motor_signal
+    global uv_signal
     global listening
     
     sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
@@ -38,8 +38,10 @@ def Get_Signal():
 
     while True:   
         data, addr = sock.recvfrom(1024)
-        motor_signal = data
-        if str(data)==close_motor_request:
+        motor_signal = data.decode('utf-8').split('|')[0]
+        uv_signal = data.decode('utf-8').split('|')[1]
+
+        if str(motor_signal) == close_motor_request or data == None:
             close_preview_request = True
             break
         time.sleep(0.1)
@@ -49,31 +51,23 @@ def Get_Signal():
     sock.close()
 
 def Enable_Uv():
-    sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
-    sock.bind((own_ip,port_uv))
     global uv_signal
+    while True:
+        if uv_signal == "01":
+            print("UV is ON")
+            time.sleep(2)
+            #TO DO..        
+        elif uv_signal == "00":
+            print("UV is OFF")
+            time.sleep(2)
 
-    print("Started UV thread...")
-    while True:   
-        data, addr = sock.recvfrom(1024)
-        uv_signal = True
-        
-        if str(data) != "b'00'":
-            uv_signal = False
-            print("Signal state: " + str(uv_signal))
-            break    
-  
-        time.sleep(0.01)
-    listening = th.Thread(target=Listen)
-    listening.start()
-    sock.close()
 
 """To send video translation to clients"""
 def Send_Image():
     global close_preview_request
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) 
     video_capturing = cv2.VideoCapture(0)
-    #video_capturing.set(cv2.CAP_PROP_FPS, 50)
+
     isread, pic = video_capturing.read()
     cv2.imwrite('opencv.png', pic)
 
@@ -118,12 +112,9 @@ def Listen():
     print("Start listening...")
 
     while True: 
-        data, addr = sock.recvfrom(1024)  #buffer size is 1024 bytes
-        print("Listening: " + str(data))
-
+        data, addr = sock.recvfrom(1024)               
         if data.count != 0:
-            data_list = str(data)
-            phone_ip = data_list.split('\'')[1]
+            phone_ip = data.decode('utf-8')
             print(phone_ip)
             print("End listening..")
             
@@ -135,8 +126,6 @@ def Listen():
                 send_image = th.Thread(target=Send_Image)
                 send_image.start()
 
-            get_uv = th.Thread(target=Enable_Uv)
-            get_uv.start()
             break
 
         if get_signal.is_alive() == False and send_image.is_alive() == False and get_uv.is_alive() == False:
@@ -149,6 +138,10 @@ def Listen():
 listening = th.Thread(target=Listen)
 listening.start()
 
+get_uv = th.Thread(target=Enable_Uv)
+get_uv.start()
+
 while True:
-    print("Motor signal is: " + str(motor_signal) + "  UV is enables: " + str(uv_signal) + " Preview is: " + str(close_preview_request))
+    #print("Motor signal is: " + str(motor_signal) + "  UV is enables: " + str(uv_signal) + " Preview is: " + str(close_preview_request))
+    #print(motor_signal + " " + uv_signal)
     time.sleep(2)

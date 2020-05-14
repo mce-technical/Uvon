@@ -19,12 +19,12 @@ namespace Uvon_Desktop
     {
         private int image_port = 55556;
         private int motor_port = 55555;
-        private int uv_port = 59472;
         private int speek_port = 55554;
-        byte[] motor_data = new byte[1024];
 
-        CancellationTokenSource motor_token_source, preview_token_source;
-        CancellationToken motor_token, preview_token;
+        private string[] signal = new string[2];     //first is motor, second is uv
+
+        CancellationTokenSource signal_token_source, preview_token_source;
+        CancellationToken signal_token, preview_token;
 
         private IPAddress robot_address;
         private IPAddress my_address;
@@ -32,14 +32,15 @@ namespace Uvon_Desktop
         {
             InitializeComponent();
 
+            signal[0] = "00";
+            signal[1] = "00";
+
             this.robot_address = robot;
             this.my_address = my;
 
-            motor_data = Encoding.UTF8.GetBytes("no signal");
-
-            motor_token_source = new CancellationTokenSource();
+            signal_token_source = new CancellationTokenSource();
             preview_token_source = new CancellationTokenSource();
-            motor_token = motor_token_source.Token;
+            signal_token = signal_token_source.Token;
             preview_token = preview_token_source.Token;
            
             SendSignal();
@@ -49,39 +50,37 @@ namespace Uvon_Desktop
 
         private void Go_Click(object sender, RoutedEventArgs e)
         {
-            motor_data = Encoding.UTF8.GetBytes("01");
+            signal[0] = "01";
         }
 
         private void Right_Click(object sender, RoutedEventArgs e)
         {
-            motor_data = Encoding.UTF8.GetBytes("04");
+            signal[0] = "04";
         }
 
         private void Left_Click(object sender, RoutedEventArgs e)
         {
-            motor_data = Encoding.UTF8.GetBytes("03");
-
+            signal[0] = "03";
         }
 
         private void Stop_Click(object sender, RoutedEventArgs e)
         {
-            motor_data = Encoding.UTF8.GetBytes("00");
-
+            signal[0] = "00";
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            motor_data = Encoding.UTF8.GetBytes("02");
+            signal[0] = "02";
         }
 
         private void disconnect_Click(object sender, RoutedEventArgs e)
         {
-            motor_data = Encoding.UTF8.GetBytes("34");
+            signal[0] = "34";
 
             Thread.Sleep(100);
-            if (motor_token_source != null)
+            if (signal_token_source != null)
             {
-                motor_token_source.Cancel();
+                signal_token_source.Cancel();
             }
             if (preview_token_source != null)
             {
@@ -95,7 +94,17 @@ namespace Uvon_Desktop
 
         private void uv_Click(object sender, RoutedEventArgs e)
         {
-            //TO DO..
+            MessageBoxResult result = MessageBox.Show("You are going to enable UV light", "UV", MessageBoxButton.YesNo);
+
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    signal[1] = "01";
+                    break;
+                case MessageBoxResult.No:
+                    signal[1] = "00";
+                    break;
+            }
         }
 
         /// <summary>
@@ -103,22 +112,26 @@ namespace Uvon_Desktop
         /// </summary>
         private async void SendSignal()
         {
+            byte[] signal_bytes;
             await Task.Run(() =>
             {
                 UdpClient client = new UdpClient(motor_port);
                 IPEndPoint ip = new IPEndPoint(robot_address, motor_port);
 
-                client.Send(motor_data, motor_data.Length, ip);
+                signal_bytes = Encoding.UTF8.GetBytes(signal[0] + "|" + signal[1]);
+                client.Send(signal_bytes, signal_bytes.Length, ip);
 
                 while (true)
                 {
-                    if (motor_token.IsCancellationRequested)
+                    if (signal_token.IsCancellationRequested)
                     {
                         client.Close();
                         return;
                     }
-                    client.Send(motor_data, motor_data.Length, ip);
-                    Debug.WriteLine("Was sent: " + motor_data[1]);
+                    signal_bytes = Encoding.UTF8.GetBytes(signal[0] + "|" + signal[1]);
+                    client.Send(signal_bytes, signal_bytes.Length, ip);
+                    Debug.WriteLine("Was sent: " + signal[0] + " " + signal[1]);
+
                     Thread.Sleep(100);
                 }
             });
@@ -140,10 +153,10 @@ namespace Uvon_Desktop
                     if (preview_token.IsCancellationRequested)
                     {
                         client.Close();
+                        client = null;
                         return;
                     }
                     byte[] bytes = client.Receive(ref ip);
-                    Debug.WriteLine(bytes.Length);
 
                     var image = ByteToImage(bytes);
                     image.Freeze();
