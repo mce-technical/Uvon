@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Uvon_Desktop"
         mc:Ignorable="d"
-        Title="UVON" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <StackPanel Margin="20">
-        <TextBlock Name="warning_text" Padding="5" Margin="20" Height="100" TextWrapping="Wrap" Background="#FFFFEB3F" Foreground="Red" FontSize="15"/>
-        <TextBlock Name="instruction_text" Padding="5" Margin="20" Height="91" TextWrapping="Wrap" FontSize="15" Width="710"/>
-
+        Title="UVON" Height="620" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <StackPanel Margin="10">
+        <TextBlock Name="warning_text" Padding="5" Margin="20" Height="89" TextWrapping="Wrap" Background="#FFFFEB3F" Foreground="Red" FontSize="15"/>
+        <TextBlock Name="instruction_text" Padding="5" Margin="20" Height="67" TextWrapping="Wrap" FontSize="15" Width="710"/>
+        <TextBlock Text="Available devices in for the first 25 ip addresses" Padding="5" Margin="20" FontSize="15"/>
+        <ListBox Height="108" Margin="20" Padding="5" Name="available_devices" MouseDoubleClick="available_devices_MouseDoubleClick"/>
         <TextBox Name="user_input" Text="Please, enter ip address or scan interval" HorizontalAlignment="Center" Width="700">
             
         </TextBox>

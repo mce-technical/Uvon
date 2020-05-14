@@ -142,6 +142,5 @@ get_uv = th.Thread(target=Enable_Uv)
 get_uv.start()
 
 while True:
-    #print("Motor signal is: " + str(motor_signal) + "  UV is enables: " + str(uv_signal) + " Preview is: " + str(close_preview_request))
-    #print(motor_signal + " " + uv_signal)
+    print("Motor signal is: " + motor_signal + "  UV signal is: " + uv_signal + " Preview is not: " + str(close_preview_request))
     time.sleep(2)

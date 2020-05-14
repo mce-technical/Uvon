@@ -96,11 +96,10 @@ namespace Uvon_Desktop
                 Debug.WriteLine("Was sent");
             });
         }
-
     }
 
     public static class Addresses
     {
-        public static List<string> addresses = new List<string>();
+        public static ObservableCollection<string> addresses = new ObservableCollection<string>();
     }
 }
