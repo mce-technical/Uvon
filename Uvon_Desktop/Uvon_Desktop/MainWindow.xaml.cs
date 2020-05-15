@@ -18,6 +18,7 @@ namespace Uvon_Desktop
         private int port = 55554;
         private byte[] address_bytes = new byte[1024];
         private Ping myping;
+        protected ControlPanel panel;
 
         public MainWindow()
         {
@@ -38,7 +39,7 @@ namespace Uvon_Desktop
             if (Addresses.addresses.Count == 0)
             {
                 myping = new Ping();
-                Scanning(my_address.ToString(), myping, 25);
+                Scanning(my_address.ToString(), myping, 15);
             }
         }
 
@@ -125,7 +126,7 @@ namespace Uvon_Desktop
             {
                 Devices.SendCheckingSignal(this.port, this.robot_address, this.address_bytes);
 
-                ControlPanel panel = new ControlPanel(my_address, robot_address);
+                panel = new ControlPanel(my_address, robot_address);
                 panel.Show();
                 this.Close();
             }
@@ -142,18 +143,18 @@ namespace Uvon_Desktop
             try
             {
                 robo_address = ((FrameworkElement)e.OriginalSource).DataContext.ToString();          //gets the clicked element content
+                bool validateIP = IPAddress.TryParse(robo_address, out robot_address);
+
+                Devices.SendCheckingSignal(this.port, this.robot_address, this.address_bytes);
+
+                panel = new ControlPanel(my_address, robot_address);
+                panel.Show();
+                this.Close();
             }
-            catch
+            catch(NullReferenceException ex)
             {
-                robo_address = "127.0.0.1";
+
             }
-            bool validateIP = IPAddress.TryParse(robo_address, out robot_address);
-
-            Devices.SendCheckingSignal(this.port, this.robot_address, this.address_bytes);
-
-            ControlPanel panel = new ControlPanel(my_address, robot_address);
-            panel.Show();
-            this.Close();
         }
 
 
@@ -191,7 +192,7 @@ namespace Uvon_Desktop
                     }
                     finally
                     {
-
+                        Debug.WriteLine("End connection...");
                     }
                 }
 

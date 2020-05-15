@@ -23,8 +23,10 @@ namespace Uvon_Desktop
 
         private string[] signal = new string[2];     //first is motor, second is uv
 
-        CancellationTokenSource signal_token_source, preview_token_source;
-        CancellationToken signal_token, preview_token;
+        CancellationTokenSource signal_token_source;
+        CancellationTokenSource preview_token_source;
+        CancellationToken signal_token;
+        CancellationToken preview_token;
 
         private IPAddress robot_address;
         private IPAddress my_address;
@@ -87,9 +89,10 @@ namespace Uvon_Desktop
             {
                 preview_token_source.Cancel();
             }
-
+            
             MainWindow main = new MainWindow();
             main.Show();
+
             this.Close();
         }
 
@@ -136,6 +139,7 @@ namespace Uvon_Desktop
                     if (signal_token.IsCancellationRequested)
                     {
                         client.Close();
+                        Debug.WriteLine("Connection signal is over");
                         return;
                     }
                     signal_bytes = Encoding.UTF8.GetBytes(signal[0] + "|" + signal[1]);
@@ -153,23 +157,22 @@ namespace Uvon_Desktop
         /// </summary>
         async void Get_image()
         {
-            byte[] bytes = new byte[1024];
-
             await Task.Run(() =>
             {
-                using(UdpClient client = new UdpClient(image_port))
+                try
                 {
-                    IPEndPoint ip = null; ;
-                    
+                    UdpClient client = new UdpClient(image_port);
+                    IPEndPoint ip = new IPEndPoint(robot_address, 0);
+
                     while (true)
                     {
                         if (preview_token.IsCancellationRequested)
                         {
-                            client.Close();
-                            return;
+                            Debug.WriteLine("Preview is canceled");
+                            break;
                         }
-                        
-                        bytes = client.Receive(ref ip);
+
+                        var bytes = client.Receive(ref ip);
 
                         var image = ByteToImage(bytes);
                         image.Freeze();
@@ -178,8 +181,21 @@ namespace Uvon_Desktop
                             imagesource.Source = image;
                         }));
                     }
-                }             
-            });
+                    Thread.Sleep(900);
+                    client.Client.Dispose();
+                    client.Client.Close();
+                    GC.Collect();
+                    Debug.WriteLine("Connection is end");
+                }
+                catch(Exception e)
+                {
+
+                }
+                finally
+                {
+
+                }
+            },preview_token);
         }
 
 
