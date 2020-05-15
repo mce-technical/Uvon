@@ -4,11 +4,11 @@
 winexe
 C#
 .cs
-C:\Users\serob\Desktop\Uvon_MCE\Uvon_Desktop\Uvon_Desktop\Uvon_Desktop\obj\Debug\netcoreapp3.1\
+C:\Users\serob\Desktop\Uvon_MCE\Uvon_Desktop\Uvon_Desktop\Uvon_Desktop\obj\Release\netcoreapp3.1\
 Uvon_Desktop
 none
 false
-TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1
+TRACE;RELEASE;NETCOREAPP;NETCOREAPP3_1
 C:\Users\serob\Desktop\Uvon_MCE\Uvon_Desktop\Uvon_Desktop\Uvon_Desktop\App.xaml
 2-135130179
 

@@ -128,10 +128,8 @@ def Listen():
 
             break
 
-        if get_signal.is_alive() == False and send_image.is_alive() == False and get_uv.is_alive() == False:
+        if get_signal.is_alive() == False and send_image.is_alive() == False:
             phone_ip = ""
-
-
         time.sleep(0.1)
 
 
@@ -142,5 +140,5 @@ get_uv = th.Thread(target=Enable_Uv)
 get_uv.start()
 
 while True:
-    print("Motor signal is: " + motor_signal + "  UV signal is: " + uv_signal + " Preview is not: " + str(close_preview_request))
+    print("Motor signal is: " + motor_signal + "  UV signal is: " + uv_signal)
     time.sleep(2)

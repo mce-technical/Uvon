@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
@@ -19,7 +20,6 @@ namespace Uvon_Desktop
     {
         private int image_port = 55556;
         private int motor_port = 55555;
-        private int speek_port = 55554;
 
         private string[] signal = new string[2];     //first is motor, second is uv
 
@@ -43,7 +43,7 @@ namespace Uvon_Desktop
             signal_token = signal_token_source.Token;
             preview_token = preview_token_source.Token;
            
-            //SendSignal();
+            SendSignal();
 
             Get_image();
         }
@@ -76,6 +76,7 @@ namespace Uvon_Desktop
         private void disconnect_Click(object sender, RoutedEventArgs e)
         {
             signal[0] = "34";
+            signal[1] = "00";
 
             Thread.Sleep(100);
             if (signal_token_source != null)
@@ -156,26 +157,28 @@ namespace Uvon_Desktop
 
             await Task.Run(() =>
             {
-                UdpClient client = new UdpClient(image_port);
-                IPEndPoint ip = null;
-
-                while (true)
+                using(UdpClient client = new UdpClient(image_port))
                 {
-                    if (preview_token.IsCancellationRequested)
+                    IPEndPoint ip = null; ;
+                    
+                    while (true)
                     {
-                        //client.Close();
-                        break;
-                    }
-                    bytes = client.Receive(ref ip);
+                        if (preview_token.IsCancellationRequested)
+                        {
+                            client.Close();
+                            return;
+                        }
+                        
+                        bytes = client.Receive(ref ip);
 
-                    var image = ByteToImage(bytes);
-                    image.Freeze();
-                    this.Dispatcher.BeginInvoke(new Action(() =>
-                    {
-                        imagesource.Source = image;
-                    }));
-                }
-                client.Close();
+                        var image = ByteToImage(bytes);
+                        image.Freeze();
+                        this.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            imagesource.Source = image;
+                        }));
+                    }
+                }             
             });
         }
 
@@ -197,5 +200,6 @@ namespace Uvon_Desktop
 
             return imgSrc;
         }
+
     }
 }

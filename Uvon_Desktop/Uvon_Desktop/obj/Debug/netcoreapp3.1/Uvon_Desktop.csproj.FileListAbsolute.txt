@@ -38,3 +38,5 @@ C:\Users\serob\Desktop\Uvon_MCE\Uvon_Desktop\Uvon_Desktop\Uvon_Desktop\obj\Debug
 C:\Users\serob\Desktop\Uvon_MCE\Uvon_Desktop\Uvon_Desktop\Uvon_Desktop\obj\Debug\netcoreapp3.1\Uvon_Desktop.genruntimeconfig.cache
 C:\Users\serob\Desktop\Uvon_MCE\Uvon_Desktop\Uvon_Desktop\Uvon_Desktop\obj\Debug\netcoreapp3.1\ControlPanel.g.cs
 C:\Users\serob\Desktop\Uvon_MCE\Uvon_Desktop\Uvon_Desktop\Uvon_Desktop\obj\Debug\netcoreapp3.1\ControlPanel.baml
+C:\Users\serob\Desktop\Uvon_MCE\Uvon_Desktop\Uvon_Desktop\Uvon_Desktop\obj\Debug\netcoreapp3.1\Uvon_Desktop.Properties.Resources.resources
+C:\Users\serob\Desktop\Uvon_MCE\Uvon_Desktop\Uvon_Desktop\Uvon_Desktop\obj\Debug\netcoreapp3.1\Uvon_Desktop.csproj.GenerateResource.cache
