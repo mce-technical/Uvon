@@ -9,8 +9,8 @@
     <StackPanel Margin="10">
         <TextBlock Name="warning_text" Padding="5" Margin="20" Height="89" TextWrapping="Wrap" Background="#FFFFEB3F" Foreground="Red" FontSize="15"/>
         <TextBlock Name="instruction_text" Padding="5" Margin="20" Height="67" TextWrapping="Wrap" FontSize="15" Width="710"/>
-        <TextBlock Text="Available devices in for the first 15 ip addresses" Padding="5" Margin="20" FontSize="15"/>
-        <ListBox Height="108" Margin="20" Padding="5" Name="available_devices" MouseDoubleClick="available_devices_MouseDoubleClick"/>
+        <TextBlock Text="Available devices for the first 15 ip addresses" Padding="5" Margin="20" FontSize="15"/>
+        <ListBox Height="108" Margin="20" Padding="5" Name="available_devices"/>
         <TextBox Name="user_input" Text="Please, enter ip address or scan interval" HorizontalAlignment="Center" Width="700">
             
         </TextBox>
@@ -24,9 +24,9 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Grid.Row="1" Content="Autoconnection" Height="50" Name="autoconnect" Width="200" Click="Autoconnect_Click"/>
-            <Button Grid.Column="1" Grid.Row="1" Content="Scan WLAN" Height="50" Width="200" Name="scan" Click="Scan_Click"/>
-            <Button Grid.Column="2" Grid.Row="1" Content="Connect" Height="50" Width="200" Name="connect" Click="Connect_Click"/>
+            <Button Grid.Column="0" Grid.Row="1" Content="Autoconnection" Height="50" Name="autoconnect" Width="200" Click="Autoconnect_Click" FontSize="20"/>
+            <Button Grid.Column="1" Grid.Row="1" Content="Scan WLAN" Height="50" Width="200" Name="scan" Click="Scan_Click" FontSize="20"/>
+            <Button Grid.Column="2" Grid.Row="1" Content="Connect" Height="50" Width="200" Name="connect" Click="Connect_Click" FontSize="20"/>
         </Grid>
     </StackPanel>
 </Window>

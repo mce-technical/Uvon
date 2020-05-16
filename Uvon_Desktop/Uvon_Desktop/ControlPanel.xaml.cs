@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -48,6 +50,25 @@ namespace Uvon_Desktop
             SendSignal();
 
             Get_image();
+
+            Task.Run(() =>
+            {
+                bool noconnection = false;
+                Thread.Sleep(1000);
+                this.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    noconnection = imagesource.Source == null;
+                }));
+                if (noconnection)
+                {
+                    Thread.Sleep(1000);
+
+                    this.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        imagesource.Source = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\noconnection.png", UriKind.Relative));
+                    }));
+                }
+            });
         }
 
         private void Go_Click(object sender, RoutedEventArgs e)
@@ -180,6 +201,7 @@ namespace Uvon_Desktop
                         {
                             imagesource.Source = image;
                         }));
+
                     }
                     Thread.Sleep(900);
                     client.Client.Dispose();
@@ -217,5 +239,31 @@ namespace Uvon_Desktop
             return imgSrc;
         }
 
+        /// <summary>
+        /// Binding buttons to keyboard's keys
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Up:
+                    Go_Click(new object(),new RoutedEventArgs());
+                    break;
+                case Key.Down:
+                    Back_Click(new object(), new RoutedEventArgs());
+                    break;
+                case Key.Left:
+                    Left_Click(new object(), new RoutedEventArgs());
+                    break;
+                case Key.Right:
+                    Right_Click(new object(), new RoutedEventArgs());
+                    break;
+                case Key.RightShift:
+                    Stop_Click(new object(), new RoutedEventArgs());
+                    break;
+            }
+        }
     }
 }

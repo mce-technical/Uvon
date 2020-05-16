@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -120,41 +121,33 @@ namespace Uvon_Desktop
 
             if (!validateIP || add.Length != 4)
             {
-                MessageBox.Show("Please, enter valid ip address.", "Warning!!");
+                if (available_devices.SelectedItem == null)
+                {
+                    MessageBox.Show("Please, enter valid ip address.", "Warning!!");
+                }
+                else
+                {
+                    Thread.Sleep(1000);
+                    Connect(IPAddress.Parse(available_devices.SelectedItem.ToString()));
+                }
             }
             else
             {
-                Devices.SendCheckingSignal(this.port, this.robot_address, this.address_bytes);
-
-                panel = new ControlPanel(my_address, robot_address);
-                panel.Show();
-                this.Close();
+                Connect(this.robot_address);
             }
         }
 
         /// <summary>
-        /// Connects to robot from the list.
+        /// Sends checking signal and connectes with server/robot
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void available_devices_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        /// <param name="robotAddress"></param>
+        void Connect(IPAddress robotAddress)
         {
-            string robo_address;
-            try
-            {
-                robo_address = ((FrameworkElement)e.OriginalSource).DataContext.ToString();          //gets the clicked element content
-                bool validateIP = IPAddress.TryParse(robo_address, out robot_address);
+            Devices.SendCheckingSignal(this.port, robotAddress, this.address_bytes);
 
-                Devices.SendCheckingSignal(this.port, this.robot_address, this.address_bytes);
-
-                panel = new ControlPanel(my_address, robot_address);
-                panel.Show();
-                this.Close();
-            }
-            catch(NullReferenceException ex)
-            {
-
-            }
+            panel = new ControlPanel(my_address, robotAddress);
+            panel.Show();
+            this.Close();
         }
 
 

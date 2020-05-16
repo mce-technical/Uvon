@@ -5,21 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Uvon_Desktop"
         mc:Ignorable="d"
+        KeyDown="Window_KeyDown"
         Title="ControlPanel" Height="450" Width="800" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
-    <StackPanel Orientation="Horizontal" Margin="15">
-        <StackPanel Orientation="Vertical" Margin="15" Width="360">
+    <StackPanel Orientation="Horizontal" Margin="10">
+        <StackPanel Orientation="Vertical" Margin="10" Width="380">
             <Image Height="263" Width="348" Name="imagesource"/>
-            <Grid Margin="20">
+            <Grid Margin="10" Width="360" Height="62">
                 <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Name="uv" Content="Turn On UV" Grid.Column="0" Grid.Row="0" Foreground="Violet" Width="100" Height="29" Margin="30,0,30,0" Grid.RowSpan="2" VerticalAlignment="Top" Click="uv_Click" FontSize="15"/>
-                <Button Name="disconnect" Content="Disconnect" Grid.Column="1" Grid.Row="0" Foreground="Red" Width="100" Click="disconnect_Click" FontSize="15" Margin="30,0,30,0" Grid.RowSpan="2"/>
+                <Button Name="uv" Content="Turn On UV" Grid.Column="0" Grid.Row="1" Foreground="#FFD41BD4" Width="130" Height="43" VerticalAlignment="Center" Click="uv_Click" FontSize="20"/>
+                <Button Name="disconnect" Content="Disconnect" Grid.Column="1" Grid.Row="0" Foreground="Red" Width="130" Height="43" VerticalAlignment="Center" Click="disconnect_Click" FontSize="20"/>
             </Grid>
         </StackPanel>
         <Grid Margin="20" Width="322" Height="274">
@@ -34,11 +34,11 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <Button Name="Left" Content="Left" Grid.Column="0" Grid.Row="1" Height="80" Width="80" Click="Left_Click" FontSize="15"/>
-            <Button Name="Stop" Content="Stop" Grid.Column="1" Grid.Row="1" Height="80" Width="80" Click="Stop_Click" FontSize="15"/>
-            <Button Name="Right" Content="Right" Grid.Column="2" Grid.Row="1" Height="80" Width="80" Click="Right_Click" FontSize="15"/>
-            <Button Name="Go" Content="Go" Grid.Column="1" Grid.Row="0" Height="80" Width="80" Click="Go_Click" FontSize="15"/>
-            <Button Name="Back" Content="Back" Grid.Column="1" Grid.Row="2" Height="80" Width="80" Click="Back_Click" FontSize="15"/>
+            <Button Name="Left" Content="Left" Grid.Column="0" Grid.Row="1" Height="80" Width="80" Click="Left_Click" FontSize="20"/>
+            <Button Name="Stop" Content="Stop" Grid.Column="1" Grid.Row="1" Height="80" Width="80" Click="Stop_Click" FontSize="20"/>
+            <Button Name="Right" Content="Right" Grid.Column="2" Grid.Row="1" Height="80" Width="80" Click="Right_Click" FontSize="20"/>
+            <Button Name="Go" Content="Go" Grid.Column="1" Grid.Row="0" Height="80" Width="80" Click="Go_Click" FontSize="20"/>
+            <Button Name="Back" Content="Back" Grid.Column="1" Grid.Row="2" Height="80" Width="80" Click="Back_Click" FontSize="20"/>
 
         </Grid>
     </StackPanel>
