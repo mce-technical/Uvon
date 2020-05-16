@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,22 +29,27 @@ namespace Uvon_Desktop
             warning_text.Text = "WARNING!!! UV LEDs\nHigh intensity ultraviolet light. Avoid exposure to eyes/skin. Do not look direclty at light, go out from room while UV is on.";
             instruction_text.Text = "Welcome to Uvon. If you want to connect your robot turn on it and enter the ip address to connect with him. If you want to do automatic ip addresses detecion please enter interval of search. ";
 
-            available_devices.ItemsSource = Addresses.addresses;
+            available_devices.ItemsSource = Addresses.addresses;    //Those are devices connected to WLAN
 
-            user_input.GotFocus += Textbox_GotFocus;
-            user_input.LostFocus += Textbox_LostFocus;
+            user_input.GotFocus += Textbox_GotFocus;                //Works when user clicks on text input field
+            user_input.LostFocus += Textbox_LostFocus;              //Works when user moves mouse out of the text input field
 
-            my_address = Devices.GetLocalIPAddress();
+            my_address = Devices.GetLocalIPAddress();               //Gets machines own Ip Address
             Debug.WriteLine(my_address);
-            address_bytes = Encoding.UTF8.GetBytes(my_address.ToString());
+            address_bytes = Encoding.UTF8.GetBytes(my_address.ToString());  //Encodes ip address to bytes
 
             if (Addresses.addresses.Count == 0)
             {
                 myping = new Ping();
-                Scanning(my_address.ToString(), myping, 15);
+                Scanning(my_address.ToString(), myping, 15);        //Scans WLAN 
             }
         }
 
+        /// <summary>
+        /// Mouse left click on text input field
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Textbox_LostFocus(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(user_input.Text))
@@ -52,6 +58,11 @@ namespace Uvon_Desktop
             }
         }
 
+        /// <summary>
+        /// Mouse left click on everywhere out of the text input field
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Textbox_GotFocus(object sender, RoutedEventArgs e)
         {
             if (user_input.Text == "Please, enter ip address or scan interval")
@@ -62,26 +73,26 @@ namespace Uvon_Desktop
 
         private void Autoconnect_Click(object sender, RoutedEventArgs e)
         {
-            //Task.Run(() =>
-            //{
-            //    foreach (var x in Addresses.addresses)
-            //    {
-            //        UdpClient client = new UdpClient(55556);
-            //        IPEndPoint ip = null;
-            //        Devices.SendCheckingSignal(this.port, IPAddress.Parse(x), this.address_bytes);
-            //        Debug.WriteLine("Current ip " + x);
-            //        Thread.Sleep(500);
-            //        var bytes = client.Receive(ref ip);
-            //        if (bytes != null)
-            //        {
-            //            ControlPanel panel = new ControlPanel(my_address, IPAddress.Parse(x));
-            //            panel.Show();
+            Task.Run(() =>
+            {
+                foreach (var x in Addresses.addresses)
+                {
+                    UdpClient client = new UdpClient(55556);
+                    IPEndPoint ip = null;
+                    Devices.SendCheckingSignal(this.port, IPAddress.Parse(x), this.address_bytes);
+                    Debug.WriteLine("Current ip: " + x);
+                    Thread.Sleep(500);
+                    var bytes = client.Receive(ref ip);
+                    if (bytes != null)
+                    {
+                        ControlPanel panel = new ControlPanel(my_address, IPAddress.Parse(x));
+                        panel.Show();
 
-            //            break;
-            //        }
-            //    }
-            //    this.Close();
-            //});       
+                        break;
+                    }
+                }
+                this.Close();
+            });
         }
 
         /// <summary>
@@ -109,7 +120,7 @@ namespace Uvon_Desktop
         }
 
         /// <summary>
-        /// Connects to device with given Ip Address.
+        /// Connects to device with given Ip Address or with selected Ip address from List.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -141,7 +152,7 @@ namespace Uvon_Desktop
         /// Sends checking signal and connectes with server/robot
         /// </summary>
         /// <param name="robotAddress"></param>
-        void Connect(IPAddress robotAddress)
+        private void Connect(IPAddress robotAddress)
         {
             Devices.SendCheckingSignal(this.port, robotAddress, this.address_bytes);
 

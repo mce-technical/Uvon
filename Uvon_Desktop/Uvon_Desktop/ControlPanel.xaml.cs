@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -24,6 +23,7 @@ namespace Uvon_Desktop
         private int motor_port = 55555;
 
         private string[] signal = new string[2];     //first is motor, second is uv
+        bool noconnection;
 
         CancellationTokenSource signal_token_source;
         CancellationTokenSource preview_token_source;
@@ -39,6 +39,8 @@ namespace Uvon_Desktop
             signal[0] = "00";
             signal[1] = "00";
 
+            noconnection = false;
+
             this.robot_address = robot;
             this.my_address = my;
 
@@ -46,30 +48,30 @@ namespace Uvon_Desktop
             preview_token_source = new CancellationTokenSource();
             signal_token = signal_token_source.Token;
             preview_token = preview_token_source.Token;
-           
+
             SendSignal();
 
             Get_image();
 
             Task.Run(() =>
             {
-                bool noconnection = false;
                 Thread.Sleep(1000);
                 this.Dispatcher.BeginInvoke(new Action(() =>
                 {
                     noconnection = imagesource.Source == null;
                 }));
+                Thread.Sleep(3000);
                 if (noconnection)
                 {
-                    Thread.Sleep(1000);
-
                     this.Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        imagesource.Source = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\noconnection.png", UriKind.Relative));
+                        imagesource.Source = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\noconnection.png", UriKind.Absolute));
                     }));
                 }
             });
         }
+
+        #region Control Buttons
 
         private void Go_Click(object sender, RoutedEventArgs e)
         {
@@ -110,16 +112,21 @@ namespace Uvon_Desktop
             {
                 preview_token_source.Cancel();
             }
-            
+
             MainWindow main = new MainWindow();
             main.Show();
 
             this.Close();
         }
 
+        /// <summary>
+        /// When user clicks on this button, it turns ON/OFF UV light
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void uv_Click(object sender, RoutedEventArgs e)
         {
-            if(uv.Content.ToString() == "Turn On UV")
+            if (uv.Content.ToString() == "Turn On UV")
             {
                 MessageBoxResult result = MessageBox.Show("You are going to enable UV light", "UV", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
@@ -134,13 +141,14 @@ namespace Uvon_Desktop
                         break;
                 }
             }
-            else if(uv.Content.ToString() == "Turn Off UV")
+            else if (uv.Content.ToString() == "Turn Off UV")
             {
                 signal[1] = "00";
                 uv.Content = "Turn On UV";
             }
         }
 
+        #endregion 
         /// <summary>
         /// Sends signals to robot/server
         /// </summary>
@@ -209,15 +217,11 @@ namespace Uvon_Desktop
                     GC.Collect();
                     Debug.WriteLine("Connection is end");
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
 
                 }
-                finally
-                {
-
-                }
-            },preview_token);
+            }, preview_token);
         }
 
 
@@ -249,7 +253,7 @@ namespace Uvon_Desktop
             switch (e.Key)
             {
                 case Key.Up:
-                    Go_Click(new object(),new RoutedEventArgs());
+                    Go_Click(new object(), new RoutedEventArgs());
                     break;
                 case Key.Down:
                     Back_Click(new object(), new RoutedEventArgs());
@@ -263,6 +267,26 @@ namespace Uvon_Desktop
                 case Key.RightShift:
                     Stop_Click(new object(), new RoutedEventArgs());
                     break;
+            }
+        }
+
+        /// <summary>
+        /// Closes all connection after clicking on close button
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            signal[0] = "34";
+            signal[1] = "00";
+
+            Thread.Sleep(100);
+            if (signal_token_source != null)
+            {
+                signal_token_source.Cancel();
+            }
+            if (preview_token_source != null)
+            {
+                preview_token_source.Cancel();
             }
         }
     }
