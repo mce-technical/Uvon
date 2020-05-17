@@ -71,6 +71,11 @@ namespace Uvon_Desktop
             }
         }
 
+        /// <summary>
+        /// Automaticly connects to available server/robot
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Autoconnect_Click(object sender, RoutedEventArgs e)
         {
             Task.Run(() =>
@@ -82,13 +87,20 @@ namespace Uvon_Desktop
                     Devices.SendCheckingSignal(this.port, IPAddress.Parse(x), this.address_bytes);
                     Debug.WriteLine("Current ip: " + x);
                     Thread.Sleep(500);
-                    var bytes = client.Receive(ref ip);
-                    if (bytes != null)
+                    try
                     {
-                        ControlPanel panel = new ControlPanel(my_address, IPAddress.Parse(x));
-                        panel.Show();
+                        var bytes = client.Receive(ref ip);
+                        if (bytes != null)
+                        {
+                            ControlPanel panel = new ControlPanel(my_address, IPAddress.Parse(x));
+                            panel.Show();
 
-                        break;
+                            break;
+                        }
+                    }
+                    catch
+                    {
+
                     }
                 }
                 this.Close();

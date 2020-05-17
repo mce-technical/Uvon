@@ -1,4 +1,5 @@
 import io
+import os
 import PIL
 import cv2
 import time
@@ -7,9 +8,10 @@ import random as rd
 import threading as th
 from PIL import Image
 
-#hostname = socket.gethostname()
-#own_ip = socket.gethostbyname(hostname)
-#check this from system
+#gw = os.popen("ip -4 route show default").read().split()       #This method works only on linux
+#s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+#s.connect((gw[2], 0))
+#own_ip = s.getsockname()[0]
 
 own_ip = "192.168.1.6"          
 phone_ip = ""
