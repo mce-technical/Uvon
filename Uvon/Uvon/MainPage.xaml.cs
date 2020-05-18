@@ -14,15 +14,13 @@ namespace Uvon
     [DesignTimeVisible(true)]
     public partial class MainPage : ContentPage
     {
-        byte[] signal_data;
-        byte[] uv_data;
         private int signal_port = 55555;
-        private int uv_port = 59472;
         private byte[] address_bytes;
+        private string[] signal = new string[2];     //first is motor, second is uv
 
         IPAddress address;
-        CancellationTokenSource cancelMotorPreview, cancelUv;
-        CancellationToken token, uv_token;
+        CancellationTokenSource cancelMotorPreview;
+        CancellationToken token;
 
         public MainPage(IPAddress ip)
         {
@@ -35,10 +33,11 @@ namespace Uvon
 
             address = ip;
             var im = ImageSource.FromFile("drawable/welcome.png");
-            signal_data = Encoding.UTF8.GetBytes("00");
+            signal[0] = "00";
+            signal[1] = "00";
            
             preview.Source = im;
-            port_view.Text = Devices.GetLocalIPAddress();
+            //port_view.Text = Devices.GetLocalIPAddress();  //uncomment after text Label is uncommented in mainpage.xaml
 
             Get_image();    //Starting new task to get preview from server/robot
 
@@ -53,8 +52,8 @@ namespace Uvon
         protected override void OnAppearing()
         {
             base.OnAppearing();
+            preview.Source = ImageSource.FromFile("drawable/welcome.png");
             MessagingCenter.Send(this, "PreventLandscape");
- 
         }
 
         /// <summary>
@@ -64,14 +63,11 @@ namespace Uvon
         {
             base.OnDisappearing();
 
-            uv_data = Encoding.UTF8.GetBytes("20");
-            signal_data = Encoding.UTF8.GetBytes("34");
+            signal[0] = "34";
+            signal[1] = "00";
 
             Thread.Sleep(100);
-            if(cancelUv != null)
-            {
-                cancelUv.Cancel();
-            }
+
             if (cancelMotorPreview != null)
             {
                 cancelMotorPreview.Cancel();
@@ -92,8 +88,7 @@ namespace Uvon
         /// <param name="e"></param>
         private void Left_Clicked(object sender, EventArgs e)
         {
-            port_view.Text = "Left";
-            signal_data = Encoding.UTF8.GetBytes("03");
+            signal[0] = "03";
         }
 
         /// <summary>
@@ -103,8 +98,7 @@ namespace Uvon
         /// <param name="e"></param>
         private void Go_Clicked(object sender, EventArgs e)
         {
-            port_view.Text = "Go";
-            signal_data = Encoding.UTF8.GetBytes("01");
+            signal[0] = "01";
         }
 
         /// <summary>
@@ -114,8 +108,7 @@ namespace Uvon
         /// <param name="e"></param>
         private void stop_Clicked(object sender, EventArgs e)
         {
-            port_view.Text = "stop";
-            signal_data = Encoding.UTF8.GetBytes("00");
+            signal[0] = "00";
         }
 
         /// <summary>
@@ -125,8 +118,7 @@ namespace Uvon
         /// <param name="e"></param>
         private void back_Clicked(object sender, EventArgs e)
         {
-            port_view.Text = "back";
-            signal_data = Encoding.UTF8.GetBytes("02");
+            signal[0] = "02";
         }
 
         /// <summary>
@@ -136,8 +128,7 @@ namespace Uvon
         /// <param name="e"></param>
         private void Right_Clicked(object sender, EventArgs e)
         {
-            port_view.Text = "right";
-            signal_data = Encoding.UTF8.GetBytes("04");
+            signal[0] = "04";
         }
 
         /// <summary>
@@ -147,7 +138,8 @@ namespace Uvon
         /// <param name="e"></param>
         private void switch_Clicked(object sender, EventArgs e)
         {
-            port_view.Text = "switch";
+            Debug.WriteLine("Switch");
+
             //TO Do...
         }
 
@@ -158,16 +150,11 @@ namespace Uvon
         /// <param name="e"></param>
         private async void disconnect_Clicked(object sender, EventArgs e)
         {
-            port_view.Text = "disconnect";
-
-            uv_data = Encoding.UTF8.GetBytes("20");
-            signal_data = Encoding.UTF8.GetBytes("34");
+            signal[0] = "34";
+            signal[1] = "00";
 
             Thread.Sleep(100);
-            if (cancelUv != null)
-            {
-                cancelUv.Cancel();
-            }
+
             if(cancelMotorPreview != null)
             {
                 cancelMotorPreview.Cancel();
@@ -191,11 +178,7 @@ namespace Uvon
                 var accept = await DisplayAlert("Warning!", "You are going to enable UV light..", "Enable" ,"Discard");
                 if (accept)
                 {
-                    uv_data = Encoding.UTF8.GetBytes("00");
-                    cancelUv = new CancellationTokenSource();
-                    uv_token = cancelUv.Token;
-
-                    Enable_Uv();
+                    signal[1] = "01";
                 }
                 else
                 {
@@ -204,13 +187,7 @@ namespace Uvon
             }
             else
             {
-                uv_data = Encoding.UTF8.GetBytes("20");
-                Thread.Sleep(100);
-                if (cancelUv != null)
-                {
-                    cancelUv.Cancel();
-                }
-                Thread.Sleep(100);
+                signal[1] = "00";
             }
         }
 
@@ -219,11 +196,12 @@ namespace Uvon
         /// </summary>
         private async void SendSignal()
         {
+            byte[] signal_data;
             await Task.Run(() =>
             {
                 UdpClient client = new UdpClient(signal_port);
                 IPEndPoint ip = new IPEndPoint(address, signal_port);
-
+                signal_data = Encoding.UTF8.GetBytes(signal[0] + "|" + signal[1]);
                 client.Send(signal_data, signal_data.Length, ip);
 
                 while (true)
@@ -233,8 +211,9 @@ namespace Uvon
                         client.Close();
                         return;
                     }
+                    signal_data = Encoding.UTF8.GetBytes(signal[0] + "|" + signal[1]);
                     client.Send(signal_data, signal_data.Length, ip);
-                    Debug.WriteLine("Was sent: " + signal_data[1]);
+                    Debug.WriteLine("Was sent: " + signal[0] + " " + signal[1]);
                     Thread.Sleep(100);
                 }
             });
@@ -260,7 +239,6 @@ namespace Uvon
                     }
 
                     bytes = client.Receive(ref ip);
-                    Debug.WriteLine(bytes);
 
                     //Parse to image
                     Device.BeginInvokeOnMainThread(() =>
@@ -280,38 +258,6 @@ namespace Uvon
         private static ImageSource ConvertToImage(byte[] array)
         {
             return ImageSource.FromStream(() => new MemoryStream(array));
-        }
-
-        
-        /// <summary>
-        /// Sends commands to keep UV light enabled
-        /// </summary>
-        private async void Enable_Uv()
-        {
-            UdpClient client_start = new UdpClient();
-            IPEndPoint ipendpoint = new IPEndPoint(address,signal_port - 1);
-
-            client_start.Send(address_bytes, address_bytes.Length, ipendpoint);
-            client_start.Close();
-
-            await Task.Run(() =>
-            {
-                UdpClient client = new UdpClient(uv_port);
-                IPEndPoint ip = new IPEndPoint(address, uv_port);
-
-                while (true)
-                {
-                    if (uv_token.IsCancellationRequested)
-                    {
-                        client.Close();
-                        Debug.WriteLine("Canceled");
-                        return;
-                    }
-                    client.Send(uv_data, uv_data.Length, ip);
-                    Debug.WriteLine("UV enable sent");
-                    Thread.Sleep(100);
-                }
-            });
         }
     }
 }

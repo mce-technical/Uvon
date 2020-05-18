@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Serob\\Uvon\\Uvon\\Uvon\\Uvon.csproj": {}
+    "D:\\Serob\\UVON\\Uvon_Android\\Uvon\\Uvon\\Uvon.csproj": {}
   },
   "projects": {
-    "D:\\Serob\\Uvon\\Uvon\\Uvon\\Uvon.csproj": {
+    "D:\\Serob\\UVON\\Uvon_Android\\Uvon\\Uvon\\Uvon.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Serob\\Uvon\\Uvon\\Uvon\\Uvon.csproj",
+        "projectUniqueName": "D:\\Serob\\UVON\\Uvon_Android\\Uvon\\Uvon\\Uvon.csproj",
         "projectName": "Uvon",
-        "projectPath": "D:\\Serob\\Uvon\\Uvon\\Uvon\\Uvon.csproj",
+        "projectPath": "D:\\Serob\\UVON\\Uvon_Android\\Uvon\\Uvon\\Uvon.csproj",
         "packagesPath": "C:\\Users\\serob\\.nuget\\packages\\",
-        "outputPath": "D:\\Serob\\Uvon\\Uvon\\Uvon\\obj\\",
+        "outputPath": "D:\\Serob\\UVON\\Uvon_Android\\Uvon\\Uvon\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "D:\\Microsoft\\Xamarin\\NuGet\\"
@@ -75,7 +75,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -5,8 +5,8 @@
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms">
 
     <StackLayout Orientation="Vertical" Padding="15" Spacing="10">
-        <StackLayout HorizontalOptions="StartAndExpand" HeightRequest="300">
-            <Frame Padding="0" HorizontalOptions="StartAndExpand" CornerRadius="15">
+        <StackLayout HorizontalOptions="CenterAndExpand" HeightRequest="300">
+            <Frame Padding="0" HorizontalOptions="CenterAndExpand" CornerRadius="15">
                 <ffimageloading:CachedImage x:Name="preview"
                     CacheDuration= "1"
                     WidthRequest="400" HeightRequest="300"
@@ -16,16 +16,16 @@
 
         <Frame Padding="6" CornerRadius="15">
             <StackLayout Orientation="Horizontal" HeightRequest="55">
-                <Button Text="Switch" WidthRequest="110" HeightRequest="70" x:Name="switch" Clicked="switch_Clicked" CornerRadius="15" TextColor="White" BackgroundColor="#409FE4"/> 
-                <StackLayout Orientation="Vertical">
-                    <Label x:Name="port_view" HeightRequest="30" Text="Enable UV light" FontSize="Medium"></Label>
-                    <Switch x:Name="switch_uv" HorizontalOptions="CenterAndExpand" IsToggled="False" Toggled="switch_uv_Toggled"></Switch>
-                </StackLayout>
+                <Button Text="Switch" WidthRequest="110" HeightRequest="70" x:Name="switch" Clicked="switch_Clicked" CornerRadius="15" TextColor="White" BackgroundColor="#409FE4"/>
+                <Switch x:Name="switch_uv" HorizontalOptions="CenterAndExpand" IsToggled="False" Toggled="switch_uv_Toggled"></Switch>
+                <!--<StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand">
+                    <Label x:Name="port_view" HeightRequest="30" Text="" FontSize="Medium"></Label>
+                </StackLayout>-->
                 <Button Text="Disconnect" WidthRequest="110" HeightRequest="70" x:Name="disconnect" Clicked="disconnect_Clicked" CornerRadius="15" TextColor="Red" BackgroundColor="#409FE4" HorizontalOptions="EndAndExpand"/>
             </StackLayout>
         </Frame>
 
-        <Frame Padding="6" CornerRadius="15">
+        <Frame Padding="6" CornerRadius="15" VerticalOptions="EndAndExpand">
             <Grid VerticalOptions="EndAndExpand" HeightRequest="300" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>

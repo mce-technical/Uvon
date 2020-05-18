@@ -8,10 +8,10 @@ import threading as th
 from PIL import Image
 
 
-udp_ip = "127.0.0.1"
-port_send_gps = int(input("Please, enter the port you want to activate the server: "))
-port_send_image = port_send_gps + 1
-port_get = port_send_image + 1
+udp_ip = "192.168.1.6"
+port_send_gps = 55556
+#port_send_image = port_send_gps + 1
+port_get = 55555 #port_send_image + 1
 
 print("Starting Python server...")
 
@@ -35,7 +35,7 @@ def Send_Gps():
         var1 = rd.random()
         var2 = rd.random()
         str_var1 = bytes(str(var1) + ',' + str(var2),'utf-8')
-        sock.sendto(str_var1, (udp_ip,port_send_gps))
+        sock.sendto(str_var1, ("192.168.1.7",port_send_gps))
         time.sleep(0.01)
 
 #To send video translation to clients
@@ -72,10 +72,10 @@ def Send_Image():
             byte_image = bytearray(f)
             #time.sleep(1)
 
-#send_gps = th.Thread(target=Send_Gps)
-#send_gps.start()
+send_gps = th.Thread(target=Send_Gps)
+send_gps.start()
 
 #send_video = th.Thread(target=Send_Image)
 #send_video.start()
 
-Get_Signal()
+#Get_Signal()

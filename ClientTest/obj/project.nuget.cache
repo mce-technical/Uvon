@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ky5NoL9aEMmFt+wwrUs6cZ2TrAfRE2mgghJD+TLeCl48QZjwYB65Yxd/I94e0+mTDiVFKvprpa/wdJ3BJcvMUA==",
+  "dgSpecHash": "yrOe98aHlVc8ldKBVP1IjAKqUK59r1Dii1doo6O9+EJKcDyu98GzyvRrqXcOWZeJIMhoUWnUp5lXhXA4jqMM6g==",
   "success": true,
-  "projectFilePath": "D:\\Serob\\Uvon\\ClientTest\\ClientTest.csproj",
+  "projectFilePath": "D:\\Serob\\UVON\\Uvon_Android\\ClientTest\\ClientTest.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

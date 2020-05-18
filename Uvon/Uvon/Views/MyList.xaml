@@ -6,21 +6,26 @@
              mc:Ignorable="d"
              x:Class="Uvon.Views.MyList">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Padding="20">
             <Frame Padding="10" CornerRadius="20">
-                <ListView x:Name="My_list" ItemsSource="{Binding devices_list}" ItemTapped="ListView_ItemTapped">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <ViewCell.ContextActions>
-                                    <MenuItem Clicked="OnDelete" CommandParameter="{Binding .}" Text="Delete " />
-                                </ViewCell.ContextActions>
-                                <Label Text="{Binding .}" />
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <ScrollView>
+                    <ListView x:Name="My_list" ItemsSource="{Binding devices_list}" ItemTapped="ListView_ItemTapped">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <ViewCell.ContextActions>
+                                        <MenuItem Clicked="OnDelete" CommandParameter="{Binding .}" Text="Delete " />
+                                    </ViewCell.ContextActions>
+                                    <Label Text="{Binding .}" />
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollView>
             </Frame>
+            <StackLayout Orientation="Horizontal">
+                <Button x:Name="clear" Text="Clear All" HorizontalOptions="CenterAndExpand" WidthRequest="250" CornerRadius="20" Clicked="clear_Clicked"/>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

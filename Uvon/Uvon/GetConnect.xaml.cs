@@ -25,6 +25,8 @@ namespace Uvon
         public GetConnect()
         {
             InitializeComponent();
+            NavigationPage.SetHasBackButton(this, false);
+
             Barrel.ApplicationId = "Uvon";
             Addresses.favorites = Barrel.Current.Get<ObservableCollection<string>>("devices");  //getting my list from cashes
 
@@ -51,6 +53,17 @@ namespace Uvon
             base.OnAppearing();
             user_input.Text = "";
             Addresses.addresses.Clear();
+        }
+
+        /// <summary>
+        /// Works when the page appears
+        /// </summary>
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            user_input.Text = "";
+            Addresses.addresses.Clear();
+
         }
 
         /// <summary>

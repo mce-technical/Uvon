@@ -2260,11 +2260,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Serob\\Uvon\\Uvon\\Uvon.Android\\Uvon.Android.csproj",
+      "projectUniqueName": "D:\\Serob\\UVON\\Uvon_Android\\Uvon\\Uvon.Android\\Uvon.Android.csproj",
       "projectName": "Uvon.Android",
-      "projectPath": "D:\\Serob\\Uvon\\Uvon\\Uvon.Android\\Uvon.Android.csproj",
+      "projectPath": "D:\\Serob\\UVON\\Uvon_Android\\Uvon\\Uvon.Android\\Uvon.Android.csproj",
       "packagesPath": "C:\\Users\\serob\\.nuget\\packages\\",
-      "outputPath": "D:\\Serob\\Uvon\\Uvon\\Uvon.Android\\obj\\",
+      "outputPath": "D:\\Serob\\UVON\\Uvon_Android\\Uvon\\Uvon.Android\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
@@ -2285,8 +2285,8 @@
       "frameworks": {
         "monoandroid90": {
           "projectReferences": {
-            "D:\\Serob\\Uvon\\Uvon\\Uvon\\Uvon.csproj": {
-              "projectPath": "D:\\Serob\\Uvon\\Uvon\\Uvon\\Uvon.csproj"
+            "D:\\Serob\\UVON\\Uvon_Android\\Uvon\\Uvon\\Uvon.csproj": {
+              "projectPath": "D:\\Serob\\UVON\\Uvon_Android\\Uvon\\Uvon\\Uvon.csproj"
             }
           }
         }

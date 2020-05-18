@@ -93,6 +93,9 @@ namespace Uvon
 
     }
 
+    /// <summary>
+    /// Static class to keep some data while application is working
+    /// </summary>
     public static class Addresses
     {
         //Addresses from scan

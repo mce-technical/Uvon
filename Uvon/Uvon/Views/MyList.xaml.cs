@@ -1,7 +1,5 @@
 ﻿using MonkeyCache.FileStore;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net;
 using Xamarin.Forms;
@@ -19,9 +17,16 @@ namespace Uvon.Views
         public MyList()
         {
             InitializeComponent();
-            My_list.ItemsSource = Addresses.favorites;     
+
+            My_list.ItemsSource = Addresses.favorites;
+            address_bytes = System.Text.Encoding.UTF8.GetBytes(Devices.GetLocalIPAddress());
         }
 
+        /// <summary>
+        /// Works when user clicks on favorite list item.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             string address = e.Item.ToString();
@@ -52,6 +57,17 @@ namespace Uvon.Views
 
                 await DisplayAlert("Congratulations", "You deleted this address from your favorite list", "OK");
             }
+        }
+
+        /// <summary>
+        /// Clears favorite list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void clear_Clicked(object sender, EventArgs e)
+        {
+            Addresses.favorites.Clear();
+            Barrel.Current.Empty("devices");
         }
     }
 }

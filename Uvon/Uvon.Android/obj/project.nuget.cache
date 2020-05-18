@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "IBFwLN/sCCLbSDYztEvtGBVJfbWhmsR2PJykTPnuzZTcsQ8MOCQBPxF3i1ol0fyGO419xA7yWsKO7qqZMrg4RQ==",
+  "dgSpecHash": "2uHvSu6ew4kWw/VQrgi4n1d9Q+vSY23dkxGz3yEfgAjvhJEut4tAl/PuhJ4DPEMl5b0/HFAc3/0dcUcXqil4Zw==",
   "success": true,
-  "projectFilePath": "D:\\Serob\\Uvon\\Uvon\\Uvon.Android\\Uvon.Android.csproj",
+  "projectFilePath": "D:\\Serob\\UVON\\Uvon_Android\\Uvon\\Uvon.Android\\Uvon.Android.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\serob\\.nuget\\packages\\hockeysdk.xamarin\\5.2.0\\hockeysdk.xamarin.5.2.0.nupkg.sha512",
     "C:\\Users\\serob\\.nuget\\packages\\monkeycache\\1.3.0\\monkeycache.1.3.0.nupkg.sha512",
