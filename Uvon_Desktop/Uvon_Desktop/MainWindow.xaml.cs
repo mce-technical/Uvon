@@ -15,11 +15,11 @@ namespace Uvon_Desktop
     /// </summary>
     public partial class MainWindow : Window
     {
-        private int scan_interval = 250;
-        private IPAddress my_address, robot_address;
-        private int port = 55554;
-        private byte[] address_bytes = new byte[1024];
-        private Ping myping;
+        private int scan_interval = 250;                //default interval to scan
+        private IPAddress my_address, robot_address;    //my and robot's ip addresses
+        private int port = 55554;                       //to send checking signal
+        private byte[] address_bytes = new byte[1024];  //My ip address in bytes
+        private Ping myping;                
         protected ControlPanel panel;
 
         public MainWindow()
@@ -29,19 +29,19 @@ namespace Uvon_Desktop
             warning_text.Text = "WARNING!!! UV LEDs\nHigh intensity ultraviolet light. Avoid exposure to eyes/skin. Do not look direclty at light, go out from room while UV is on.";
             instruction_text.Text = "Welcome to Uvon. If you want to connect your robot turn on it and enter the ip address to connect with him. If you want to do automatic ip addresses detecion please enter interval of search. ";
 
-            available_devices.ItemsSource = Addresses.addresses;    //Those are devices connected to WLAN
+            available_devices.ItemsSource = Addresses.addresses;            //Those are devices connected to WLAN
 
-            user_input.GotFocus += Textbox_GotFocus;                //Works when user clicks on text input field
-            user_input.LostFocus += Textbox_LostFocus;              //Works when user moves mouse out of the text input field
+            user_input.GotFocus += Textbox_GotFocus;                        //Works when user clicks on text input field
+            user_input.LostFocus += Textbox_LostFocus;                      //Works when user moves mouse out of the text input field
 
-            my_address = Devices.GetLocalIPAddress();               //Gets machines own Ip Address
+            my_address = Devices.GetLocalIPAddress();                       //Gets machines own Ip Address
             Debug.WriteLine(my_address);
             address_bytes = Encoding.UTF8.GetBytes(my_address.ToString());  //Encodes ip address to bytes
 
             if (Addresses.addresses.Count == 0)
             {
                 myping = new Ping();
-                Scanning(my_address.ToString(), myping, 15);        //Scans WLAN 
+                Scanning(my_address.ToString(), myping, 15);                //Scans WLAN 
             }
         }
 
@@ -92,7 +92,7 @@ namespace Uvon_Desktop
                         var bytes = client.Receive(ref ip);
                         if (bytes != null)
                         {
-                            ControlPanel panel = new ControlPanel(my_address, IPAddress.Parse(x));
+                            ControlPanel panel = new ControlPanel(IPAddress.Parse(x));
                             panel.Show();
 
                             break;
@@ -100,7 +100,7 @@ namespace Uvon_Desktop
                     }
                     catch
                     {
-
+                        Debug.WriteLine("Something goes wrong..");
                     }
                 }
                 this.Close();
@@ -168,7 +168,7 @@ namespace Uvon_Desktop
         {
             Devices.SendCheckingSignal(this.port, robotAddress, this.address_bytes);
 
-            panel = new ControlPanel(my_address, robotAddress);
+            panel = new ControlPanel(robotAddress);
             panel.Show();
             this.Close();
         }

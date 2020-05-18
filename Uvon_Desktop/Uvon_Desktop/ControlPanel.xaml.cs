@@ -31,8 +31,7 @@ namespace Uvon_Desktop
         CancellationToken preview_token;
 
         private IPAddress robot_address;
-        private IPAddress my_address;
-        public ControlPanel(IPAddress my, IPAddress robot)
+        public ControlPanel(IPAddress robot)
         {
             InitializeComponent();
 
@@ -42,7 +41,6 @@ namespace Uvon_Desktop
             noconnection = false;
 
             this.robot_address = robot;
-            this.my_address = my;
 
             signal_token_source = new CancellationTokenSource();
             preview_token_source = new CancellationTokenSource();
@@ -65,13 +63,21 @@ namespace Uvon_Desktop
                 {
                     this.Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        imagesource.Source = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\noconnection.png", UriKind.Absolute));
+                        try
+                        {
+                            imagesource.Source = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\noconnection.png", UriKind.Absolute));
+                        }
+                        catch(Exception exp)
+                        {
+                            Debug.WriteLine("Excepstion is: " + exp);
+                        }
                     }));
                 }
             });
         }
 
-        #region Control Buttons
+        //These buttons changes signal to appropriate values.
+        #region Control Buttons     
 
         private void Go_Click(object sender, RoutedEventArgs e)
         {
@@ -149,6 +155,8 @@ namespace Uvon_Desktop
         }
 
         #endregion 
+
+
         /// <summary>
         /// Sends signals to robot/server
         /// </summary>
@@ -271,7 +279,7 @@ namespace Uvon_Desktop
         }
 
         /// <summary>
-        /// Closes all connection after clicking on close button
+        /// Closes all connections after clicking on close button
         /// </summary>
         /// <param name="e"></param>
         protected override void OnClosing(CancelEventArgs e)
