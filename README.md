@@ -9,6 +9,8 @@
 
 ![](https://github.com/mce-technical/Uvon/blob/master/Screenshots/scan.png)
 
+3. After connection is open the application will redirect you to the control page.
+![](https://github.com/mce-technical/Uvon/blob/master/Screenshots/control.png)
 ### Side bar
 1. The first element in side bar is the connection page which is opened when application starts.
 2. The second is **_My List_** page, where you can add ip addresses (servers/robots) and connect them.
