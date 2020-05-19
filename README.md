@@ -6,6 +6,7 @@
 1. If you know your server/robot's ip address, you can enter it and click on **_Submit_** button.
 ![](https://github.com/mce-technical/Uvon/blob/master/Screenshots/submit.png)
 2. If you don't know your server/robot's ip address, you can enter number of checking ip addresses, and click on **_Scan_** button. The application will begin to check ip addresses in sequence started by the first ip in LAN (192.168.X.1) over the entered number.
+
 ![](https://github.com/mce-technical/Uvon/blob/master/Screenshots/scan.png)
 
 ### Side bar
