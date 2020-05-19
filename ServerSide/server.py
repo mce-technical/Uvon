@@ -8,22 +8,22 @@ import random as rd
 import threading as th
 from PIL import Image
 
-#gw = os.popen("ip -4 route show default").read().split()       #This method works only on linux
+#gw = os.popen("ip -4 route show default").read().split()       #This method works only on linux based systems
 #s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #s.connect((gw[2], 0))
 #own_ip = s.getsockname()[0]
 
 own_ip = "192.168.1.6"          
-phone_ip = ""
-port_send_image = 55556         # this ports must be same as in the android application: Android side uses this ports:
-port_get = 55555                    # 55555 to get motor controlling signals
-port_listen = 55554                 # 55554 to listen incoming connection requests
+phone_ip = ""                               # this ports must be same as in the android application: Android side uses this ports:
+port_send_image = 55556                         # 55556 - to send image's bytes to client.
+port_get = 55555                                # 55555 - to get motor controlling signals from client.
+port_listen = 55554                             # 55554 - to listen incoming connection requests from client.
 
 
-motor_signal = ""               #   any motor controlling command has its specific bytes command (incoming type: byte[], used type: string)
-uv_signal = ""                  #   UV light must be turned ON or OFF, (incoming type: byte[], used type: boolean)
-close_motor_request = "34"      #   command which demands to close motor control and preview from here(robot side), (incoming type: byte[], used type: string )
-close_preview_request = False   #   command to open or close camera preview (incoming type: _, used type: boolean)
+motor_signal = ""                           #   any motor controlling command has its specific bytes command (incoming type: byte[], used type: string)
+uv_signal = ""                              #   UV light must be turned ON or OFF, (incoming type: byte[], used type: boolean)
+close_motor_request = "34"                  #   command which demands to close motor control and preview from here(robot side), (incoming type: byte[], used type: string )
+close_preview_request = False               #   command to open or close camera preview (incoming type: _, used type: boolean)
 
 
 """To get signal from client"""

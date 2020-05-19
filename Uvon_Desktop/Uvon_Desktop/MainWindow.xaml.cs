@@ -115,6 +115,7 @@ namespace Uvon_Desktop
         private void Scan_Click(object sender, RoutedEventArgs e)
         {
             var good = int.TryParse(user_input.Text, out scan_interval);
+
             if (!good || scan_interval > 255)
             {
                 MessageBox.Show("Incorrect interval", "Warning!!");
@@ -127,6 +128,15 @@ namespace Uvon_Desktop
                 {
                     scan_interval = 255;
                 }
+
+                this.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    this.Title = "Scanning...";
+                    if (progress.Value != 0)
+                    {
+                        progress.Value = 0;
+                    }
+                }));
                 Scanning(my_address.ToString(), myping, scan_interval);
             }
         }
@@ -186,11 +196,11 @@ namespace Uvon_Desktop
             {
                 string[] address_array = address.Split('.');
 
-                for (int i = 1; i <= interval; i++)
+                for (int i = 2; i <= interval; i++)
                 {
                     try
                     {
-                        PingReply reply;
+                        PingReply reply;    
                         reply = myping.Send(address_array[0] + '.' + address_array[1] + '.' + address_array[2] + '.' + i.ToString(), 100);
 
                         if (reply != null && reply.Status == IPStatus.Success)
@@ -205,13 +215,21 @@ namespace Uvon_Desktop
                                 }
                             }));
                         }
+                        this.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            progress.Value += 100 / interval;
+                        }));
                     }
                     finally
                     {
-                        Debug.WriteLine("End connection...");
+                        Debug.WriteLine("End connection... " + i);
                     }
                 }
-
+                this.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    this.Title = "UVON";
+                    progress.Value = 0;
+                }));
             });
         }
     }
