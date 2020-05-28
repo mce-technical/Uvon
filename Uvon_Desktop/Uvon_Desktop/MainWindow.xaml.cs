@@ -35,13 +35,13 @@ namespace Uvon_Desktop
             user_input.LostFocus += Textbox_LostFocus;                      //Works when user moves mouse out of the text input field
 
             my_address = Devices.GetLocalIPAddress();                       //Gets machines own Ip Address
-            Debug.WriteLine(my_address);
+            Debug.WriteLine("My address is:" + my_address);
             address_bytes = Encoding.UTF8.GetBytes(my_address.ToString());  //Encodes ip address to bytes
 
             if (Addresses.addresses.Count == 0)
             {
                 myping = new Ping();
-                Scanning(my_address.ToString(), myping, 15);                //Scans WLAN 
+                Scanning(my_address.ToString(), myping, 10);                //Scans WLAN 
             }
         }
 
@@ -190,7 +190,7 @@ namespace Uvon_Desktop
         /// <param name="address"></param>
         /// <param name="myping"></param>
         /// <param name="interval"></param>
-        private async void Scanning(string address, Ping myping, int interval)
+        private async void Scanning(string address, Ping myping, double interval)
         {
             await Task.Run(() =>
             {
@@ -217,7 +217,7 @@ namespace Uvon_Desktop
                         }
                         this.Dispatcher.BeginInvoke(new Action(() =>
                         {
-                            progress.Value += 100 / interval;
+                            progress.Value += 100.0 / interval;
                         }));
                     }
                     finally

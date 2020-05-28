@@ -22,7 +22,7 @@ namespace Uvon_Desktop
         private int image_port = 55556;
         private int motor_port = 55555;
 
-        private string[] signal = new string[2];     //first is motor, second is uv
+        private string[] signal = new string[5];     //first is motor, second is uv    "0,0,0,0,0"
         bool noconnection;
 
         CancellationTokenSource signal_token_source;
@@ -35,8 +35,11 @@ namespace Uvon_Desktop
         {
             InitializeComponent();
 
-            signal[0] = "00";
-            signal[1] = "00";
+            signal[0] = "0";
+            signal[1] = "0";
+            signal[2] = "";
+            signal[3] = "";
+            signal[4] = "";
 
             noconnection = false;
 
@@ -94,9 +97,23 @@ namespace Uvon_Desktop
             signal[0] = "03";
         }
 
-        private void Stop_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// This method enables or disables Arduino system
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_Off_Click(object sender, RoutedEventArgs e)
         {
-            signal[0] = "00";
+            if(Enable.Content.ToString() == "ON")
+            {
+                signal[2] = "ON\n";
+                Enable.Content = "OFF";
+            }
+            else if (Enable.Content.ToString() == "OFF")
+            {
+                signal[2] = "OFF\n";
+                Enable.Content = "ON";
+            }
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
@@ -108,6 +125,7 @@ namespace Uvon_Desktop
         {
             signal[0] = "34";
             signal[1] = "00";
+            signal[2] = "OFF\n";
 
             Thread.Sleep(100);
             if (signal_token_source != null)
@@ -168,7 +186,7 @@ namespace Uvon_Desktop
                 UdpClient client = new UdpClient(motor_port);
                 IPEndPoint ip = new IPEndPoint(robot_address, motor_port);
 
-                signal_bytes = Encoding.UTF8.GetBytes(signal[0] + "|" + signal[1]);
+                signal_bytes = Encoding.UTF8.GetBytes(signal[0] + "|" + signal[1] + "|" + signal[2]);
                 client.Send(signal_bytes, signal_bytes.Length, ip);
 
                 while (true)
@@ -179,9 +197,9 @@ namespace Uvon_Desktop
                         Debug.WriteLine("Connection signal is over");
                         return;
                     }
-                    signal_bytes = Encoding.UTF8.GetBytes(signal[0] + "|" + signal[1]);
+                    signal_bytes = Encoding.UTF8.GetBytes(signal[0] + "|" + signal[1] + "|" + signal[2]);
                     client.Send(signal_bytes, signal_bytes.Length, ip);
-                    Debug.WriteLine("Was sent: " + signal[0] + " " + signal[1]);
+                    Debug.WriteLine("Was sent: " + signal[0] + " " + signal[1] + " " + signal[2]);
 
                     Thread.Sleep(100);
                 }
@@ -273,7 +291,7 @@ namespace Uvon_Desktop
                     Right_Click(new object(), new RoutedEventArgs());
                     break;
                 case Key.RightShift:
-                    Stop_Click(new object(), new RoutedEventArgs());
+                    On_Off_Click(new object(), new RoutedEventArgs());
                     break;
             }
         }
