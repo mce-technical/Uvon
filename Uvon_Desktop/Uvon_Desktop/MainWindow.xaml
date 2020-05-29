@@ -12,7 +12,7 @@
         <TextBlock Text="Available devices for the first 15 ip addresses" Padding="5" Margin="20" FontSize="20"/>
         <ListBox Height="104" Margin="20" Padding="5" Name="available_devices"/>
         <TextBox Name="user_input" Text="Please, enter ip address or scan interval" HorizontalAlignment="Center" Width="700" Foreground="Gray" FontSize="17">
-            
+
         </TextBox>
         <Grid Margin="20">
             <Grid.RowDefinitions>

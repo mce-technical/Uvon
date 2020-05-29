@@ -20,7 +20,7 @@ port_send_image = 55556                         # 55556 - to send image's bytes 
 port_get = 55555                                # 55555 - to get motor controlling signals from client.
 port_listen = 55554                             # 55554 - to listen incoming connection requests from client.
 
-on_off_signal = ""
+#on_off_signal = ""
 motor_signal = ""                           #   any motor controlling command has its specific bytes command (incoming type: byte[], used type: string)
 uv_signal = ""                              #   UV light must be turned ON or OFF, (incoming type: byte[], used type: boolean)
 close_motor_request = "34"                  #   command which demands to close motor control and preview from here(robot side), (incoming type: byte[], used type: string )
@@ -35,7 +35,7 @@ def Get_Signal():
     global motor_signal
     global uv_signal
     global listening
-    global on_off_signal
+    #global on_off_signal
     
     sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
     sock.bind((own_ip,port_get))
@@ -46,7 +46,7 @@ def Get_Signal():
         data, addr = sock.recvfrom(1024)
         motor_signal = data.decode('utf-8').split('|')[0]
         uv_signal = data.decode('utf-8').split('|')[1]
-        on_off_signal = data.decode('utf-8').split('|')[2] + '\n'
+        #on_off_signal = data.decode('utf-8').split('|')[2] + '\n'
         if str(motor_signal) == close_motor_request or data == None:
             close_preview_request = True
             break
@@ -74,33 +74,27 @@ def Send_Image():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) 
     video_capturing = cv2.VideoCapture(0)
 
-    isread, pic = video_capturing.read()
-    cv2.imwrite('opencv.png', pic)
+    isread, img = video_capturing.read()
 
-    img = Image.open('opencv.png')
-    img = img.resize((500, 300), PIL.Image.ANTIALIAS)
-    img.save('opencv.jpg')
+    scale_percent = 60 # percent of original size
+    width = int(img.shape[1] * scale_percent / 100)
+    height = int(img.shape[0] * scale_percent / 100)
+    dim = (width, height)
+    encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
 
-    with open('opencv.jpg','rb') as image:
-        f = image.read()
-        byte_image = bytearray(f)
+    resized = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
+    retval, buffer = cv2.imencode('.jpg', resized, encode_param)
 
-    print("Sending video frames data...")
+    print("Sending video frames data... Buffer length: " + str(len(buffer)))
 
     while close_preview_request == False:        
-        sock.sendto(byte_image, (phone_ip,port_send_image))
+        sock.sendto(buffer, (phone_ip,port_send_image))
 
-        isread, pic = video_capturing.read()
-        cv2.imwrite('opencv.png', pic)
-    
-        img = Image.open('opencv.png')
-        img = img.resize((500, 400), PIL.Image.ANTIALIAS)
-        img.save('opencv.jpg')
+        isread, img = video_capturing.read()
 
-        with open('opencv.jpg','rb') as image:
-            f = image.read()
-            byte_image = bytearray(f)
-            time.sleep(0.01)
+        resized = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
+        retval, buffer = cv2.imencode('.jpg', resized, encode_param)
+        
     close_preview_request = False
     sock.close()
 
@@ -148,14 +142,14 @@ get_uv.start()
 previous_state = b''
 
 while True:
-    if on_off_signal!= previous_state:
-        time.sleep(0.4)
-        #print(ser.readline())
+    #if on_off_signal!= previous_state:
+    #    time.sleep(0.4)
+    #    #print(ser.readline())
 
-        #print(ser.name)
-        #ser.write(on_off_signal)
-        previous_state = on_off_signal
-        print(previous_state)
+    #    #print(ser.name)
+    #    #ser.write(on_off_signal)
+    #    previous_state = on_off_signal
+    #    print(previous_state)
 
-    print("Motor signal is: " + motor_signal + "  UV signal is: " + uv_signal + " ON/OFF signal is: " + on_off_signal)
-    #time.sleep(1)
+    print("Motor signal is: " + motor_signal + "  UV signal is: " + uv_signal + " ON/OFF signal is: ") #on_off_signal)
+    time.sleep(2)

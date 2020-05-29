@@ -15,11 +15,11 @@ namespace Uvon_Desktop
     /// </summary>
     public partial class MainWindow : Window
     {
-        private int scan_interval = 250;                //default interval to scan
-        private IPAddress my_address, robot_address;    //my and robot's ip addresses
-        private int port = 55554;                       //to send checking signal
-        private byte[] address_bytes = new byte[1024];  //My ip address in bytes
-        private Ping myping;                
+        private int scan_interval = 250;
+        private IPAddress my_address, robot_address;
+        private int port = 55554;
+        private byte[] address_bytes = new byte[1024];
+        private Ping myping;
         protected ControlPanel panel;
 
         public MainWindow()
@@ -29,19 +29,19 @@ namespace Uvon_Desktop
             warning_text.Text = "WARNING!!! UV LEDs\nHigh intensity ultraviolet light. Avoid exposure to eyes/skin. Do not look direclty at light, go out from room while UV is on.";
             instruction_text.Text = "Welcome to Uvon. If you want to connect your robot turn on it and enter the ip address to connect with him. If you want to do automatic ip addresses detecion please enter interval of search. ";
 
-            available_devices.ItemsSource = Addresses.addresses;            //Those are devices connected to WLAN
+            available_devices.ItemsSource = Addresses.addresses;    //Those are devices connected to WLAN
 
-            user_input.GotFocus += Textbox_GotFocus;                        //Works when user clicks on text input field
-            user_input.LostFocus += Textbox_LostFocus;                      //Works when user moves mouse out of the text input field
+            user_input.GotFocus += Textbox_GotFocus;                //Works when user clicks on text input field
+            user_input.LostFocus += Textbox_LostFocus;              //Works when user moves mouse out of the text input field
 
-            my_address = Devices.GetLocalIPAddress();                       //Gets machines own Ip Address
-            Debug.WriteLine("My address is:" + my_address);
+            my_address = Devices.GetLocalIPAddress();               //Gets machines own Ip Address
+            Debug.WriteLine(my_address);
             address_bytes = Encoding.UTF8.GetBytes(my_address.ToString());  //Encodes ip address to bytes
 
             if (Addresses.addresses.Count == 0)
             {
                 myping = new Ping();
-                Scanning(my_address.ToString(), myping, 10);                //Scans WLAN 
+                Scanning(my_address.ToString(), myping, 15);        //Scans WLAN 
             }
         }
 
@@ -92,7 +92,7 @@ namespace Uvon_Desktop
                         var bytes = client.Receive(ref ip);
                         if (bytes != null)
                         {
-                            ControlPanel panel = new ControlPanel(IPAddress.Parse(x));
+                            ControlPanel panel = new ControlPanel(my_address, IPAddress.Parse(x));
                             panel.Show();
 
                             break;
@@ -100,7 +100,7 @@ namespace Uvon_Desktop
                     }
                     catch
                     {
-                        Debug.WriteLine("Something goes wrong..");
+
                     }
                 }
                 this.Close();
@@ -115,7 +115,6 @@ namespace Uvon_Desktop
         private void Scan_Click(object sender, RoutedEventArgs e)
         {
             var good = int.TryParse(user_input.Text, out scan_interval);
-
             if (!good || scan_interval > 255)
             {
                 MessageBox.Show("Incorrect interval", "Warning!!");
@@ -137,6 +136,7 @@ namespace Uvon_Desktop
                         progress.Value = 0;
                     }
                 }));
+
                 Scanning(my_address.ToString(), myping, scan_interval);
             }
         }
@@ -178,7 +178,7 @@ namespace Uvon_Desktop
         {
             Devices.SendCheckingSignal(this.port, robotAddress, this.address_bytes);
 
-            panel = new ControlPanel(robotAddress);
+            panel = new ControlPanel(my_address, robotAddress);
             panel.Show();
             this.Close();
         }
@@ -190,17 +190,17 @@ namespace Uvon_Desktop
         /// <param name="address"></param>
         /// <param name="myping"></param>
         /// <param name="interval"></param>
-        private async void Scanning(string address, Ping myping, double interval)
+        private async void Scanning(string address, Ping myping, int interval)
         {
             await Task.Run(() =>
             {
                 string[] address_array = address.Split('.');
 
-                for (int i = 2; i <= interval; i++)
+                for (int i = 1; i <= interval; i++)
                 {
                     try
                     {
-                        PingReply reply;    
+                        PingReply reply;
                         reply = myping.Send(address_array[0] + '.' + address_array[1] + '.' + address_array[2] + '.' + i.ToString(), 100);
 
                         if (reply != null && reply.Status == IPStatus.Success)
@@ -222,7 +222,7 @@ namespace Uvon_Desktop
                     }
                     finally
                     {
-                        Debug.WriteLine("End connection... " + i);
+                        Debug.WriteLine("End connection...");
                     }
                 }
                 this.Dispatcher.BeginInvoke(new Action(() =>
