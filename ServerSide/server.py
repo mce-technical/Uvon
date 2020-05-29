@@ -20,7 +20,7 @@ port_send_image = 55556                         # 55556 - to send image's bytes 
 port_get = 55555                                # 55555 - to get motor controlling signals from client.
 port_listen = 55554                             # 55554 - to listen incoming connection requests from client.
 
-#on_off_signal = ""
+on_off_signal = '0'
 motor_signal = ""                           #   any motor controlling command has its specific bytes command (incoming type: byte[], used type: string)
 uv_signal = ""                              #   UV light must be turned ON or OFF, (incoming type: byte[], used type: boolean)
 close_motor_request = "34"                  #   command which demands to close motor control and preview from here(robot side), (incoming type: byte[], used type: string )
@@ -35,7 +35,7 @@ def Get_Signal():
     global motor_signal
     global uv_signal
     global listening
-    #global on_off_signal
+    global on_off_signal
     
     sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
     sock.bind((own_ip,port_get))
@@ -46,7 +46,8 @@ def Get_Signal():
         data, addr = sock.recvfrom(1024)
         motor_signal = data.decode('utf-8').split('|')[0]
         uv_signal = data.decode('utf-8').split('|')[1]
-        #on_off_signal = data.decode('utf-8').split('|')[2] + '\n'
+        on_off_signal = data.decode('utf-8').split('|')[2]
+        print("On off signal is: " + on_off_signal)
         if str(motor_signal) == close_motor_request or data == None:
             close_preview_request = True
             break
@@ -139,17 +140,32 @@ listening.start()
 get_uv = th.Thread(target=Enable_Uv)
 get_uv.start()
 
-previous_state = b''
+previous_state = ''
+turn_on = b'ON\n'
+turn_off = b'OFF\n'
+send_me = b'0'
 
-while True:
-    #if on_off_signal!= previous_state:
-    #    time.sleep(0.4)
-    #    #print(ser.readline())
+def Enable():
+    global previous_state
+    global on_off_signal
+    #global ser
+    global send_me
+    while True:
+        if on_off_signal!= previous_state:
+            if on_off_signal == 'ON':
+                send_me = turn_on
+                print('Send Me is: ' + str(send_me))
+            elif on_off_signal == 'OFF':
+                send_me = turn_off
+                print('Send Me is: ' + str(send_me))
+            time.sleep(0.4)
+            #print(ser.name)
+            #ser.write(send_me)
+            #print(ser.readline())
+            previous_state = on_off_signal
 
-    #    #print(ser.name)
-    #    #ser.write(on_off_signal)
-    #    previous_state = on_off_signal
-    #    print(previous_state)
+        print("Motor signal is: " + motor_signal + "  UV signal is: " + uv_signal + " ON/OFF signal is: " + on_off_signal)
+        time.sleep(1)
 
-    print("Motor signal is: " + motor_signal + "  UV signal is: " + uv_signal + " ON/OFF signal is: ") #on_off_signal)
-    time.sleep(2)
+enable_me = th.Thread(target=Enable)
+enable_me.start()

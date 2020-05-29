@@ -22,7 +22,7 @@ namespace Uvon_Desktop
         private int image_port = 55556;
         private int motor_port = 55555;
 
-        private string[] signal = new string[2];     //first is motor, second is uv
+        private string[] signal = new string[3];     //first is motor, second is uv
         bool noconnection;
 
         CancellationTokenSource signal_token_source;
@@ -38,6 +38,7 @@ namespace Uvon_Desktop
 
             signal[0] = "00";
             signal[1] = "00";
+            signal[2] = "0";
 
             noconnection = false;
 
@@ -102,12 +103,12 @@ namespace Uvon_Desktop
         {
             if (Enable.Content.ToString() == "ON")
             {
-                //signal[2] = "ON\n";
+                signal[2] = "ON";
                 Enable.Content = "OFF";
             }
             else if (Enable.Content.ToString() == "OFF")
             {
-                //signal[2] = "OFF\n";
+                signal[2] = "OFF";
                 Enable.Content = "ON";
             }
         }
@@ -174,7 +175,7 @@ namespace Uvon_Desktop
                 UdpClient client = new UdpClient(motor_port);
                 IPEndPoint ip = new IPEndPoint(robot_address, motor_port);
 
-                signal_bytes = Encoding.UTF8.GetBytes(signal[0] + "|" + signal[1]);
+                signal_bytes = Encoding.UTF8.GetBytes(signal[0] + "|" + signal[1] + "|" + signal[2]);
                 client.Send(signal_bytes, signal_bytes.Length, ip);
 
                 while (true)
@@ -185,9 +186,9 @@ namespace Uvon_Desktop
                         Debug.WriteLine("Connection signal is over");
                         return;
                     }
-                    signal_bytes = Encoding.UTF8.GetBytes(signal[0] + "|" + signal[1]);
+                    signal_bytes = Encoding.UTF8.GetBytes(signal[0] + "|" + signal[1] + "|" + signal[2]);
                     client.Send(signal_bytes, signal_bytes.Length, ip);
-                    Debug.WriteLine("Was sent: " + signal[0] + " " + signal[1]);
+                    Debug.WriteLine("Was sent: " + signal[0] + " " + signal[1] + " " + signal[2]);
 
                     Thread.Sleep(100);
                 }
