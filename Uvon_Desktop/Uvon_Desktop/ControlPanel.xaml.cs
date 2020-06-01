@@ -25,6 +25,8 @@ namespace Uvon_Desktop
         private string[] signal = new string[3];     //first is motor, second is uv
         bool noconnection;
 
+        UvonInfo infoPage;
+
         CancellationTokenSource signal_token_source;
         CancellationTokenSource preview_token_source;
         CancellationToken signal_token;
@@ -58,6 +60,11 @@ namespace Uvon_Desktop
             SendSignal();
 
             Get_image();
+
+            this.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                info_image.Source = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\info.png", UriKind.Absolute));
+            }));
 
             Task.Run(() =>
             {
@@ -99,6 +106,21 @@ namespace Uvon_Desktop
             signal[0] = "02";
         }
 
+        private void Info_Click(object sender, RoutedEventArgs e)
+        {
+            if (infoPage == null)
+            {
+                infoPage = new UvonInfo();
+                infoPage.Closed += delegate { infoPage = null; };
+                infoPage.Show();
+            }
+            else
+            {
+                infoPage.WindowState = WindowState.Normal;
+                infoPage.Activate();
+            }
+        }
+
         /// <summary>
         /// This method enables or disables Arduino system
         /// </summary>
@@ -122,10 +144,16 @@ namespace Uvon_Desktop
             }
         }
 
+        /// <summary>
+        /// To disconnect client from server/robot
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void disconnect_Click(object sender, RoutedEventArgs e)
         {
             signal[0] = "34";
             signal[1] = "00";
+            signal[2] = "OFF";
 
             Thread.Sleep(100);
             if (signal_token_source != null)
@@ -190,12 +218,12 @@ namespace Uvon_Desktop
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
-                        signal[1] = "01";
+                        //signal[1] = "01";
                         uv2.Content = "UV Level 2 Disable";
                         uv2_brush.Color = Colors.Green;
                         break;
                     case MessageBoxResult.No:
-                        signal[1] = "00";
+                        //signal[1] = "00";
                         uv2_brush.Color = Colors.Red;
                         break;
                 }
@@ -210,6 +238,8 @@ namespace Uvon_Desktop
         }
 
         #endregion 
+
+
         /// <summary>
         /// Sends signals to robot/server
         /// </summary>
@@ -349,6 +379,8 @@ namespace Uvon_Desktop
             {
                 preview_token_source.Cancel();
             }
+
+            infoPage.Close();
         }
     }
 }

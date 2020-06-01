@@ -14,7 +14,7 @@ from PIL import Image
 #s.connect((gw[2], 0))
 #own_ip = s.getsockname()[0]
 
-own_ip = "192.168.1.6"          
+own_ip = "192.168.11.128"          
 phone_ip = ""                               # this ports must be same as in the android application: Android side uses this ports:
 port_send_image = 55556                         # 55556 - to send image's bytes to client.
 port_get = 55555                                # 55555 - to get motor controlling signals from client.
@@ -53,7 +53,7 @@ def Get_Signal():
         motor_signal = data.decode('utf-8').split('|')[0]
         uv_signal = data.decode('utf-8').split('|')[1]
         on_off_motors_signal = data.decode('utf-8').split('|')[2]
-        print("On off signal is: " + on_off_motors_signal)
+        #print("On off signal is: " + on_off_motors_signal)
         if str(motor_signal) == close_motor_request or data == None:
             close_preview_request = True
             break
@@ -117,7 +117,7 @@ def Enable():
             previous_state = on_off_motors_signal
 
 
-"""To control motor drivers"""
+"""To control motor drivers
 def Motor_Control():
     global motor_signal
     #global ser
@@ -125,6 +125,7 @@ def Motor_Control():
     while let_motor_control:
         #ser.write(motor_signal.encode())
         #print(ser.readline())
+ """
 
 
 enable_me = th.Thread(target=Enable)
