@@ -32,6 +32,11 @@ namespace Uvon_Desktop
 
         private IPAddress robot_address;
         private IPAddress my_address;
+
+        SolidColorBrush motor_brush = new SolidColorBrush();
+        SolidColorBrush uv1_brush = new SolidColorBrush();
+        SolidColorBrush uv2_brush = new SolidColorBrush();
+
         public ControlPanel(IPAddress my, IPAddress robot)
         {
             InitializeComponent();
@@ -105,11 +110,15 @@ namespace Uvon_Desktop
             {
                 signal[2] = "ON";
                 Enable.Content = "OFF";
+                motor_brush.Color = Colors.Green;
+                motor_drivers.Fill = motor_brush;
             }
             else if (Enable.Content.ToString() == "OFF")
             {
                 signal[2] = "OFF";
                 Enable.Content = "ON";
+                motor_brush.Color = Colors.Red;
+                motor_drivers.Fill = motor_brush;
             }
         }
 
@@ -135,13 +144,13 @@ namespace Uvon_Desktop
         }
 
         /// <summary>
-        /// When user clicks on this button, it turns ON/OFF UV light
+        /// When user clicks on this button, it opens UV light's 1st level
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void uv_Click(object sender, RoutedEventArgs e)
+        private void uv1_Click(object sender, RoutedEventArgs e)
         {
-            if (uv.Content.ToString() == "Turn On UV")
+            if (uv1.Content.ToString() == "UV Level 1 Enable")
             {
                 MessageBoxResult result = MessageBox.Show("You are going to enable UV light", "UV", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
@@ -149,18 +158,55 @@ namespace Uvon_Desktop
                 {
                     case MessageBoxResult.Yes:
                         signal[1] = "01";
-                        uv.Content = "Turn Off UV";
+                        uv1.Content = "UV Level 1 Disable";
+                        uv1_brush.Color = Colors.Green;
                         break;
                     case MessageBoxResult.No:
                         signal[1] = "00";
+                        uv1_brush.Color = Colors.Red;
                         break;
                 }
             }
-            else if (uv.Content.ToString() == "Turn Off UV")
+            else if (uv1.Content.ToString() == "UV Level 1 Disable")
             {
                 signal[1] = "00";
-                uv.Content = "Turn On UV";
+                uv1.Content = "UV Level 1 Enable";
+                uv1_brush.Color = Colors.Red;
             }
+            uv_light_1.Fill = uv1_brush;
+        }
+
+        /// <summary>
+        /// When user clicks on this button, it opens UV light's 2nd level
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void uv2_Click(object sender, RoutedEventArgs e)
+        {
+            if (uv2.Content.ToString() == "UV Level 2 Enable")
+            {
+                MessageBoxResult result = MessageBox.Show("You are going to enable UV light", "UV", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        signal[1] = "01";
+                        uv2.Content = "UV Level 2 Disable";
+                        uv2_brush.Color = Colors.Green;
+                        break;
+                    case MessageBoxResult.No:
+                        signal[1] = "00";
+                        uv2_brush.Color = Colors.Red;
+                        break;
+                }
+            }
+            else if (uv2.Content.ToString() == "UV Level 2 Disable")
+            {
+                signal[1] = "00";
+                uv2.Content = "UV Level 2 Enable";
+                uv2_brush.Color = Colors.Red;
+            }
+            uv_light_2.Fill = uv2_brush;
         }
 
         #endregion 

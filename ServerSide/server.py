@@ -14,17 +14,23 @@ from PIL import Image
 #s.connect((gw[2], 0))
 #own_ip = s.getsockname()[0]
 
-own_ip = "192.168.11.129"          
+own_ip = "192.168.1.6"          
 phone_ip = ""                               # this ports must be same as in the android application: Android side uses this ports:
 port_send_image = 55556                         # 55556 - to send image's bytes to client.
 port_get = 55555                                # 55555 - to get motor controlling signals from client.
 port_listen = 55554                             # 55554 - to listen incoming connection requests from client.
 
-on_off_signal = '0'
+on_off_motors_signal = '0'
 motor_signal = ""                           #   any motor controlling command has its specific bytes command (incoming type: byte[], used type: string)
 uv_signal = ""                              #   UV light must be turned ON or OFF, (incoming type: byte[], used type: boolean)
 close_motor_request = "34"                  #   command which demands to close motor control and preview from here(robot side), (incoming type: byte[], used type: string )
 close_preview_request = False               #   command to open or close camera preview (incoming type: _, used type: boolean)
+let_motor_control = False                   #   to know if we can send motor controlling signals to Arduino or not
+
+previous_state = ''                         #   keeps the previous signal from client
+turn_on = b'ON\n'                           #   signal, which value must be sent to Arduino to enable motors control
+turn_off = b'OFF\n'                         #   signal, which value must be sent to Arduino to disable motors control
+send_me = b'0'                              #   signal, which must be sent to Arduino (turn ON or turn OFF)
 
 #ser = serial.Serial('/dev/ttyACM0')
 #ser.baudrate = 9600
@@ -35,7 +41,7 @@ def Get_Signal():
     global motor_signal
     global uv_signal
     global listening
-    global on_off_signal
+    global on_off_motors_signal
     
     sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
     sock.bind((own_ip,port_get))
@@ -46,8 +52,8 @@ def Get_Signal():
         data, addr = sock.recvfrom(1024)
         motor_signal = data.decode('utf-8').split('|')[0]
         uv_signal = data.decode('utf-8').split('|')[1]
-        on_off_signal = data.decode('utf-8').split('|')[2]
-        print("On off signal is: " + on_off_signal)
+        on_off_motors_signal = data.decode('utf-8').split('|')[2]
+        print("On off signal is: " + on_off_motors_signal)
         if str(motor_signal) == close_motor_request or data == None:
             close_preview_request = True
             break
@@ -56,17 +62,6 @@ def Get_Signal():
         listening = th.Thread(target=Listen)
         listening.start()
     sock.close()
-
-def Enable_Uv():
-    global uv_signal
-    while True:
-        if uv_signal == "01":
-            #print("UV is ON")
-            time.sleep(2)
-            #TO DO..        
-        elif uv_signal == "00":
-            #print("UV is OFF")
-            time.sleep(2)
 
 
 """To send video translation to clients"""
@@ -99,6 +94,40 @@ def Send_Image():
     close_preview_request = False
     sock.close()
 
+
+"""To enable or disable motors control"""
+def Enable():
+    global previous_state
+    global on_off_motors_signal
+    #global ser
+    global send_me
+    while True:
+        if on_off_motors_signal!= previous_state:
+            if on_off_motors_signal == 'ON':
+                let_motor_control = True
+                send_me = turn_on
+                print('Send Me is: ' + str(send_me))
+            elif on_off_motors_signal == 'OFF':
+                send_me = turn_off
+                let_motor_control = False
+                print('Send Me is: ' + str(send_me))
+            time.sleep(0.4)
+            #ser.write(send_me)
+            #print(ser.readline())
+            previous_state = on_off_motors_signal
+
+
+"""To control motor drivers"""
+def Motor_Control():
+    global motor_signal
+    #global ser
+
+    while let_motor_control:
+        #ser.write(motor_signal.encode())
+        #print(ser.readline())
+
+
+enable_me = th.Thread(target=Enable)
 send_image = th.Thread(target=Send_Image)
 get_signal = th.Thread(target=Get_Signal)
 
@@ -107,6 +136,7 @@ def Listen():
     global phone_ip
     global send_image
     global get_signal
+    global enable_me
     sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
     sock.bind((own_ip,port_listen))
 
@@ -127,6 +157,10 @@ def Listen():
                 send_image = th.Thread(target=Send_Image)
                 send_image.start()
 
+            if enable_me.is_alive() == False:
+                enable_me = th.Thread(target=Enable)
+                enable_me.start()
+
             break
 
         if get_signal.is_alive() == False and send_image.is_alive() == False:
@@ -137,35 +171,8 @@ def Listen():
 listening = th.Thread(target=Listen)
 listening.start()
 
-get_uv = th.Thread(target=Enable_Uv)
-get_uv.start()
 
-previous_state = ''
-turn_on = b'ON\n'
-turn_off = b'OFF\n'
-send_me = b'0'
 
-def Enable():
-    global previous_state
-    global on_off_signal
-    #global ser
-    global send_me
-    while True:
-        if on_off_signal!= previous_state:
-            if on_off_signal == 'ON':
-                send_me = turn_on
-                print('Send Me is: ' + str(send_me))
-            elif on_off_signal == 'OFF':
-                send_me = turn_off
-                print('Send Me is: ' + str(send_me))
-            time.sleep(0.4)
-            #print(ser.name)
-            #ser.write(send_me)
-            #print(ser.readline())
-            previous_state = on_off_signal
-
-        print("Motor signal is: " + motor_signal + "  UV signal is: " + uv_signal + " ON/OFF signal is: " + on_off_signal)
-        time.sleep(1)
-
-enable_me = th.Thread(target=Enable)
-enable_me.start()
+while True:
+    print("Motor signal is: " + motor_signal + "  UV signal is: " + uv_signal + " ON/OFF signal is: " + on_off_motors_signal)
+    time.sleep(1)
