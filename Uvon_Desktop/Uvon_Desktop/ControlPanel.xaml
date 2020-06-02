@@ -14,35 +14,46 @@
             <TextBlock Text="UV light 2" FontSize="15" Width="110" Margin="10,0" TextAlignment="Center" Foreground="#FF747070"/>
             <TextBlock Text="Autopilot" FontSize="15" Width="110" Margin="10,0" TextAlignment="Center" Foreground="#FF747070"/>
             <TextBlock Text="Emerg.. Status" FontSize="15" Width="110" Margin="10,0" TextAlignment="Center" Foreground="#FF747070"/>
-            <Button x:Name="info" Width="34" Margin="400,0" Background="Transparent" BorderBrush="Transparent" Click="Info_Click">
+            <TextBlock Text="Battery 1" FontSize="15" Width="80" Margin="10,0" TextAlignment="Center" Foreground="#FF747070"/>
+            <TextBlock Text="Battery 2" FontSize="15" Width="80" Margin="10,0" TextAlignment="Center" Foreground="#FF747070"/>
+            <TextBlock Text="Main Battery" FontSize="15" Width="90" Margin="10,0" TextAlignment="Center" Foreground="#FF747070"/>
+
+            <Button x:Name="info" Width="34" Margin="90,0" Background="Transparent" BorderBrush="White" Click="Info_Click">
                 <Image Name="info_image" Source="ImageSources\info.png"/>
             </Button>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Height="16" Margin="10">
-            <Ellipse Name="motor_drivers"  Width="110" Margin="10,0" Fill="Red"/>
-            <Ellipse Name="uv_light_1"  Width="110" Margin="10,0" Fill ="red"/>
-            <Ellipse Name="uv_light_2" Width="110" Margin="10,0" Fill="red"/>
-            <Ellipse Name="autopilot" Width="110" Margin="10,0" Fill="red"/>
-            <Ellipse Name="emergency_status" Width="110" Margin="10,0" Fill="red"/>
+            <Label Name="motor_drivers"  Width="110" Margin="10,0" Background ="Red"/>
+            <Label Name="uv_light_1"  Width="110" Margin="10,0" Background ="red"/>
+            <Label Name="uv_light_2" Width="110" Margin="10,0" Background = "red"/>
+            <Label Name="autopilot" Width="110" Margin="10,0" Background="red"/>
+            <Label Name="emergency_status" Width="110" Margin="10,0" Background="Green"/>
+            <ProgressBar Name="battery_1" Width="60" Margin="20,0" Value="50"/>
+            <ProgressBar Name="battery_2" Width="60" Margin="20,0" Value="50"/>
+            <ProgressBar Name="main_battery" Width="60" Margin="20,0" Value="50"/>
 
         </StackPanel>
-        <StackPanel Orientation="Vertical" Margin="10" Width="895" Height="569">
-            <Image Height="467" Width="813" Name="imagesource"/>
-            <Grid Margin="10" Width="900" Height="66">
-                <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Button Name="Enable" Content="ON" Grid.Column="0" Grid.Row="0" Height="60" Width="170" Click="On_Off_Click" FontSize="20" Background="#FFE2F0FD"/>
-                <Button Name="uv1" Content="UV Level 1 Enable" Grid.Column="1" Grid.Row="0" Foreground="#FFD41BD4" Width="170" Height="60" VerticalAlignment="Center" Click="uv1_Click" FontSize="20" Background="#FFE2F0FD"/>
-                <Button Name="uv2" Content="UV Level 2 Enable" Grid.Column="2" Grid.Row="0" Foreground="#FFD41BD4" Width="170" Height="60" VerticalAlignment="Center" Click="uv2_Click"  FontSize="20" Background="#FFE2F0FD"/>
-                <Button Name="disconnect" Content="Disconnect" Grid.Column="3" Grid.Row="0" Foreground="Red" Width="170" Height="60" VerticalAlignment="Center" Click="disconnect_Click" FontSize="20" Background="#FFE2F0FD"/>
-            </Grid>
+        <StackPanel Orientation="Horizontal" Height="577">
+            <StackPanel Orientation="Vertical" Margin="10" Width="1095" Height="569">
+                <Image Height="462" Width="813" x:Name="imagesource"/>
+                <Grid Margin="10" Width="968" Height="66">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="Enable" Content="ON" Grid.Column="0" Grid.Row="0" Height="60" Width="170" Click="On_Off_Click" FontSize="20" Background="#FFE2F0FD"/>
+                    <Button x:Name="uv1" Content="UV Level 1 Enable" Grid.Column="1" Grid.Row="0" Foreground="#FFD41BD4" Width="170" Height="60" VerticalAlignment="Center" Click="uv1_Click" FontSize="20" Background="#FFE2F0FD"/>
+                    <Button x:Name="uv2" Content="UV Level 2 Enable" Grid.Column="2" Grid.Row="0" Foreground="#FFD41BD4" Width="170" Height="60" VerticalAlignment="Center" Click="uv2_Click"  FontSize="20" Background="#FFE2F0FD"/>
+                    <Button x:Name="disconnect" Content="Disconnect" Grid.Column="3" Grid.Row="0" Foreground="Red" Width="170" Height="60" VerticalAlignment="Center" Click="disconnect_Click" FontSize="20" Background="#FFE2F0FD"/>
+                    <Button Name="Autopilot_button" Content="Autopilot" Grid.Column="4" Grid.Row="0" Height="60" Width="170" Click="Autopilot_button_Click" FontSize="20" Background="#FFE2F0FD"/>
+                </Grid>
+            </StackPanel>
         </StackPanel>
     </StackPanel>
 </Window>

@@ -12,9 +12,10 @@
         <TextBlock Text="Press 'DOWN' arrow to move backward" Margin="20,2" FontStyle="Italic"/>
         <TextBlock Text="Press 'LEFT' arrow to turn left" Margin="20,2" FontStyle="Italic"/>
         <TextBlock Text="Press 'RIGHT' arrow to turn right" Margin="20,2" FontStyle="Italic"/>
+        <TextBlock Text="Press 'SHIFT' to turn ON/OFF motor drivers" Margin="20,2" FontStyle="Italic"/>
 
         <TextBlock Text="Managment" Padding="20" FontSize="30" FontWeight="DemiBold"/>
-        <TextBlock Text="Press 'ON' button to turn On motor drivers" Margin="20,2" FontStyle="Italic"/>
+        <TextBlock Text="Press 'ON/OFF' button to turn On/Off motor drivers" Margin="20,2" FontStyle="Italic"/>
         <TextBlock Text="Press 'UV Level 1 Enable' to enable first level of UV led light" Margin="20,2" FontStyle="Italic"/>
         <TextBlock Text="Press 'UV Level 2 Enable' to enable second level of UV led light" Margin="20,2" FontStyle="Italic"/>
         <TextBlock Text="Press 'DISCONNECT' to disconnect from robot/server" Margin="20,2" FontStyle="Italic"/>

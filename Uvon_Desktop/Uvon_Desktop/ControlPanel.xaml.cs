@@ -38,6 +38,7 @@ namespace Uvon_Desktop
         SolidColorBrush motor_brush = new SolidColorBrush();
         SolidColorBrush uv1_brush = new SolidColorBrush();
         SolidColorBrush uv2_brush = new SolidColorBrush();
+        SolidColorBrush autopilot_brush = new SolidColorBrush();
 
         public ControlPanel(IPAddress my, IPAddress robot)
         {
@@ -88,7 +89,7 @@ namespace Uvon_Desktop
 
         private void Go_Click(object sender, RoutedEventArgs e)
         {
-            signal[0] = "01";
+            signal[0] = "01";   //"0,100,0,100"
         }
 
         private void Right_Click(object sender, RoutedEventArgs e)
@@ -104,6 +105,28 @@ namespace Uvon_Desktop
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             signal[0] = "02";
+        }
+
+        /// <summary>
+        /// Sets robot to autopilot. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Autopilot_button_Click(object sender, RoutedEventArgs e)
+        {
+            if(Autopilot_button.Content.ToString() == "Autopilot")
+            {
+                autopilot_brush.Color = Colors.Green;
+                Autopilot_button.Content = "Hand Control";
+            }
+            else if(Autopilot_button.Content.ToString() == "Hand Control")
+            {
+                autopilot_brush.Color = Colors.Red;
+                Autopilot_button.Content = "Autopilot";
+            }
+            autopilot.Background = autopilot_brush;
+            //TO DO...
+            //If autopilot is ON disable hand control buttons
         }
 
         private void Info_Click(object sender, RoutedEventArgs e)
@@ -133,14 +156,14 @@ namespace Uvon_Desktop
                 signal[2] = "ON";
                 Enable.Content = "OFF";
                 motor_brush.Color = Colors.Green;
-                motor_drivers.Fill = motor_brush;
+                motor_drivers.Background = motor_brush;
             }
             else if (Enable.Content.ToString() == "OFF")
             {
                 signal[2] = "OFF";
                 Enable.Content = "ON";
                 motor_brush.Color = Colors.Red;
-                motor_drivers.Fill = motor_brush;
+                motor_drivers.Background = motor_brush;
             }
         }
 
@@ -201,7 +224,7 @@ namespace Uvon_Desktop
                 uv1.Content = "UV Level 1 Enable";
                 uv1_brush.Color = Colors.Red;
             }
-            uv_light_1.Fill = uv1_brush;
+            uv_light_1.Background = uv1_brush;
         }
 
         /// <summary>
@@ -234,7 +257,7 @@ namespace Uvon_Desktop
                 uv2.Content = "UV Level 2 Enable";
                 uv2_brush.Color = Colors.Red;
             }
-            uv_light_2.Fill = uv2_brush;
+            uv_light_2.Background = uv2_brush;
         }
 
         #endregion 
@@ -266,7 +289,7 @@ namespace Uvon_Desktop
                     client.Send(signal_bytes, signal_bytes.Length, ip);
                     Debug.WriteLine("Was sent: " + signal[0] + " " + signal[1] + " " + signal[2]);
 
-                    Thread.Sleep(100);
+                    Thread.Sleep(10);
                 }
             });
         }
@@ -286,21 +309,21 @@ namespace Uvon_Desktop
 
                     while (true)
                     {
-                        if (preview_token.IsCancellationRequested)
-                        {
-                            Debug.WriteLine("Preview is canceled");
-                            break;
-                        }
-
                         var bytes = client.Receive(ref ip);
-                        Debug.WriteLine("Image bytes are: " + bytes.Length);
                         var image = ByteToImage(bytes);
+
                         image.Freeze();
+
                         this.Dispatcher.BeginInvoke(new Action(() =>
                         {
                             imagesource.Source = image;
                         }));
 
+                        if (preview_token.IsCancellationRequested)
+                        {
+                            Debug.WriteLine("Preview is canceled");
+                            break;
+                        }
                     }
                     Thread.Sleep(900);
                     client.Client.Dispose();
@@ -310,7 +333,7 @@ namespace Uvon_Desktop
                 }
                 catch (Exception e)
                 {
-
+                    
                 }
             }, preview_token);
         }
@@ -333,6 +356,7 @@ namespace Uvon_Desktop
 
             return imgSrc;
         }
+
 
         /// <summary>
         /// Binding buttons to keyboard's keys
@@ -380,7 +404,9 @@ namespace Uvon_Desktop
                 preview_token_source.Cancel();
             }
 
-            infoPage.Close();
+            if(infoPage!=null)
+                infoPage.Close();
         }
+
     }
 }

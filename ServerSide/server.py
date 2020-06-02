@@ -57,7 +57,7 @@ def Get_Signal():
         if str(motor_signal) == close_motor_request or data == None:
             close_preview_request = True
             break
-        time.sleep(0.1)
+        time.sleep(0.01)
     if listening.is_alive() == False:
         listening = th.Thread(target=Listen)
         listening.start()
@@ -69,6 +69,8 @@ def Send_Image():
     global close_preview_request
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) 
     video_capturing = cv2.VideoCapture(0)
+    #video_capturing.set(cv2.CAP_PROP_FRAME_WIDTH, 461)
+    #video_capturing.set(cv2.CAP_PROP_FRAME_HEIGHT, 231)
 
     isread, img = video_capturing.read()
 
@@ -158,9 +160,9 @@ def Listen():
                 send_image = th.Thread(target=Send_Image)
                 send_image.start()
 
-            if enable_me.is_alive() == False:
-                enable_me = th.Thread(target=Enable)
-                enable_me.start()
+            #if enable_me.is_alive() == False:
+            #    enable_me = th.Thread(target=Enable)
+            #    enable_me.start()
 
             break
 
@@ -176,4 +178,4 @@ listening.start()
 
 while True:
     print("Motor signal is: " + motor_signal + "  UV signal is: " + uv_signal + " ON/OFF signal is: " + on_off_motors_signal)
-    time.sleep(1)
+    time.sleep(1.5)
