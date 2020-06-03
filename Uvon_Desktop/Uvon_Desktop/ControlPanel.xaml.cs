@@ -19,25 +19,24 @@ namespace Uvon_Desktop
     /// </summary>
     public partial class ControlPanel : Window
     {
-        private int image_port = 55556;
-        private int motor_port = 55555;
+        private int image_port = 55556;                             //The port to get image frames from server/robot
+        private int motor_port = 55555;                             //The port to send motor controlling signls to robot
 
-        private string[] signal = new string[3];     //first is motor, second is uv
-        bool noconnection;
+        private string[] signal = new string[4];                    //first is motor, second is uv
+        bool noconnection;                                          //Keeps the connection state of preview
+        bool disconneted;                                           //Keeps the connection state of motor control
 
-        UvonInfo infoPage;
+        UvonInfo infoPage;                                          //information page for users
 
-        CancellationTokenSource signal_token_source;
-        CancellationTokenSource preview_token_source;
-        CancellationTokenSource key_release_source;
+        CancellationTokenSource signal_token_source;                //To cancel controlling Task
+        CancellationTokenSource preview_token_source;               //To cancel preview Task
         CancellationToken signal_token;
         CancellationToken preview_token;
-        CancellationToken key_token;
 
-        private IPAddress robot_address;
-        private IPAddress my_address;
+        private IPAddress robot_address;                            //Ip address of robot/server
+        private IPAddress my_address;                               //Own ip address
 
-        SolidColorBrush motor_brush = new SolidColorBrush();
+        SolidColorBrush motor_brush = new SolidColorBrush();        //UI colors
         SolidColorBrush uv1_brush = new SolidColorBrush();
         SolidColorBrush uv2_brush = new SolidColorBrush();
         SolidColorBrush autopilot_brush = new SolidColorBrush();
@@ -49,18 +48,18 @@ namespace Uvon_Desktop
             signal[0] = "00";
             signal[1] = "00";
             signal[2] = "0";
+            signal[3] = "0";
 
             noconnection = false;
+            disconneted = false;
 
             this.robot_address = robot;
             this.my_address = my;
 
             signal_token_source = new CancellationTokenSource();
             preview_token_source = new CancellationTokenSource();
-            key_release_source = new CancellationTokenSource();
             signal_token = signal_token_source.Token;
             preview_token = preview_token_source.Token;
-            key_token = key_release_source.Token;
 
             SendSignal();
 
@@ -73,11 +72,12 @@ namespace Uvon_Desktop
 
             Task.Run(() =>
             {
-                Thread.Sleep(3000);
+                Thread.Sleep(1000);
                 this.Dispatcher.BeginInvoke(new Action(() =>
                 {
                     noconnection = imagesource.Source == null;
                 }));
+                Thread.Sleep(3000);
 
                 if (noconnection)
                 {
@@ -87,25 +87,9 @@ namespace Uvon_Desktop
                     }));
                 }
             });
-
-            var thread = new Thread(new ThreadStart(Release));
-            thread.SetApartmentState(ApartmentState.STA);
-            thread.Start();
         }
 
         #region Control Buttons
-
-        void Release()
-        {
-            while (!key_token.IsCancellationRequested)
-            {
-                if (Keyboard.IsKeyUp(Key.Up) && Keyboard.IsKeyUp(Key.Down) && Keyboard.IsKeyUp(Key.Left) && Keyboard.IsKeyUp(Key.Right))
-                {
-                    signal[0] = "0";
-                }
-            }
-            signal[0] = "34";
-        }
 
         private void Go_Click(object sender, RoutedEventArgs e)
         {        
@@ -126,7 +110,6 @@ namespace Uvon_Desktop
         {
             signal[0] = "4";
         }
-
 
         /// <summary>
         /// Sets robot to autopilot. 
@@ -174,14 +157,14 @@ namespace Uvon_Desktop
         {
             if (Enable.Content.ToString() == "ON")
             {
-                signal[2] = "ON";
+                signal[1] = "ON";
                 Enable.Content = "OFF";
                 motor_brush.Color = Colors.Green;
                 motor_drivers.Background = motor_brush;
             }
             else if (Enable.Content.ToString() == "OFF")
             {
-                signal[2] = "OFF";
+                signal[1] = "OFF";
                 Enable.Content = "ON";
                 motor_brush.Color = Colors.Red;
                 motor_drivers.Background = motor_brush;
@@ -193,15 +176,17 @@ namespace Uvon_Desktop
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void disconnect_Click(object sender, RoutedEventArgs e)
+        private void Disconnect_Click(object sender, RoutedEventArgs e)
         {
-            signal[1] = "00";
-            signal[2] = "OFF";
-
-            if (key_release_source != null)
+            signal[2] = "00";
+            signal[3] = "00";
+            if (signal[1] == "ON")
             {
-                key_release_source.Cancel();
+                signal[1] = "OFF";
             }
+            disconneted = true;
+            signal[0] = "34";
+
             Thread.Sleep(100);
             if (signal_token_source != null)
             {
@@ -211,9 +196,6 @@ namespace Uvon_Desktop
             {
                 preview_token_source.Cancel();
             }
-            
-            Thread.Sleep(100);
-            signal[0] = "34";
 
             MainWindow main = new MainWindow();
             main.Show();
@@ -226,7 +208,7 @@ namespace Uvon_Desktop
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void uv1_Click(object sender, RoutedEventArgs e)
+        private void Uv1_Click(object sender, RoutedEventArgs e)
         {
             if (uv1.Content.ToString() == "UV Level 1 Enable")
             {
@@ -235,19 +217,19 @@ namespace Uvon_Desktop
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
-                        signal[1] = "01";
+                        signal[2] = "01";
                         uv1.Content = "UV Level 1 Disable";
                         uv1_brush.Color = Colors.Green;
                         break;
                     case MessageBoxResult.No:
-                        signal[1] = "00";
+                        signal[2] = "00";
                         uv1_brush.Color = Colors.Red;
                         break;
                 }
             }
             else if (uv1.Content.ToString() == "UV Level 1 Disable")
             {
-                signal[1] = "00";
+                signal[2] = "00";
                 uv1.Content = "UV Level 1 Enable";
                 uv1_brush.Color = Colors.Red;
             }
@@ -259,7 +241,7 @@ namespace Uvon_Desktop
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void uv2_Click(object sender, RoutedEventArgs e)
+        private void Uv2_Click(object sender, RoutedEventArgs e)
         {
             if (uv2.Content.ToString() == "UV Level 2 Enable")
             {
@@ -268,19 +250,19 @@ namespace Uvon_Desktop
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
-                        //signal[1] = "01";
+                        signal[3] = "01";
                         uv2.Content = "UV Level 2 Disable";
                         uv2_brush.Color = Colors.Green;
                         break;
                     case MessageBoxResult.No:
-                        //signal[1] = "00";
+                        signal[3] = "00";
                         uv2_brush.Color = Colors.Red;
                         break;
                 }
             }
             else if (uv2.Content.ToString() == "UV Level 2 Disable")
             {
-                signal[1] = "00";
+                signal[3] = "00";
                 uv2.Content = "UV Level 2 Enable";
                 uv2_brush.Color = Colors.Red;
             }
@@ -301,7 +283,7 @@ namespace Uvon_Desktop
                 UdpClient client = new UdpClient(motor_port);
                 IPEndPoint ip = new IPEndPoint(robot_address, motor_port);
 
-                signal_bytes = Encoding.UTF8.GetBytes(signal[0] + "|" + signal[1] + "|" + signal[2]);
+                signal_bytes = Encoding.UTF8.GetBytes(signal[0] + "|" + signal[1] + "|" + signal[2] + "|" + signal[3]);
                 client.Send(signal_bytes, signal_bytes.Length, ip);
 
                 while (true)
@@ -312,9 +294,9 @@ namespace Uvon_Desktop
                         Debug.WriteLine("Connection signal is over");
                         return;
                     }
-                    signal_bytes = Encoding.UTF8.GetBytes(signal[0] + "|" + signal[1] + "|" + signal[2]);
+                    signal_bytes = Encoding.UTF8.GetBytes(signal[0] + "|" + signal[1] + "|" + signal[2] + "|" + signal[3]);
                     client.Send(signal_bytes, signal_bytes.Length, ip);
-                    Debug.WriteLine("Was sent: " + signal[0] + " " + signal[1] + " " + signal[2]);
+                    Debug.WriteLine("Was sent: " + signal[0] + " " + signal[1] + " " + signal[2] + " " + signal[3]);
 
                     Thread.Sleep(100);
                 }
@@ -412,9 +394,21 @@ namespace Uvon_Desktop
             }
         }
 
+        /// <summary>
+        /// When there is no key that is pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
-
+            if (disconneted)
+            {
+                signal[0] = "34";
+            }
+            else
+            {
+                signal[0] = "0";
+            }
         }
 
         /// <summary>
@@ -424,8 +418,13 @@ namespace Uvon_Desktop
         protected override void OnClosing(CancelEventArgs e)
         {
             signal[0] = "34";
-            signal[1] = "00";
 
+            if(signal[1] == "ON")
+            {
+                signal[1] = "OFF";
+            }
+            signal[2] = "00";
+            signal[3] = "00";
             Thread.Sleep(100);
             if (signal_token_source != null)
             {

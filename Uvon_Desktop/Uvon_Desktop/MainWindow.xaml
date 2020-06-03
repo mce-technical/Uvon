@@ -7,7 +7,9 @@
         mc:Ignorable="d"
         Title="UVON" Height="620" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <StackPanel Margin="10">
-        <TextBlock Name="warning_text" Padding="5" Margin="20" Height="89" TextWrapping="Wrap" Background="#FFFFEB3F" Foreground="Red" FontSize="15"/>
+        <Border Margin="20" Padding="10" CornerRadius="20" Background="#FFFFEB3F">
+            <TextBlock Name="warning_text" Height="89" TextWrapping="Wrap" Background="#FFFFEB3F" Foreground="Red" FontSize="15"/>
+        </Border>
         <TextBlock Name="instruction_text" Padding="5" Margin="20" Height="54" TextWrapping="Wrap" FontSize="15" Width="710"/>
         <TextBlock Text="Available devices for the first 15 ip addresses" Padding="5" Margin="20" FontSize="20"/>
         <ListBox Height="104" Margin="20" Padding="5" Name="available_devices"/>
@@ -24,10 +26,12 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Grid.Row="1" Content="Autoconnection" Height="50" Name="autoconnect" Width="200" Click="Autoconnect_Click" FontSize="20"/>
-            <Button Grid.Column="1" Grid.Row="1" Content="Scan WLAN" Height="50" Width="200" Name="scan" Click="Scan_Click" FontSize="20"/>
-            <Button Grid.Column="2" Grid.Row="1" Content="Connect" Height="50" Width="200" Name="connect" Click="Connect_Click" FontSize="20"/>
+            <Button Grid.Column="0" Grid.Row="1" Content="Autoconnection" Height="50" Name="autoconnect" Width="200" Click="Autoconnect_Click" FontSize="20" Background="#FFE2F0FD"/>
+            <Button Grid.Column="1" Grid.Row="1" Content="Scan WLAN" Height="50" Width="200" Name="scan" Click="Scan_Click" FontSize="20" Background="#FFE2F0FD"/>
+            <Button Grid.Column="2" Grid.Row="1" Content="Connect" Height="50" Width="200" Name="connect" Click="Connect_Click" FontSize="20" Background="#FFE2F0FD"/>
         </Grid>
         <ProgressBar Height="13" Width="680" Minimum="0" Maximum="100" Name="progress"/>
     </StackPanel>
 </Window>
+
+<!--Background="{DynamicResource {x:Static SystemColors.AppWorkspaceColor}}"-->
