@@ -41,6 +41,7 @@ namespace Uvon_Desktop
             if (Addresses.addresses.Count == 0)
             {
                 myping = new Ping();
+                Addresses.addresses.Add("192.168.11.118");
                 Addresses.addresses.Add("192.168.11.128");
                 Scanning(my_address.ToString(), myping, 15);        //Scans WLAN 
             }

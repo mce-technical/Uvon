@@ -29,8 +29,10 @@ namespace Uvon_Desktop
 
         CancellationTokenSource signal_token_source;
         CancellationTokenSource preview_token_source;
+        CancellationTokenSource key_release_source;
         CancellationToken signal_token;
         CancellationToken preview_token;
+        CancellationToken key_token;
 
         private IPAddress robot_address;
         private IPAddress my_address;
@@ -55,8 +57,10 @@ namespace Uvon_Desktop
 
             signal_token_source = new CancellationTokenSource();
             preview_token_source = new CancellationTokenSource();
+            key_release_source = new CancellationTokenSource();
             signal_token = signal_token_source.Token;
             preview_token = preview_token_source.Token;
+            key_token = key_release_source.Token;
 
             SendSignal();
 
@@ -69,12 +73,12 @@ namespace Uvon_Desktop
 
             Task.Run(() =>
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(3000);
                 this.Dispatcher.BeginInvoke(new Action(() =>
                 {
                     noconnection = imagesource.Source == null;
                 }));
-                Thread.Sleep(3000);
+
                 if (noconnection)
                 {
                     this.Dispatcher.BeginInvoke(new Action(() =>
@@ -83,29 +87,46 @@ namespace Uvon_Desktop
                     }));
                 }
             });
+
+            var thread = new Thread(new ThreadStart(Release));
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
         }
 
         #region Control Buttons
 
+        void Release()
+        {
+            while (!key_token.IsCancellationRequested)
+            {
+                if (Keyboard.IsKeyUp(Key.Up) && Keyboard.IsKeyUp(Key.Down) && Keyboard.IsKeyUp(Key.Left) && Keyboard.IsKeyUp(Key.Right))
+                {
+                    signal[0] = "0";
+                }
+            }
+            signal[0] = "34";
+        }
+
         private void Go_Click(object sender, RoutedEventArgs e)
-        {
-            signal[0] = "01";   //"0,100,0,100"
-        }
-
-        private void Right_Click(object sender, RoutedEventArgs e)
-        {
-            signal[0] = "04";
-        }
-
-        private void Left_Click(object sender, RoutedEventArgs e)
-        {
-            signal[0] = "03";
+        {        
+            signal[0] = "1";
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            signal[0] = "02";
+            signal[0] = "2";
         }
+
+        private void Left_Click(object sender, RoutedEventArgs e)
+        {
+            signal[0] = "3";
+        }
+
+        private void Right_Click(object sender, RoutedEventArgs e)
+        {
+            signal[0] = "4";
+        }
+
 
         /// <summary>
         /// Sets robot to autopilot. 
@@ -114,12 +135,12 @@ namespace Uvon_Desktop
         /// <param name="e"></param>
         private void Autopilot_button_Click(object sender, RoutedEventArgs e)
         {
-            if(Autopilot_button.Content.ToString() == "Autopilot")
+            if (Autopilot_button.Content.ToString() == "Autopilot")
             {
                 autopilot_brush.Color = Colors.Green;
                 Autopilot_button.Content = "Hand Control";
             }
-            else if(Autopilot_button.Content.ToString() == "Hand Control")
+            else if (Autopilot_button.Content.ToString() == "Hand Control")
             {
                 autopilot_brush.Color = Colors.Red;
                 Autopilot_button.Content = "Autopilot";
@@ -174,10 +195,13 @@ namespace Uvon_Desktop
         /// <param name="e"></param>
         private void disconnect_Click(object sender, RoutedEventArgs e)
         {
-            signal[0] = "34";
             signal[1] = "00";
             signal[2] = "OFF";
 
+            if (key_release_source != null)
+            {
+                key_release_source.Cancel();
+            }
             Thread.Sleep(100);
             if (signal_token_source != null)
             {
@@ -187,6 +211,9 @@ namespace Uvon_Desktop
             {
                 preview_token_source.Cancel();
             }
+            
+            Thread.Sleep(100);
+            signal[0] = "34";
 
             MainWindow main = new MainWindow();
             main.Show();
@@ -289,7 +316,7 @@ namespace Uvon_Desktop
                     client.Send(signal_bytes, signal_bytes.Length, ip);
                     Debug.WriteLine("Was sent: " + signal[0] + " " + signal[1] + " " + signal[2]);
 
-                    Thread.Sleep(10);
+                    Thread.Sleep(100);
                 }
             });
         }
@@ -333,7 +360,7 @@ namespace Uvon_Desktop
                 }
                 catch (Exception e)
                 {
-                    
+
                 }
             }, preview_token);
         }
@@ -385,6 +412,11 @@ namespace Uvon_Desktop
             }
         }
 
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+
+        }
+
         /// <summary>
         /// Closes all connection after clicking on close button
         /// </summary>
@@ -404,7 +436,7 @@ namespace Uvon_Desktop
                 preview_token_source.Cancel();
             }
 
-            if(infoPage!=null)
+            if (infoPage != null)
                 infoPage.Close();
         }
 

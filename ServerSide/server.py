@@ -28,9 +28,15 @@ close_preview_request = False               #   command to open or close camera 
 let_motor_control = False                   #   to know if we can send motor controlling signals to Arduino or not
 
 previous_state = ''                         #   keeps the previous signal from client
-turn_on = b'ON\n'                           #   signal, which value must be sent to Arduino to enable motors control
-turn_off = b'OFF\n'                         #   signal, which value must be sent to Arduino to disable motors control
+turn_on = b'1\n'                            #   signal, which value must be sent to Arduino to enable motors control
+turn_off = b'2\n'                           #   signal, which value must be sent to Arduino to disable motors control
 send_me = b'0'                              #   signal, which must be sent to Arduino (turn ON or turn OFF)
+
+forward = b'M1,15,1,15\n'                   #   to command motor drivers to move robot forward 
+backward = b'M0,15,0,15\n'                  #   to command motor drivers to move robot backward 
+left = b'M1,15,0,15\n'                      #   to command motor drivers to move robot left 
+right = b'M0,15,1,15\n'                     #   to command motor drivers to move robot right
+send_motor_signal = b'0'
 
 #ser = serial.Serial('/dev/ttyACM0')
 #ser.baudrate = 9600
@@ -57,7 +63,7 @@ def Get_Signal():
         if str(motor_signal) == close_motor_request or data == None:
             close_preview_request = True
             break
-        time.sleep(0.01)
+        #time.sleep(0.1)
     if listening.is_alive() == False:
         listening = th.Thread(target=Listen)
         listening.start()
@@ -78,7 +84,7 @@ def Send_Image():
     width = int(img.shape[1] * scale_percent / 100)
     height = int(img.shape[0] * scale_percent / 100)
     dim = (width, height)
-    encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
+    encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 50]
 
     resized = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
     retval, buffer = cv2.imencode('.jpg', resized, encode_param)
@@ -103,6 +109,7 @@ def Enable():
     global on_off_motors_signal
     #global ser
     global send_me
+    global send_motor_signal 
     while True:
         if on_off_motors_signal!= previous_state:
             if on_off_motors_signal == 'ON':
@@ -113,21 +120,21 @@ def Enable():
                 send_me = turn_off
                 let_motor_control = False
                 print('Send Me is: ' + str(send_me))
+            
             time.sleep(0.4)
             #ser.write(send_me)
             #print(ser.readline())
             previous_state = on_off_motors_signal
-
-
-"""To control motor drivers
-def Motor_Control():
-    global motor_signal
-    #global ser
-
-    while let_motor_control:
-        #ser.write(motor_signal.encode())
-        #print(ser.readline())
- """
+        
+        if motor_signal == "1":
+            send_motor_signal = forward
+        elif motor_signal == "2":
+            send_motor_signal = backward
+        elif motor_signal == "3":
+            send_motor_signal = left
+        elif motor_signal == "4":
+            send_motor_signal = right
+        #ser.write(send_motor_signal)
 
 
 enable_me = th.Thread(target=Enable)
@@ -160,9 +167,9 @@ def Listen():
                 send_image = th.Thread(target=Send_Image)
                 send_image.start()
 
-            #if enable_me.is_alive() == False:
-            #    enable_me = th.Thread(target=Enable)
-            #    enable_me.start()
+            if enable_me.is_alive() == False:
+                enable_me = th.Thread(target=Enable)
+                enable_me.start()
 
             break
 
