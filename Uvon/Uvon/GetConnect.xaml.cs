@@ -20,7 +20,9 @@ namespace Uvon
 
         private byte[] address_bytes = new byte[1024];
         private static string address = "192.168.1.1";
-        private int interval;
+        public static double interval;
+        public static double current_progress = 0;
+        public static double index = 0;
 
         public GetConnect()
         {
@@ -38,6 +40,8 @@ namespace Uvon
             instruction.Text = "Welcome to Uvon. If you want to connect your robot turn on it and enter the ip address to connect with him. If you want to do automatic ip addresses detecion please enter interval of search";
             address_bytes = Encoding.UTF8.GetBytes(Devices.GetLocalIPAddress());
             devs = new Devices();
+
+            
         }
 
         private void ChangedText(object sender, EventArgs e)
@@ -109,7 +113,7 @@ namespace Uvon
         {
             ActivityIndicator activityIndicator = new ActivityIndicator { IsRunning = true, IsVisible = true };
 
-            var good = int.TryParse(user_input.Text, out interval);
+            var good = double.TryParse(user_input.Text, out interval);
             if (!good || interval > 255)
             {
                 await DisplayAlert("Warning!", "Please, enter number in [0,255].", "OK");
@@ -118,8 +122,9 @@ namespace Uvon
             {
                 Ping myping = new Ping();
 
-                //var address = Devices.GetLocalIPAddress();
-                string address = "192.168.1.1";
+                var address = Devices.GetLocalIPAddress();
+                //var address = "192.168.1.6";
+
                 if (interval == 0)
                 {
                     interval = 255;
@@ -137,12 +142,12 @@ namespace Uvon
         /// <param name="address"></param>
         /// <param name="myping"></param>
         /// <param name="interval"></param>
-        private async void Scanning(string address, Ping myping, int interval)
+        private async void Scanning(string address, Ping myping, double interval)
         {
             await Task.Run(() =>
             {
                 string[] address_array = address.Split('.');
-
+                double min_growth = 1.0 / GetConnect.interval;
                 for (int i = 0; i <= interval; i++)
                 {
                     try
@@ -153,14 +158,14 @@ namespace Uvon
                         if (reply != null && reply.Status == IPStatus.Success)
                         {
                             Debug.WriteLine("Status :  " + reply.Status + ",  Time : " + reply.RoundtripTime.ToString() + ",  Address : " + reply.Address + "\n");
-                            //devs.Addresses.Add(reply.Address.ToString());
 
                             Addresses.addresses.Add(reply.Address.ToString());
                         }
                     }
                     finally
                     {
-
+                        current_progress += min_growth;
+                        index++;
                     }
                 }
 

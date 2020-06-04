@@ -5,23 +5,54 @@
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms">
 
     <StackLayout Orientation="Vertical" Padding="15" Spacing="10">
-        <StackLayout HorizontalOptions="CenterAndExpand" HeightRequest="300">
+        <Frame Padding="6" CornerRadius="15">
+            <StackLayout Orientation="Horizontal" HeightRequest="55" Spacing="10">
+                <StackLayout Orientation="Vertical" WidthRequest="55">
+                    <Label Text="Motor Drivers" FontSize="13" HorizontalOptions="Center"/>
+                    <BoxView x:Name="motors_box" CornerRadius="20" BackgroundColor="Red" HeightRequest="10" VerticalOptions="EndAndExpand"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical" WidthRequest="55">
+                    <Label Text="UV 1st" FontSize="13" HorizontalOptions="Center"/>
+                    <BoxView x:Name="uv_light1_box" CornerRadius="20" BackgroundColor="Red" HeightRequest="10" VerticalOptions="EndAndExpand"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical" WidthRequest="55">
+                    <Label Text="UV 2nd" FontSize="13" HorizontalOptions="Center"/>
+                    <BoxView x:Name="uv_light2_box" CornerRadius="20" BackgroundColor="Red" HeightRequest="10" VerticalOptions="EndAndExpand"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical" WidthRequest="55">
+                    <Label Text="Autopilot" FontSize="13" HorizontalOptions="Center"/>
+                    <BoxView x:Name="autopilot_box" CornerRadius="20" BackgroundColor="Red" HeightRequest="10" VerticalOptions="EndAndExpand"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical" WidthRequest="55">
+                    <Label Text="Emerg status" FontSize="13" HorizontalOptions="Center"/>
+                    <BoxView x:Name="emergency_status_box" CornerRadius="20" BackgroundColor="Red" HeightRequest="10" VerticalOptions="EndAndExpand"/>
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+        <StackLayout HorizontalOptions="CenterAndExpand" HeightRequest="280">
             <Frame Padding="0" HorizontalOptions="CenterAndExpand" CornerRadius="15">
                 <ffimageloading:CachedImage x:Name="preview"
                     CacheDuration= "1"
-                    WidthRequest="400" HeightRequest="300"
+                    WidthRequest="400" HeightRequest="280"
                     DownsampleToViewSize = "False"/>
             </Frame>
         </StackLayout>
 
         <Frame Padding="6" CornerRadius="15">
-            <StackLayout Orientation="Horizontal" HeightRequest="55">
-                <Button Text="Switch" WidthRequest="110" HeightRequest="70" x:Name="switch" Clicked="switch_Clicked" CornerRadius="15" TextColor="White" BackgroundColor="#409FE4"/>
-                <Switch x:Name="switch_uv" HorizontalOptions="CenterAndExpand" IsToggled="False" Toggled="switch_uv_Toggled"></Switch>
+            <StackLayout Orientation="Horizontal" HeightRequest="55" Spacing="10">
+                <Button Text="Turn On" WidthRequest="90" HeightRequest="70" x:Name="turn" Clicked="turn_Clicked" CornerRadius="15" TextColor="White" BackgroundColor="#409FE4"/>
+                <StackLayout Orientation="Vertical">
+                    <Label Text="UV 1" HorizontalOptions="Center" VerticalOptions="StartAndExpand"/>
+                    <Switch x:Name="switch_uv_1" ThumbColor="Violet" OnColor="#E44CE4" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" IsToggled="False" Toggled="switch_uv_1_Toggled"></Switch>
+                </StackLayout>
+                <StackLayout Orientation="Vertical">
+                    <Label Text="UV 2" HorizontalOptions="Center" VerticalOptions="StartAndExpand"/>
+                    <Switch x:Name="switch_uv_2" ThumbColor="Violet" OnColor="#E44CE4" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" IsToggled="False" Toggled="switch_uv_2_Toggled"></Switch>
+                </StackLayout>
                 <!--<StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand">
-                    <Label x:Name="port_view" HeightRequest="30" Text="" FontSize="Medium"></Label>
+                    <Label x:Name="info_view" HeightRequest="30" Text="" FontSize="Medium"></Label>
                 </StackLayout>-->
-                <Button Text="Disconnect" WidthRequest="110" HeightRequest="70" x:Name="disconnect" Clicked="disconnect_Clicked" CornerRadius="15" TextColor="Red" BackgroundColor="#409FE4" HorizontalOptions="EndAndExpand"/>
+                <Button Text="Disconnect" WidthRequest="90" HeightRequest="70" x:Name="disconnect" Clicked="disconnect_Clicked" CornerRadius="15" TextColor="Red" BackgroundColor="#409FE4" HorizontalOptions="EndAndExpand"/>
             </StackLayout>
         </Frame>
 
@@ -38,11 +69,12 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Button Text="Left" Grid.Column="0" Grid.Row="1" x:Name="Left" Clicked="Left_Clicked"/>
-                <Button Text="Go" Grid.Column="1" Grid.Row="0" x:Name="Go" Clicked="Go_Clicked"/>
-                <Button Text="Stop" Grid.Column="1" Grid.Row="1" x:Name="stop" Clicked="stop_Clicked"/>
-                <Button Text="Back" Grid.Column="1" Grid.Row="2" x:Name="back" Clicked="back_Clicked"/>
-                <Button Text="Right" Grid.Column="2" Grid.Row="1"  x:Name="Right" Clicked="Right_Clicked"/>
+                <Button Text="Left" Grid.Column="0" Grid.Row="1" x:Name="Left" Pressed="Left_Pressed" Released="Left_Released" CornerRadius="15"/>
+                <Button Text="Forward" Grid.Column="1" Grid.Row="0" x:Name="Go" Pressed="Go_Pressed" Released="Go_Released" CornerRadius="15"/>
+                <!--<Button Text="Stop" Grid.Column="1" Grid.Row="1" x:Name="stop" Clicked="stop_Clicked"/>-->
+                <BoxView BackgroundColor="#C8C8C8" Grid.Column="1" Grid.Row="1" CornerRadius="15"/>
+                <Button Text="Backward" Grid.Column="1" Grid.Row="2" x:Name="Back" Pressed="Back_Pressed" Released="Back_Released" CornerRadius="15"/>
+                <Button Text="Right" Grid.Column="2" Grid.Row="1"  x:Name="Right" Pressed="Right_Pressed" Released="Right_Released" CornerRadius="15"/>
             </Grid>
         </Frame>
     </StackLayout>

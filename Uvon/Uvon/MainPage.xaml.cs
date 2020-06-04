@@ -16,7 +16,7 @@ namespace Uvon
     {
         private int signal_port = 55555;
         private byte[] address_bytes;
-        private string[] signal = new string[2];     //first is motor, second is uv
+        private string[] signal = new string[4];     //first is motor, second is uv
 
         IPAddress address;
         CancellationTokenSource cancelMotorPreview;
@@ -26,6 +26,11 @@ namespace Uvon
         {
             InitializeComponent();
 
+            if (DesignMode.IsDesignModeEnabled)
+            {
+                return;
+            }
+
             cancelMotorPreview = new CancellationTokenSource();        
             token = cancelMotorPreview.Token;
 
@@ -33,11 +38,14 @@ namespace Uvon
 
             address = ip;
             var im = ImageSource.FromFile("drawable/welcome.png");
-            signal[0] = "00";
-            signal[1] = "00";
-           
+
+            signal[0] = "00";                                               //Motor's signal
+            signal[1] = "00";                                               //ON/OFF signal
+            signal[2] = "0";                                                //UV 1
+            signal[3] = "0";                                                //UV 2
+            
             preview.Source = im;
-            //port_view.Text = Devices.GetLocalIPAddress();  //uncomment after text Label is uncommented in mainpage.xaml
+            //info_view.Text = Devices.GetLocalIPAddress();  //uncomment after text Label is uncommented in mainpage.xaml
 
             Get_image();    //Starting new task to get preview from server/robot
 
@@ -64,7 +72,12 @@ namespace Uvon
             base.OnDisappearing();
 
             signal[0] = "34";
-            signal[1] = "00";
+            if(signal[1] == "ON")
+            {
+                signal[1] = "OFF";
+            }
+            signal[2] = "0";
+            signal[3] = "0";
 
             Thread.Sleep(100);
 
@@ -81,66 +94,115 @@ namespace Uvon
             return true;
         }
 
+
+        #region Buttons pressed events handlers
+
         /// <summary>
-        /// Works when user clicks on Left button
+        /// Left pressed event
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Left_Clicked(object sender, EventArgs e)
+        private void Left_Pressed(object sender, EventArgs e)
         {
-            signal[0] = "03";
+            signal[0] = "3";
         }
 
         /// <summary>
-        ///  Works when user clicks on Go button
+        /// Go pressed event
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Go_Clicked(object sender, EventArgs e)
+        private void Go_Pressed(object sender, EventArgs e)
         {
-            signal[0] = "01";
+            signal[0] = "1";
         }
 
         /// <summary>
-        ///  Works when user clicks on Stop button
+        /// Back pressed event
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void stop_Clicked(object sender, EventArgs e)
+        private void Back_Pressed(object sender, EventArgs e)
         {
-            signal[0] = "00";
+            signal[0] = "2";
+        }
+
+          
+        /// <summary>
+        /// Right pressed event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Right_Pressed(object sender, EventArgs e)
+        {
+            signal[0] = "4";
+        }
+
+        #endregion
+
+        #region Buttons Released event handlers
+
+        /// <summary>
+        /// Left released event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Left_Released(object sender, EventArgs e)
+        {
+            signal[0] = "0";
         }
 
         /// <summary>
-        ///  Works when user clicks on Back button
+        /// Go released event
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void back_Clicked(object sender, EventArgs e)
+        private void Go_Released(object sender, EventArgs e)
         {
-            signal[0] = "02";
+            signal[0] = "0";
         }
 
         /// <summary>
-        ///  Works when user clicks on Right button
+        /// Back released event
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Right_Clicked(object sender, EventArgs e)
+        private void Back_Released(object sender, EventArgs e)
         {
-            signal[0] = "04";
+            signal[0] = "0";
         }
+
+        /// <summary>
+        /// Right released event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Right_Released(object sender, EventArgs e)
+        {
+            signal[0] = "0";
+        }
+
+        #endregion
 
         /// <summary>
         ///  Works when user clicks on Switch button
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void switch_Clicked(object sender, EventArgs e)
+        private void turn_Clicked(object sender, EventArgs e)
         {
-            Debug.WriteLine("Switch");
-
-            //TO Do...
+            if(turn.Text == "Turn On")
+            {
+                signal[1] = "ON";
+                turn.Text = "Turn Off";
+                motors_box.BackgroundColor = Color.Green;
+            }
+            else if(turn.Text == "Turn Off")
+            {
+                signal[1] = "OFF";
+                turn.Text = "Turn On";
+                motors_box.BackgroundColor = Color.Red;
+            }
         }
 
         /// <summary>
@@ -151,7 +213,13 @@ namespace Uvon
         private async void disconnect_Clicked(object sender, EventArgs e)
         {
             signal[0] = "34";
-            signal[1] = "00";
+            signal[2] = "0";
+            signal[3] = "0";
+
+            if(signal[1] == "ON")
+            {
+                signal[1] = "OFF";
+            }
 
             Thread.Sleep(100);
 
@@ -167,27 +235,64 @@ namespace Uvon
         #endregion
 
         /// <summary>
-        /// UV light turn on/off event
+        /// UV light 1st level turn on/off event
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void switch_uv_Toggled(object sender, ToggledEventArgs e)
+        private async void switch_uv_1_Toggled(object sender, ToggledEventArgs e)
         {
-            if (switch_uv.IsToggled)
+            if (switch_uv_1.IsToggled)
             {
-                var accept = await DisplayAlert("Warning!", "You are going to enable UV light..", "Enable" ,"Discard");
+                var accept = await DisplayAlert("Warning!", "You are going to enable UV light's 1st level..", "Enable", "Discard");
                 if (accept)
                 {
-                    signal[1] = "01";
+                    signal[2] = "1";
+                    uv_light1_box.BackgroundColor = Color.Green;
                 }
                 else
                 {
-                    switch_uv.IsToggled = false;
+                    switch_uv_1.IsToggled = false;
                 }
             }
             else
             {
-                signal[1] = "00";
+                signal[2] = "0";
+                switch_uv_2.IsToggled = false;
+                uv_light1_box.BackgroundColor = Color.Red;
+            }
+        }
+
+        /// <summary>
+        /// UV light 2nd level turn on/off event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void switch_uv_2_Toggled(object sender, ToggledEventArgs e)
+        {
+            if (switch_uv_2.IsToggled)
+            {
+                if (!switch_uv_1.IsToggled)
+                {
+                    await DisplayAlert("Warning!", "Please, enable UV level 1 at first...", "OK");
+                    switch_uv_2.IsToggled = false;
+                    return;
+                }
+
+                var accept = await DisplayAlert("Warning!", "You are going to enable UV light's 2nd level..", "Enable", "Discard");
+                if (accept)
+                {
+                    signal[3] = "1";
+                    uv_light2_box.BackgroundColor = Color.Green;
+                }
+                else
+                {
+                    switch_uv_2.IsToggled = false;
+                }
+            }
+            else
+            {
+                uv_light2_box.BackgroundColor = Color.Red;
+                signal[3] = "0";
             }
         }
 
@@ -201,7 +306,7 @@ namespace Uvon
             {
                 UdpClient client = new UdpClient(signal_port);
                 IPEndPoint ip = new IPEndPoint(address, signal_port);
-                signal_data = Encoding.UTF8.GetBytes(signal[0] + "|" + signal[1]);
+                signal_data = Encoding.UTF8.GetBytes(signal[0] + "|" + signal[1] + "|" + signal[2] + "|" + signal[3]);
                 client.Send(signal_data, signal_data.Length, ip);
 
                 while (true)
@@ -211,10 +316,10 @@ namespace Uvon
                         client.Close();
                         return;
                     }
-                    signal_data = Encoding.UTF8.GetBytes(signal[0] + "|" + signal[1]);
+                    signal_data = Encoding.UTF8.GetBytes(signal[0] + "|" + signal[1] + "|" + signal[2] + "|" + signal[3]);
                     client.Send(signal_data, signal_data.Length, ip);
-                    Debug.WriteLine("Was sent: " + signal[0] + " " + signal[1]);
-                    Thread.Sleep(100);
+                    Debug.WriteLine("Was sent: " + signal[0] + " " + signal[1] + " " + signal[2] + " " + signal[3]);
+                    Thread.Sleep(10);
                 }
             });
         }
@@ -258,6 +363,6 @@ namespace Uvon
         private static ImageSource ConvertToImage(byte[] array)
         {
             return ImageSource.FromStream(() => new MemoryStream(array));
-        }
+        } 
     }
 }

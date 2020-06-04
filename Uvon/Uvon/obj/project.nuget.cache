@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ndG6bgpKUVV+A4A/C5sImKJbUbc/oiRVb9u2rMLCFtr88pFF/T1ocjll3y7+fAO+Ts5MRNoqItHwNg5QMCyuCg==",
+  "dgSpecHash": "gQAQvMwPGUw3CAaOwcGQjC5AbLbkmKNKunaEnLVBXYoxPpjRNlQZitk3ktRVn87QgZFoLU7+2QVKxV/kqhSCtA==",
   "success": true,
   "projectFilePath": "D:\\Serob\\UVON\\Uvon_Android\\Uvon\\Uvon\\Uvon.csproj",
   "expectedPackageFiles": [
@@ -13,7 +13,7 @@
     "D:\\Microsoft\\Xamarin\\NuGet\\xamarin.essentials\\1.3.1\\xamarin.essentials.1.3.1.nupkg.sha512",
     "C:\\Users\\serob\\.nuget\\packages\\xamarin.ffimageloading\\2.4.11.982\\xamarin.ffimageloading.2.4.11.982.nupkg.sha512",
     "C:\\Users\\serob\\.nuget\\packages\\xamarin.ffimageloading.forms\\2.4.11.982\\xamarin.ffimageloading.forms.2.4.11.982.nupkg.sha512",
-    "D:\\Microsoft\\Xamarin\\NuGet\\xamarin.forms\\4.4.0.991265\\xamarin.forms.4.4.0.991265.nupkg.sha512"
+    "C:\\Users\\serob\\.nuget\\packages\\xamarin.forms\\4.4.0.991265\\xamarin.forms.4.4.0.991265.nupkg.sha512"
   ],
   "logs": []
 }

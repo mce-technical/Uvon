@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -25,6 +27,22 @@ namespace Uvon
             var devices_list = Addresses.addresses;
 
             Devices_list.ItemsSource = devices_list;
+            Task.Run(() =>
+            {
+                double i = 0;
+                scan_progress.Progress = 0;
+
+                while (GetConnect.index <= GetConnect.interval) 
+                {
+                    if (GetConnect.current_progress != i)
+                    {
+                        scan_progress.Progress = GetConnect.current_progress;
+                        Debug.WriteLine(GetConnect.current_progress);
+                        i = GetConnect.current_progress;
+                    }
+                }
+                scan_progress.Progress = 0;
+            });
         }
 
 

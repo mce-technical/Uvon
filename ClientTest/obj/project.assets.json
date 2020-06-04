@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Serob\\Uvon\\Uvon_Android\\ClientTest\\ClientTest.csproj",
+      "projectUniqueName": "D:\\Serob\\UVON\\Uvon_Android\\ClientTest\\ClientTest.csproj",
       "projectName": "ClientTest",
-      "projectPath": "D:\\Serob\\Uvon\\Uvon_Android\\ClientTest\\ClientTest.csproj",
+      "projectPath": "D:\\Serob\\UVON\\Uvon_Android\\ClientTest\\ClientTest.csproj",
       "packagesPath": "C:\\Users\\serob\\.nuget\\packages\\",
-      "outputPath": "D:\\Serob\\Uvon\\Uvon_Android\\ClientTest\\obj\\",
+      "outputPath": "D:\\Serob\\UVON\\Uvon_Android\\ClientTest\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "D:\\Microsoft\\Xamarin\\NuGet\\"
@@ -63,7 +63,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
       }
     }
   }
