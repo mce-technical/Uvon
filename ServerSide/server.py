@@ -22,10 +22,10 @@ port_listen = 55554                             # 55554 - to listen incoming con
 
 on_off_motors_signal = '0'
 motor_signal = ""                           #   any motor controlling command has its specific bytes command (incoming type: byte[], used type: string)
-uv_signal = ""                              #   UV light must be turned ON or OFF, (incoming type: byte[], used type: boolean)
+uv_signal = ""                              #   UV light must be turned ON or OFF, (incoming type: byte[], used type: string)
 uv_signal_2 = ""
 close_motor_request = "34"                  #   command which demands to close motor control and preview from here(robot side), (incoming type: byte[], used type: string )
-close_preview_request = False               #   command to open or close camera preview (incoming type: _, used type: boolean)
+close_preview_request = False               #   command to open or close camera preview (incoming type: byte[], used type: boolean)
 let_motor_control = False
 
 previous_state = '0'                        #   keeps the previous signal from client
@@ -38,9 +38,18 @@ forward = b'M1,20,1,20\n'                   #   to command motor drivers to move
 backward = b'M0,15,0,15\n'                  #   to command motor drivers to move robot backward 
 left = b'M1,15,0,15\n'                      #   to command motor drivers to move robot left 
 right = b'M0,15,1,15\n'                     #   to command motor drivers to move robot right
-stop = b'M0,1,0,1\n'
-send_motor_signal = b''
-previous_motor_state = '00'
+stop = b'M0,1,0,1\n'                        #   to command motor drivers to stop wheels
+send_motor_signal = b''                     #   signal, which must be sent to Arduino
+previous_motor_state = '00'                 #   keeps the previous signal from client
+
+uv1_on = b'S1\n'                            #   to enable UV 1
+uv1_off = b'S0\n'                           #   to disable UV 1
+uv2_on = b'S1\n'                            #   to enable UV 2
+uv2_off = b'S0\n'                           #   to disable UV 2
+send_uv1 = b''                              #   signal, which must be sent to Arduino
+send_uv2 = b''                              #   signal, which must be sent to Arduino
+previous_uv1_state = '00'                   #   keeps the previous signal for UV 1 from client
+previous_uv2_state = '00'                   #   keeps the previous signal for UV 2 from client
 
 #ser = serial.Serial('/dev/ttyACM0')
 #ser.baudrate = 9600
@@ -106,13 +115,15 @@ def Send_Image():
     sock.close()
 
 """To enable or disable motors control"""
-def Enable():
+def Send_Arduino():
     global previous_state
     global previous_motor_state
+    global previous_uv1_state, previous_uv2_state
     global on_off_motors_signal
     #global ser
     global send_me
     global send_motor_signal
+    global send_uv1, send_uv2
     while True:
         if on_off_motors_signal!= previous_state:
             if on_off_motors_signal == 'ON':
@@ -138,9 +149,25 @@ def Enable():
             time.sleep(0.4)
             previous_motor_state = motor_signal
             #ser.write(send_motor_signal)
+        if uv_signal != previous_uv1_state:
+            if uv_signal == "1":
+                send_uv1 = uv1_on
+            elif uv_signal == "0":
+                send_uv1 = uv1_off
+            time.sleep(0.4)
+            #ser.write(send_uv1)
+            previous_uv1_state = uv_signal
+        if uv_signal_2 != previous_uv2_state:
+            if uv_signal_2 == "1":
+                send_uv2 = uv2_on
+            elif uv_signal_2 == "0":
+                send_uv2 = uv2_off
+            time.sleep(0.4)
+            #ser.write(send_uv2)
+            previous_uv2_state = uv_signal_2
 
 
-enable_me = th.Thread(target=Enable)
+send_me_arduino = th.Thread(target=Send_Arduino)
 send_image = th.Thread(target=Send_Image)
 get_signal = th.Thread(target=Get_Signal)
 
@@ -149,7 +176,7 @@ def Listen():
     global phone_ip
     global send_image
     global get_signal
-    global enable_me
+    global send_me_arduino
     global on_off_signal
     on_off_signal = '0' 
     sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
@@ -172,9 +199,9 @@ def Listen():
                 send_image = th.Thread(target=Send_Image)
                 send_image.start()
             
-            if enable_me.is_alive() == False:
-                enable_me = th.Thread(target=Enable)
-                enable_me.start()
+            if send_me_arduino.is_alive() == False:
+                send_me_arduino = th.Thread(target=Send_Arduino)
+                send_me_arduino.start()
             break
 
         if get_signal.is_alive() == False and send_image.is_alive() == False:
@@ -187,5 +214,5 @@ listening.start()
 
 
 while True:
-    print("Motor signal is: " + motor_signal + "  UV signal is: " + uv_signal + " ON/OFF signal is: " + on_off_motors_signal + " Motor signal is: " + str(send_motor_signal))
+    print("UV signal is: " + uv_signal + " , " + uv_signal_2 + " ON/OFF signal is: " + on_off_motors_signal + " Motor signal is: " + str(send_motor_signal))
     time.sleep(2)

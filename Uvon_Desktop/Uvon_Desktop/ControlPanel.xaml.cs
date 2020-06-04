@@ -129,6 +129,7 @@ namespace Uvon_Desktop
                 Autopilot_button.Content = "Autopilot";
             }
             autopilot.Background = autopilot_brush;
+
             //TO DO...
             //If autopilot is ON disable hand control buttons
         }
@@ -178,8 +179,8 @@ namespace Uvon_Desktop
         /// <param name="e"></param>
         private void Disconnect_Click(object sender, RoutedEventArgs e)
         {
-            signal[2] = "00";
-            signal[3] = "00";
+            signal[2] = "0";
+            signal[3] = "0";
             if (signal[1] == "ON")
             {
                 signal[1] = "OFF";
@@ -217,19 +218,19 @@ namespace Uvon_Desktop
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
-                        signal[2] = "01";
+                        signal[2] = "1";
                         uv1.Content = "UV Level 1 Disable";
                         uv1_brush.Color = Colors.Green;
                         break;
                     case MessageBoxResult.No:
-                        signal[2] = "00";
+                        signal[2] = "0";
                         uv1_brush.Color = Colors.Red;
                         break;
                 }
             }
             else if (uv1.Content.ToString() == "UV Level 1 Disable")
             {
-                signal[2] = "00";
+                signal[2] = "0";
                 uv1.Content = "UV Level 1 Enable";
                 uv1_brush.Color = Colors.Red;
             }
@@ -250,19 +251,19 @@ namespace Uvon_Desktop
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
-                        signal[3] = "01";
+                        signal[3] = "1";
                         uv2.Content = "UV Level 2 Disable";
                         uv2_brush.Color = Colors.Green;
                         break;
                     case MessageBoxResult.No:
-                        signal[3] = "00";
+                        signal[3] = "0";
                         uv2_brush.Color = Colors.Red;
                         break;
                 }
             }
             else if (uv2.Content.ToString() == "UV Level 2 Disable")
             {
-                signal[3] = "00";
+                signal[3] = "0";
                 uv2.Content = "UV Level 2 Enable";
                 uv2_brush.Color = Colors.Red;
             }
@@ -423,8 +424,8 @@ namespace Uvon_Desktop
             {
                 signal[1] = "OFF";
             }
-            signal[2] = "00";
-            signal[3] = "00";
+            signal[2] = "0";
+            signal[3] = "0";
             Thread.Sleep(100);
             if (signal_token_source != null)
             {
