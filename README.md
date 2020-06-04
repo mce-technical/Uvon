@@ -38,8 +38,9 @@ The application will begin to check ip addresses in sequence started by the firs
 
 ![](https://github.com/mce-technical/Uvon/blob/master/Screenshots/control1.png).
 
-### Side bar
-1. The first element in side bar is the connection page which is opened when application starts.
+## Side bar
+
+1. The first element in side bar is the **_Connect_** page which is opened when application starts.
 2. The second is **_My List_** page, where you can add ip addresses (servers/robots) and connect them.
 ![](https://github.com/mce-technical/Uvon/blob/master/Screenshots/mylist.png)
 
