@@ -21,8 +21,10 @@ namespace Uvon_Desktop
     {
         private int image_port = 55556;                             //The port to get image frames from server/robot
         private int motor_port = 55555;                             //The port to send motor controlling signls to robot
+        private int get_status_port = 53784;
 
-        private string[] signal = new string[4];                    //first is motor, second is uv
+        private string line_track_status = "0", battery_1_status = "0", battery_2_status = "0";
+        private string[] signal = new string[5];                    //first is motor, second is uv
         bool noconnection;                                          //Keeps the connection state of preview
         bool disconneted;                                           //Keeps the connection state of motor control
 
@@ -34,12 +36,12 @@ namespace Uvon_Desktop
         CancellationToken preview_token;
 
         private IPAddress robot_address;                            //Ip address of robot/server
-        private IPAddress my_address;                               //Own ip address
 
         SolidColorBrush motor_brush = new SolidColorBrush();        //UI colors
         SolidColorBrush uv1_brush = new SolidColorBrush();
         SolidColorBrush uv2_brush = new SolidColorBrush();
         SolidColorBrush autopilot_brush = new SolidColorBrush();
+        SolidColorBrush line_status_brush = new SolidColorBrush();
 
         public ControlPanel(IPAddress my, IPAddress robot)
         {
@@ -49,12 +51,12 @@ namespace Uvon_Desktop
             signal[1] = "00";
             signal[2] = "0";
             signal[3] = "0";
+            signal[4] = "0";
 
             noconnection = false;
             disconneted = false;
 
             this.robot_address = robot;
-            this.my_address = my;
 
             signal_token_source = new CancellationTokenSource();
             preview_token_source = new CancellationTokenSource();
@@ -118,15 +120,17 @@ namespace Uvon_Desktop
         /// <param name="e"></param>
         private void Autopilot_button_Click(object sender, RoutedEventArgs e)
         {
-            if (Autopilot_button.Content.ToString() == "Autopilot")
+            if (Autopilot_button.Content.ToString() == "Line tracking")
             {
+                signal[4] = "1";
                 autopilot_brush.Color = Colors.Green;
                 Autopilot_button.Content = "Hand Control";
             }
             else if (Autopilot_button.Content.ToString() == "Hand Control")
             {
+                signal[4] = "0";
                 autopilot_brush.Color = Colors.Red;
-                Autopilot_button.Content = "Autopilot";
+                Autopilot_button.Content = "Line tracking";
             }
             autopilot.Background = autopilot_brush;
 
@@ -284,9 +288,6 @@ namespace Uvon_Desktop
                 UdpClient client = new UdpClient(motor_port);
                 IPEndPoint ip = new IPEndPoint(robot_address, motor_port);
 
-                signal_bytes = Encoding.UTF8.GetBytes(signal[0] + "|" + signal[1] + "|" + signal[2] + "|" + signal[3]);
-                client.Send(signal_bytes, signal_bytes.Length, ip);
-
                 while (true)
                 {
                     if (signal_token.IsCancellationRequested)
@@ -295,9 +296,9 @@ namespace Uvon_Desktop
                         Debug.WriteLine("Connection signal is over");
                         return;
                     }
-                    signal_bytes = Encoding.UTF8.GetBytes(signal[0] + "|" + signal[1] + "|" + signal[2] + "|" + signal[3]);
+                    signal_bytes = Encoding.UTF8.GetBytes(signal[0] + "|" + signal[1] + "|" + signal[2] + "|" + signal[3] + "|" + signal[4]);
                     client.Send(signal_bytes, signal_bytes.Length, ip);
-                    Debug.WriteLine("Was sent: " + signal[0] + " " + signal[1] + " " + signal[2] + " " + signal[3]);
+                    Debug.WriteLine("Was sent: " + signal[0] + " " + signal[1] + " " + signal[2] + " " + signal[3] + " " + signal[4]);
 
                     Thread.Sleep(100);
                 }
@@ -348,6 +349,44 @@ namespace Uvon_Desktop
             }, preview_token);
         }
 
+        private async void GetStatusInfo()
+        {
+            byte[] bytes = new byte[64];
+            await Task.Run(() =>
+            {
+                UdpClient client = new UdpClient(get_status_port);
+                IPEndPoint ip = null;
+
+                while (true)
+                {
+                    if (signal_token.IsCancellationRequested)
+                    {
+                        client.Close();
+                        return;
+                    }
+
+                    bytes = client.Receive(ref ip);
+                    var status_message = Encoding.UTF8.GetString(bytes).Split('|');
+                    //line_track_status = status_message[0];
+                    //TO DO...-----------------------try.. catch----------------------------------------------------------------------------------------
+                    if (line_track_status == "1")
+                    {
+                        this.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            line_status_brush.Color = Colors.Black;
+                        }));
+                    }
+                    else if (line_track_status == "0")
+                    {
+                        this.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            line_status_brush.Color = Colors.Wheat;
+                        }));
+                    }
+                    online_status.Background = line_status_brush;
+                }
+            });
+        }
 
         /// <summary>
         /// This method reads image from byte's array
