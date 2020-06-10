@@ -15,6 +15,7 @@
                                 <ViewCell>
                                     <ViewCell.ContextActions>
                                         <MenuItem Clicked="OnDelete" CommandParameter="{Binding .}" Text="Delete " />
+                                        <MenuItem Clicked="OnEdit"  CommandParameter="{Binding .}" Text="Edit Name " />
                                     </ViewCell.ContextActions>
                                     <Label Text="{Binding .}" />
                                 </ViewCell>
@@ -23,6 +24,7 @@
                     </ListView>
                 </ScrollView>
             </Frame>
+            <ActivityIndicator VerticalOptions="CenterAndExpand" x:Name="loading" Color="#409FE4"/>
             <StackLayout Orientation="Horizontal">
                 <Button x:Name="clear" Text="Clear All" HorizontalOptions="CenterAndExpand" WidthRequest="250" CornerRadius="20" Clicked="clear_Clicked"/>
             </StackLayout>

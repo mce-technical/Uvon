@@ -13,6 +13,8 @@ public class MonoPackageManager_Resources {
 		"MonkeyCache.dll",
 		"MonkeyCache.FileStore.dll",
 		"Newtonsoft.Json.dll",
+		"Plugin.BLE.Abstractions.dll",
+		"Plugin.BLE.dll",
 		"Uvon.dll",
 		"Xamarin.Android.Arch.Core.Common.dll",
 		"Xamarin.Android.Arch.Core.Runtime.dll",

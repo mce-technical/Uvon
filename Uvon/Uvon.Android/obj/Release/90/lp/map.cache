@@ -5,6 +5,7 @@ HockeySDK.AndroidBindings
 HockeySDK
 MonkeyCache
 MonkeyCache.FileStore
+Plugin.BLE
 Xamarin.Android.Arch.Core.Common
 Xamarin.Android.Arch.Core.Runtime
 Xamarin.Android.Arch.Lifecycle.Common

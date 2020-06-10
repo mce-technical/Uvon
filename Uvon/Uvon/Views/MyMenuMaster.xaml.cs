@@ -33,9 +33,10 @@ namespace Uvon.Views
             {
                 MenuItems = new ObservableCollection<MyMenuMasterMenuItem>(new[]
                 {
-                    new MyMenuMasterMenuItem { Id = 0, Title = "Connect", TargetType = typeof(GetConnect) },
-                    new MyMenuMasterMenuItem { Id = 1, Title = "My List", TargetType = typeof(MyList) },
-                    new MyMenuMasterMenuItem { Id = 2, Title = "About", TargetType = typeof(About) },
+                    new MyMenuMasterMenuItem { Id = 0, Title="Bluetooth", TargetType = typeof(BluetoothConnection) },
+                    new MyMenuMasterMenuItem { Id = 1, Title = "Connect", TargetType = typeof(GetConnect) },
+                    new MyMenuMasterMenuItem { Id = 2, Title = "My List", TargetType = typeof(MyList) },
+                    new MyMenuMasterMenuItem { Id = 3, Title = "About", TargetType = typeof(About) },
                 });
             }
 

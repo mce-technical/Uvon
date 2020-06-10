@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "RWR7sSrc1ir+y1O8tFuAXmehqKu2idMUmRMXB5BimwqvD4+ONtpk22SilIdMzfw5KAExTjxbcq589NWr/S6D2w==",
+  "dgSpecHash": "bScRqW+dImxTVzMPymidN4F2djep4qkxrx2b/gmsD3CYO8bIdWDmAurnbSaE1XGgHvR4VtxjByXKw8frT3N+mQ==",
   "success": true,
   "projectFilePath": "D:\\Serob\\UVON\\Uvon_Android\\Uvon\\Uvon.Android\\Uvon.Android.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\serob\\.nuget\\packages\\monkeycache\\1.3.0\\monkeycache.1.3.0.nupkg.sha512",
     "C:\\Users\\serob\\.nuget\\packages\\monkeycache.filestore\\1.3.0\\monkeycache.filestore.1.3.0.nupkg.sha512",
     "C:\\Users\\serob\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
+    "C:\\Users\\serob\\.nuget\\packages\\plugin.ble\\2.1.1\\plugin.ble.2.1.1.nupkg.sha512",
     "C:\\Users\\serob\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
     "C:\\Users\\serob\\.nuget\\packages\\xamarin.android.arch.core.common\\1.1.1.3\\xamarin.android.arch.core.common.1.1.1.3.nupkg.sha512",
     "C:\\Users\\serob\\.nuget\\packages\\xamarin.android.arch.core.runtime\\1.1.1.3\\xamarin.android.arch.core.runtime.1.1.1.3.nupkg.sha512",

@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uvon.Android", "Uvon\Uvon.A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Uvon", "Uvon\Uvon\Uvon.csproj", "{B923DC16-BDD9-46E6-8085-84948931EF19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientTest", "ClientTest\ClientTest.csproj", "{399F1E2D-A0D5-447F-A6B8-2BB0681DC9B9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,10 +25,6 @@ Global
 		{B923DC16-BDD9-46E6-8085-84948931EF19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B923DC16-BDD9-46E6-8085-84948931EF19}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B923DC16-BDD9-46E6-8085-84948931EF19}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{399F1E2D-A0D5-447F-A6B8-2BB0681DC9B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{399F1E2D-A0D5-447F-A6B8-2BB0681DC9B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{399F1E2D-A0D5-447F-A6B8-2BB0681DC9B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{399F1E2D-A0D5-447F-A6B8-2BB0681DC9B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,61 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Uvon
 {
+    /// <summary>
+    /// Has a few static members to work with DNS and Ip Addresses.
+    /// </summary>
     class Devices
     {
-        private List<string> addresses;
-        private List<string> hostnames;
-        private List<string> macaddresses;
-
-        public List<string> Addresses
-        {
-            get
-            {
-                return addresses;
-            }
-            set
-            {
-                addresses.Add(value[0]);
-            }
-        }
-
-        public List<string> Hostnames
-        {
-            get
-            {
-                return hostnames;
-            }
-            set
-            {
-                hostnames.Add(value[0]);
-            }
-        }
-
-        public List<string> Macaddresses
-        {
-            get
-            {
-                return macaddresses;
-            }
-            set
-            {
-                macaddresses.Add(value[0]);
-            }
-        }
-        public Devices()
-        {
-            addresses = new List<string>();
-            hostnames = new List<string>();
-            macaddresses = new List<string>();
-        }
-
-
         /// <summary>
         /// Getting local ip address
         /// </summary>
@@ -84,14 +42,45 @@ namespace Uvon
         {
             await Task.Run(() =>
             {
-                UdpClient client = new UdpClient(port);
-                IPEndPoint ipendpoint = new IPEndPoint(ip, port);
+                try
+                {
+                    UdpClient client = new UdpClient(port);
+                    IPEndPoint ipendpoint = new IPEndPoint(ip, port);
 
-                client.Send(address_bytes, address_bytes.Length, ipendpoint);
+                    client.Send(address_bytes, address_bytes.Length, ipendpoint);
+                }
+                catch(Exception e)
+                {
+                    Debug.WriteLine("Error message: " + e.ToString());
+                }
             });
         }
 
+        /// <summary>
+        /// Starts to listen incoming confirmation messages
+        /// </summary>
+        /// <param name="confirm_port"></param>
+        /// <param name="timeout"></param>
+        /// <returns></returns>
+        public static byte[] StartConfirmation(int confirm_port, int timeout)
+        {
+            byte[] message = new byte[1024];
+            try
+            {
+                UdpClient client = new UdpClient(confirm_port);
+                IPEndPoint ipEnd = null;
+                client.Client.ReceiveTimeout = timeout;
+                message = client.Receive(ref ipEnd);
+                Debug.WriteLine("BUffer length is: " + message.Length + "Message is: " + Encoding.UTF8.GetString(message));
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error message: " + ex.Message);
+            }
+            return message;
+        }
     }
+
 
     /// <summary>
     /// Static class to keep some data while application is working
@@ -99,9 +88,12 @@ namespace Uvon
     public static class Addresses
     {
         //Addresses from scan
-        public static  ObservableCollection<string> addresses = new ObservableCollection<string>();
+        public static  ObservableCollection<string> scanedAddresses = new ObservableCollection<string>();
 
         //Favorite addresses
-        public static ObservableCollection<string> favorites = new ObservableCollection<string>();
+        public static ObservableCollection<string> favoritesAddresses = new ObservableCollection<string>();
+
+        //These objects are [key, value] pairs. [address, name] format
+        public static Dictionary<string, string> myEditableAddresses = new Dictionary<string, string>();
     }
 }

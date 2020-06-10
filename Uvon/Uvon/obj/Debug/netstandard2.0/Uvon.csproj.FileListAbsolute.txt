@@ -47,7 +47,6 @@ D:\Serob\Uvon\Uvon_Android\Uvon\Uvon\obj\Debug\netstandard2.0\Views\MyList.xaml.
 D:\Serob\Uvon\Uvon_Android\Uvon\Uvon\obj\Debug\netstandard2.0\Views\MyMenu.xaml.g.cs
 D:\Serob\Uvon\Uvon_Android\Uvon\Uvon\obj\Debug\netstandard2.0\Views\MyMenuDetail.xaml.g.cs
 D:\Serob\Uvon\Uvon_Android\Uvon\Uvon\obj\Debug\netstandard2.0\Views\MyMenuMaster.xaml.g.cs
-D:\Serob\Uvon\Uvon_Android\Uvon\Uvon\obj\Debug\netstandard2.0\Uvon.csproj.CoreCompileInputs.cache
 D:\Serob\Uvon\Uvon_Android\Uvon\Uvon\obj\Debug\netstandard2.0\Uvon.AssemblyInfoInputs.cache
 D:\Serob\Uvon\Uvon_Android\Uvon\Uvon\obj\Debug\netstandard2.0\Uvon.AssemblyInfo.cs
 D:\Serob\Uvon\Uvon_Android\Uvon\Uvon\obj\Debug\netstandard2.0\Uvon.dll
@@ -57,4 +56,6 @@ D:\Serob\Uvon\Uvon_Android\Uvon\Uvon\bin\Debug\netstandard2.0\Uvon.deps.json
 D:\Serob\Uvon\Uvon_Android\Uvon\Uvon\bin\Debug\netstandard2.0\Uvon.dll
 D:\Serob\Uvon\Uvon_Android\Uvon\Uvon\bin\Debug\netstandard2.0\ref\Uvon.dll
 D:\Serob\Uvon\Uvon_Android\Uvon\Uvon\bin\Debug\netstandard2.0\Uvon.pdb
-D:\Serob\Uvon\Uvon_Android\Uvon\Uvon\obj\Debug\netstandard2.0\XamlC.stamp
+D:\Serob\UVON\Uvon_Android\Uvon\Uvon\obj\Debug\netstandard2.0\Views\BluetoothConnection.xaml.g.cs
+D:\Serob\UVON\Uvon_Android\Uvon\Uvon\obj\Debug\netstandard2.0\Uvon.csproj.CoreCompileInputs.cache
+D:\Serob\UVON\Uvon_Android\Uvon\Uvon\obj\Debug\netstandard2.0\XamlC.stamp

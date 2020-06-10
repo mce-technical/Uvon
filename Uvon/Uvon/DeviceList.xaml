@@ -25,6 +25,7 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </Frame>
+            <ActivityIndicator VerticalOptions="CenterAndExpand" x:Name="loading" Color="#409FE4"/>
             <Frame Padding="5" CornerRadius="20">
                 <ProgressBar x:Name="scan_progress" HeightRequest="15" ProgressColor="#409FE4"/>
             </Frame>
