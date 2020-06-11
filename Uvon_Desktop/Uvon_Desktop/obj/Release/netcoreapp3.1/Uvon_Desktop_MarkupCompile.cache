@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\Serob\UVON\Uvon_Desktop\Uvon_Desktop\Uvon_Desktop\obj\Release\netcoreapp3.1\
+C:\Users\serob\Desktop\Uvon_MCE\Uvon_Desktop\Uvon_Desktop\Uvon_Desktop\obj\Release\netcoreapp3.1\
 Uvon_Desktop
 none
 false
 TRACE;RELEASE;NETCOREAPP;NETCOREAPP3_1
-D:\Serob\UVON\Uvon_Desktop\Uvon_Desktop\Uvon_Desktop\App.xaml
-2-135130179
+C:\Users\serob\Desktop\Uvon_MCE\Uvon_Desktop\Uvon_Desktop\Uvon_Desktop\App.xaml
+31412879757
 
-5-990809768
+6-105941328
 1921654412462
-ControlPanel.xaml;MainWindow.xaml;
+ControlPanel.xaml;MainWindow.xaml;UvonInfo.xaml;
 
 False
 
