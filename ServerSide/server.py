@@ -15,12 +15,13 @@ from PIL import Image
 #s.connect((gw[2], 0))
 #own_ip = s.getsockname()[0]
 
-own_ip = "192.168.11.128"          
+own_ip =  "172.20.14.151" #"192.168.11.128"          
 phone_ip = ""                               # this ports must be same as in the android application: Android side uses this ports:
 port_send_image = 55556                         # 55556 - to send image's bytes to client.
 port_get = 55555                                # 55555 - to get motor controlling signals from client.
 port_listen = 55554                             # 55554 - to listen incoming connection requests from client.
 confirm_port = 45732
+send_status_port = 53784
 
 on_off_motors_signal = '0'
 motor_signal = ""                           #   any motor controlling command has its specific bytes command (incoming type: byte[], used type: string)
@@ -67,6 +68,7 @@ previous_mode_state = '0'                   #   keeps the previous signal from c
 """To get signal from client"""
 def Get_Signal():
     global close_preview_request
+    global close_send_state
     global motor_signal
     global uv_signal
     global uv_signal_2
@@ -89,6 +91,7 @@ def Get_Signal():
             motor_signal = "0"
             on_off_motors_signal = "0"
             close_preview_request = True
+            close_send_state = True
             time.sleep(0.5)
             break
         signal_array = data.decode('utf-8').split('|')
@@ -97,9 +100,10 @@ def Get_Signal():
         uv_signal = signal_array[2]
         uv_signal_2 = signal_array[3]
         line_track_signal = signal_array[4]
-        if str(motor_signal) == close_motor_request or data == None:
+        if str(motor_signal) == close_motor_request:
             time.sleep(0.5)
             close_preview_request = True
+            close_send_state = True
             break
         #time.sleep(0.4)
     if listening.is_alive() == False:
@@ -220,8 +224,10 @@ def Send_Status():
         #ser.write(command)
         #state = ser.read(20)
         #print(state)
-        print("I am working")
-        time.sleep(3)
+        sock.sendto(b'1\n', (phone_ip,send_status_port))
+        time.sleep(1)
+        sock.sendto(b'0\n', (phone_ip,send_status_port))
+        time.sleep(1)
     close_send_state = False
 
 

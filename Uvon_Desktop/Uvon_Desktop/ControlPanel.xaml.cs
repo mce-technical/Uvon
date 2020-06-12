@@ -67,6 +67,8 @@ namespace Uvon_Desktop
 
             Get_image();
 
+            GetStatusInfo();
+
             this.Dispatcher.BeginInvoke(new Action(() =>
             {
                 info_image.Source = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\info.png", UriKind.Absolute));
@@ -215,7 +217,7 @@ namespace Uvon_Desktop
         /// <param name="e"></param>
         private void Uv1_Click(object sender, RoutedEventArgs e)
         {
-            if (uv1.Content.ToString() == "UV Level 1 Enable")
+            if (uv1.Content.ToString() == "UV 1 Enable")
             {
                 MessageBoxResult result = MessageBox.Show("You are going to enable UV light", "UV", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
@@ -223,7 +225,7 @@ namespace Uvon_Desktop
                 {
                     case MessageBoxResult.Yes:
                         signal[2] = "1";
-                        uv1.Content = "UV Level 1 Disable";
+                        uv1.Content = "UV 1 Disable";
                         uv1_brush.Color = Colors.Green;
                         break;
                     case MessageBoxResult.No:
@@ -232,10 +234,10 @@ namespace Uvon_Desktop
                         break;
                 }
             }
-            else if (uv1.Content.ToString() == "UV Level 1 Disable")
+            else if (uv1.Content.ToString() == "UV 1 Disable")
             {
                 signal[2] = "0";
-                uv1.Content = "UV Level 1 Enable";
+                uv1.Content = "UV 1 Enable";
                 uv1_brush.Color = Colors.Red;
             }
             uv_light_1.Background = uv1_brush;
@@ -248,7 +250,7 @@ namespace Uvon_Desktop
         /// <param name="e"></param>
         private void Uv2_Click(object sender, RoutedEventArgs e)
         {
-            if (uv2.Content.ToString() == "UV Level 2 Enable")
+            if (uv2.Content.ToString() == "UV 2 Enable")
             {
                 MessageBoxResult result = MessageBox.Show("You are going to enable UV light", "UV", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
@@ -256,7 +258,7 @@ namespace Uvon_Desktop
                 {
                     case MessageBoxResult.Yes:
                         signal[3] = "1";
-                        uv2.Content = "UV Level 2 Disable";
+                        uv2.Content = "UV 2 Disable";
                         uv2_brush.Color = Colors.Green;
                         break;
                     case MessageBoxResult.No:
@@ -265,10 +267,10 @@ namespace Uvon_Desktop
                         break;
                 }
             }
-            else if (uv2.Content.ToString() == "UV Level 2 Disable")
+            else if (uv2.Content.ToString() == "UV 2 Disable")
             {
                 signal[3] = "0";
-                uv2.Content = "UV Level 2 Enable";
+                uv2.Content = "UV 2 Enable";
                 uv2_brush.Color = Colors.Red;
             }
             uv_light_2.Background = uv2_brush;
@@ -342,9 +344,9 @@ namespace Uvon_Desktop
                     GC.Collect();
                     Debug.WriteLine("Connection is end");
                 }
-                catch (Exception e)
+                catch (Exception exp)
                 {
-
+                    Debug.WriteLine(exp.Message);
                 }
             }, preview_token);
         }
@@ -354,36 +356,51 @@ namespace Uvon_Desktop
             byte[] bytes = new byte[64];
             await Task.Run(() =>
             {
-                UdpClient client = new UdpClient(get_status_port);
-                IPEndPoint ip = null;
-
-                while (true)
+                try
                 {
-                    if (signal_token.IsCancellationRequested)
-                    {
-                        client.Close();
-                        return;
-                    }
+                    UdpClient client = new UdpClient(get_status_port);
+                    IPEndPoint ip = null;
 
-                    bytes = client.Receive(ref ip);
-                    var status_message = Encoding.UTF8.GetString(bytes).Split('|');
-                    //line_track_status = status_message[0];
-                    //TO DO...-----------------------try.. catch----------------------------------------------------------------------------------------
-                    if (line_track_status == "1")
+                    while (true)
                     {
-                        this.Dispatcher.BeginInvoke(new Action(() =>
+                        if (signal_token.IsCancellationRequested)
                         {
-                            line_status_brush.Color = Colors.Black;
-                        }));
-                    }
-                    else if (line_track_status == "0")
-                    {
-                        this.Dispatcher.BeginInvoke(new Action(() =>
+                            client.Close();
+                            return;
+                        }
+
+                        bytes = client.Receive(ref ip);
+                        try
                         {
-                            line_status_brush.Color = Colors.Wheat;
-                        }));
+                            var status_message = Encoding.UTF8.GetString(bytes).Split('|');
+                            line_track_status = status_message[0];
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine(ex.Message);
+                        }
+
+                        if (line_track_status[0] == '1')
+                        {
+                            this.Dispatcher.BeginInvoke(new Action(() =>
+                            {
+                                line_status_brush.Color = Colors.Black;
+                                online_status.Background = line_status_brush;
+                            }));
+                        }
+                        else if (line_track_status[0] == '0')
+                        {
+                            this.Dispatcher.BeginInvoke(new Action(() =>
+                            {
+                                line_status_brush.Color = Colors.Wheat;
+                                online_status.Background = line_status_brush;
+                            }));
+                        }                    
                     }
-                    online_status.Background = line_status_brush;
+                }
+                catch(Exception exp)
+                {
+                    Debug.WriteLine(exp.Message);
                 }
             });
         }

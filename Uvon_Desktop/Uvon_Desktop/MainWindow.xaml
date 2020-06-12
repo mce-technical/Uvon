@@ -5,20 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Uvon_Desktop"
         mc:Ignorable="d"
-        Title="UVON" Height="620" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="UVON" BorderBrush="Black" Height="632" Width="800" ResizeMode="NoResize" Background="#FF111111" WindowStartupLocation="CenterScreen">
     <StackPanel Margin="10">
         <Border Margin="20" Padding="10" CornerRadius="20" Background="#FFFFEB3F">
-            <TextBlock Name="warning_text" Height="89" TextWrapping="Wrap" Background="#FFFFEB3F" Foreground="Red" FontSize="15"/>
+            <TextBlock Name="warning_text" Height="89" FontWeight="Bold" TextWrapping="Wrap" Background="#FFFFEB3F" Foreground="Red" FontSize="20"/>
         </Border>
-        <TextBlock Name="instruction_text" Padding="5" Margin="20" Height="54" TextWrapping="Wrap" FontSize="15" Width="710"/>
-        <TextBlock Text="Available devices for the first 15 ip addresses" Padding="5" Margin="20" FontSize="20"/>
-        <ListBox Height="104" Margin="20" Padding="5" Name="available_devices"/>
-        <TextBox Name="user_input" Text="Please, enter ip address or scan interval" HorizontalAlignment="Center" Width="700" Foreground="Gray" FontSize="17">
+        <TextBlock Name="instruction_text" Padding="5" Margin="20" Height="54" TextWrapping="Wrap" FontSize="15" Width="710" Foreground="#FFE2F0FD"/>
+        <TextBlock Text="Available devices for the first 15 ip addresses" Padding="5" Margin="20" FontSize="20"  Foreground="#FFE2F0FD"/>
+        <ListBox Height="87" Margin="20" Padding="5" Name="available_devices" Background="#FF322E2E" Foreground="#FFE2F0FD"/>
+        <TextBox Name="user_input" Text="Please, enter ip address or scan interval" HorizontalAlignment="Center" Width="700" Foreground="#FFE2F0FD" FontSize="17" Background="#FF322E2E"/>
 
-        </TextBox>
         <Grid Margin="20">
             <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -26,11 +24,18 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Grid.Row="1" Content="Autoconnection" Height="50" Name="autoconnect" Width="200" Click="Autoconnect_Click" FontSize="20" Background="#FFE2F0FD"/>
-            <Button Grid.Column="1" Grid.Row="1" Content="Scan WLAN" Height="50" Width="200" Name="scan" Click="Scan_Click" FontSize="20" Background="#FFE2F0FD"/>
-            <Button Grid.Column="2" Grid.Row="1" Content="Connect" Height="50" Width="200" Name="connect" Click="Connect_Click" FontSize="20" Background="#FFE2F0FD"/>
+            
+            <Border CornerRadius="15" Background="#FFE2F0FD" Width="200" Height="50" Grid.Column="0" Grid.Row="0">
+                <Button Content="Autoconnection" BorderThickness="0" Height="50" Name="autoconnect" Width="170" Click="Autoconnect_Click" FontSize="20" Background="#FFE2F0FD"/>
+            </Border>
+            <Border CornerRadius="15" Background="#FFE2F0FD" Width="200" Height="50" Grid.Column="1" Grid.Row="0">
+                <Button Grid.Column="1" Grid.Row="0" Content="Scan WLAN" BorderThickness="0" Height="50" Width="170" Name="scan" Click="Scan_Click" FontSize="20" Background="#FFE2F0FD"/>
+            </Border>
+            <Border CornerRadius="15" Background="#FFE2F0FD" Width="200" Height="50" Grid.Column="2" Grid.Row="0">
+                <Button Grid.Column="2" Grid.Row="0" Content="Connect" BorderThickness="0" Height="50" Width="170" Name="connect" Click="Connect_Click" FontSize="20" Background="#FFE2F0FD"/>
+            </Border>
         </Grid>
-        <ProgressBar Height="13" Width="680" Minimum="0" Maximum="100" Name="progress"/>
+        <ProgressBar Height="9" Margin="30,0" Minimum="0" Maximum="100" Name="progress" Background="#FF322E2E"/>
     </StackPanel>
 </Window>
 

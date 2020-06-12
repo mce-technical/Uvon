@@ -6,6 +6,7 @@
     <UseWPF>true</UseWPF>
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <Company>MCE</Company>
+    <Version>1.1.7</Version>
   </PropertyGroup>
 
   <ItemGroup>
