@@ -135,9 +135,6 @@ namespace Uvon_Desktop
                 Autopilot_button.Content = "Line tracking";
             }
             autopilot.Background = autopilot_brush;
-
-            //TO DO...
-            //If autopilot is ON disable hand control buttons
         }
 
         private void Info_Click(object sender, RoutedEventArgs e)
@@ -219,7 +216,7 @@ namespace Uvon_Desktop
         {
             if (uv1.Content.ToString() == "UV 1 Enable")
             {
-                MessageBoxResult result = MessageBox.Show("You are going to enable UV light", "UV", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                MessageBoxResult result = MessageBox.Show("You are going to enable UV lamp", "UV 1", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                 switch (result)
                 {
@@ -252,7 +249,7 @@ namespace Uvon_Desktop
         {
             if (uv2.Content.ToString() == "UV 2 Enable")
             {
-                MessageBoxResult result = MessageBox.Show("You are going to enable UV light", "UV", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                MessageBoxResult result = MessageBox.Show("You are going to enable UV lamp", "UV 2", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                 switch (result)
                 {
@@ -338,9 +335,10 @@ namespace Uvon_Desktop
                             break;
                         }
                     }
-                    Thread.Sleep(900);
+                    Thread.Sleep(500);
                     client.Client.Dispose();
                     client.Client.Close();
+                    client.Close();
                     GC.Collect();
                     Debug.WriteLine("Connection is end");
                 }
@@ -365,6 +363,7 @@ namespace Uvon_Desktop
                     {
                         if (signal_token.IsCancellationRequested)
                         {
+                            client.Client.Close();
                             client.Close();
                             return;
                         }

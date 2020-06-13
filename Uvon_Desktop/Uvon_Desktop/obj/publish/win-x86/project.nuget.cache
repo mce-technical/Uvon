@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "y/ce2xFAlqIJRTIcQLYjlXiTfNui7QW7/WGC+m8zPr6lLyYQEd10fApdfKI41kQ4UdjIkil97E0J+uzfxjuGCw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\serob\\Desktop\\Uvon_MCE\\Uvon_Desktop\\Uvon_Desktop\\Uvon_Desktop\\Uvon_Desktop.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\serob\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x86\\3.1.5\\microsoft.netcore.app.runtime.win-x86.3.1.5.nupkg.sha512",
+    "C:\\Users\\serob\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x86\\3.1.5\\microsoft.windowsdesktop.app.runtime.win-x86.3.1.5.nupkg.sha512",
+    "C:\\Users\\serob\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x86\\3.1.5\\microsoft.aspnetcore.app.runtime.win-x86.3.1.5.nupkg.sha512"
+  ],
+  "logs": []
+}

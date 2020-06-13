@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Net;
@@ -9,53 +10,10 @@ namespace Uvon_Desktop
 {
     class Devices
     {
-        private List<string> addresses;
-        private List<string> hostnames;
-        private List<string> macaddresses;
-
-        public List<string> Addresses
-        {
-            get
-            {
-                return addresses;
-            }
-            set
-            {
-                addresses.Add(value[0]);
-            }
-        }
-
-        public List<string> Hostnames
-        {
-            get
-            {
-                return hostnames;
-            }
-            set
-            {
-                hostnames.Add(value[0]);
-            }
-        }
-
-        public List<string> Macaddresses
-        {
-            get
-            {
-                return macaddresses;
-            }
-            set
-            {
-                macaddresses.Add(value[0]);
-            }
-        }
         public Devices()
         {
-            addresses = new List<string>();
-            hostnames = new List<string>();
-            macaddresses = new List<string>();
+            Console.WriteLine("This class still contains only static methods");
         }
-
-
         /// <summary>
         /// Getting local ip address
         /// </summary>
@@ -69,7 +27,7 @@ namespace Uvon_Desktop
             {
                 if (ip.AddressFamily == AddressFamily.InterNetwork)
                 {
-                    Debug.WriteLine(ip);
+                    Debug.WriteLine("Own ip address is: " + ip);
                     address = ip;
                 }
             }
@@ -90,7 +48,9 @@ namespace Uvon_Desktop
                 IPEndPoint ipendpoint = new IPEndPoint(ip, port);
 
                 client.Send(address_bytes, address_bytes.Length, ipendpoint);
-                Debug.WriteLine("Was sent");
+                client.Client.Close();
+                client.Close();
+                client = null;
             });
         }
     }

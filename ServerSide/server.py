@@ -15,7 +15,7 @@ from PIL import Image
 #s.connect((gw[2], 0))
 #own_ip = s.getsockname()[0]
 
-own_ip =  "172.20.14.151" #"192.168.11.128"          
+own_ip = "192.168.1.7" #"172.20.14.151" #"192.168.11.128"          
 phone_ip = ""                               # this ports must be same as in the android application: Android side uses this ports:
 port_send_image = 55556                         # 55556 - to send image's bytes to client.
 port_get = 55555                                # 55555 - to get motor controlling signals from client.
@@ -78,7 +78,7 @@ def Get_Signal():
 
     sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
     sock.bind((own_ip,port_get))
-    sock.settimeout(3)
+    sock.settimeout(5)
     print("Getting signal from clients...")
 
     while True:

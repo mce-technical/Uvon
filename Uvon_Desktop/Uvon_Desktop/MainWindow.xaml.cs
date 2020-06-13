@@ -16,6 +16,7 @@ namespace Uvon_Desktop
     public partial class MainWindow : Window
     {
         private int scan_interval = 250;
+        bool isAutoconnectClicked = false;
         private IPAddress my_address, robot_address;
         private int port = 55554;
         private byte[] address_bytes = new byte[1024];
@@ -41,8 +42,8 @@ namespace Uvon_Desktop
             if (Addresses.addresses.Count == 0)
             {
                 myping = new Ping();
-                Addresses.addresses.Add("192.168.11.118");
-                Addresses.addresses.Add("192.168.11.128");
+                //Addresses.addresses.Add("192.168.11.118");
+                //Addresses.addresses.Add("192.168.11.128");
                 Scanning(my_address.ToString(), myping, 15);        //Scans WLAN 
             }
         }
@@ -80,32 +81,51 @@ namespace Uvon_Desktop
         /// <param name="e"></param>
         private void Autoconnect_Click(object sender, RoutedEventArgs e)
         {
+            if(isAutoconnectClicked == false)
+            {
+                isAutoconnectClicked = true;
+                this.Title = "Connecting...";
+            }
+            else
+            {
+                MessageBox.Show("You have already started autoconnection", "Autoconnection");
+                return;
+            }
             Task.Run(() =>
             {
-                foreach (var x in Addresses.addresses)
+                UdpClient client = new UdpClient(55556);
+                IPEndPoint ip = null;
+                client.Client.ReceiveTimeout = 1200;
+
+                foreach (var x in Addresses.addresses)  
                 {
-                    UdpClient client = new UdpClient(55556);
-                    IPEndPoint ip = null;
-                    Devices.SendCheckingSignal(this.port, IPAddress.Parse(x), this.address_bytes);
+                    Devices.SendCheckingSignal(this.port, IPAddress.Parse(x), this.address_bytes);  
+
                     Debug.WriteLine("Current ip: " + x);
-                    Thread.Sleep(500);
+                    Thread.Sleep(400);
                     try
                     {
                         var bytes = client.Receive(ref ip);
                         if (bytes != null)
                         {
-                            ControlPanel panel = new ControlPanel(my_address, IPAddress.Parse(x));
-                            panel.Show();
-
+                            this.Dispatcher.BeginInvoke(new Action(() =>
+                            {
+                                this.Title = "Uvon";
+                                ControlPanel panel = new ControlPanel(my_address, IPAddress.Parse(x));
+                                panel.Show();
+                                this.Close();
+                            }));
                             break;
                         }
                     }
-                    catch
+                    catch(SocketException exp)
                     {
-
+                        Debug.WriteLine(exp.Message);
                     }
                 }
-                this.Close();
+                client.Client.Close();
+                client.Close();
+                isAutoconnectClicked = false;
             });
         }
 
