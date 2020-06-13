@@ -54,6 +54,8 @@ namespace Uvon
             GetImage();    //Starting new task to get preview from server/robot
 
             SendSignal();   //Starting new task to send signal to control motors of robor.
+
+            GetStatusInfo();
         }
 
 
@@ -344,7 +346,7 @@ namespace Uvon
                     }
                     signal_data = Encoding.UTF8.GetBytes(signals_array[0] + "|" + signals_array[1] + "|" + signals_array[2] + "|" + signals_array[3] + "|" + signals_array[4]);
                     client.Send(signal_data, signal_data.Length, ip);
-                    Debug.WriteLine("Was sent: " + signals_array[0] + "|" + signals_array[1] + "|" + signals_array[2] + "|" + signals_array[3] + "|" + signals_array[4]);
+                    //Debug.WriteLine("Was sent: " + signals_array[0] + "|" + signals_array[1] + "|" + signals_array[2] + "|" + signals_array[3] + "|" + signals_array[4]);
                     Thread.Sleep(10);
                 }
             });
@@ -400,17 +402,26 @@ namespace Uvon
                     }
 
                     bytes = client.Receive(ref ip);
-                    var status_message = Encoding.UTF8.GetString(bytes).Split('|');
+                    try
+                    {
+                        string[] status_message = Encoding.UTF8.GetString(bytes).Split('|');
+                        line_track_status = status_message[0];
+                        Debug.WriteLine("Track status is: " + line_track_status);
+                    }
+                    catch(Exception ex)
+                    {
+                        Debug.WriteLine(ex.Message);
+                    }
                     //line_track_status = status_message[0];
                     //TO DO...-----------------------try.. catch----------------------------------------------------------------------------------------
-                    if (line_track_status == "1")
+                    if (line_track_status[0] == '1')
                     {
                         Device.BeginInvokeOnMainThread(() =>
                         {
                             line_status.BackgroundColor = Color.Black;
                         });
                     }
-                    else if(line_track_status == "0")
+                    else if(line_track_status[0] == '0')
                     {
                         Device.BeginInvokeOnMainThread(() =>
                         {
