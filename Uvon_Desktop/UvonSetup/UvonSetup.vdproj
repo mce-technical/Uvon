@@ -97,6 +97,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -113,6 +129,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -176,7 +200,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Uvon_Desktop, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Uvon_Desktop, Version=1.1.7.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_1D1D8F6B00EB4A2899723BAC54185FF7"
@@ -400,7 +424,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:UvonSetup"
         "ProductCode" = "8:{1F4BE130-70FE-427F-9AAC-45A7BC8154E3}"
-        "PackageCode" = "8:{2CD05416-FFF4-444F-B653-F9394ECECAB5}"
+        "PackageCode" = "8:{CA5C9DA7-DB80-4968-B8A2-BA3C501E9270}"
         "UpgradeCode" = "8:{87998B3D-0980-4A60-9746-CDC71894086C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -530,6 +554,20 @@
             "Transitive" = "11:FALSE"
             "Target" = "8:_D5EFAF911A6648D392F11A370E30F47D"
             "Folder" = "8:_886A2B1F73884D7A98EE466819BA900F"
+            "WorkingFolder" = "8:_7EB767BB459D41CA9DAA726DC3709CDA"
+            "Icon" = "8:_830291432A6248CA8C00615F88217CB1"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_69CB0CF1B83F4825934B73F54DC0FE98"
+            {
+            "Name" = "8:Uvon"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_D5EFAF911A6648D392F11A370E30F47D"
+            "Folder" = "8:_E66FAEFDB858492CB8ED10AF5CDDCDF2"
             "WorkingFolder" = "8:_7EB767BB459D41CA9DAA726DC3709CDA"
             "Icon" = "8:_830291432A6248CA8C00615F88217CB1"
             "Feature" = "8:"

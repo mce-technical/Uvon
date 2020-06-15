@@ -12,7 +12,7 @@ namespace Uvon_Desktop
     {
         public Devices()
         {
-            Console.WriteLine("This class still contains only static methods");
+            Console.WriteLine("This class contains only static methods");
         }
         /// <summary>
         /// Getting local ip address
@@ -40,7 +40,7 @@ namespace Uvon_Desktop
         /// <param name="port"></param>
         /// <param name="ip"></param>
         /// <param name="address_bytes"></param>
-        public static async void SendCheckingSignal(int port, IPAddress ip, byte[] address_bytes)
+        public static async void SendCheckingSignal(ushort port, IPAddress ip, byte[] address_bytes)
         {
             await Task.Run(() =>
             {

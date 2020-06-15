@@ -19,11 +19,17 @@ namespace Uvon_Desktop
     /// </summary>
     public partial class ControlPanel : Window
     {
-        private int image_port = 55556;                             //The port to get image frames from server/robot
-        private int motor_port = 55555;                             //The port to send motor controlling signls to robot
-        private int get_status_port = 53784;
+        private ushort image_port = 55556;                             //The port to get image frames from server/robot
+        private ushort motor_port = 55555;                             //The port to send motor controlling signls to robot
+        private ushort get_status_port = 53784;
 
-        private string line_track_status = "0", battery_1_status = "0", battery_2_status = "0";
+        private string line_track_status = "0",                        //The robot's components status
+            battery_1_status = "0", 
+            battery_2_status = "0",
+            motor_driver_status = "0",
+            uv1_status = "0",
+            uv2_status = "0";
+
         private string[] signal = new string[5];                    //first is motor, second is uv
         bool noconnection;                                          //Keeps the connection state of preview
         bool disconneted;                                           //Keeps the connection state of motor control
@@ -90,6 +96,11 @@ namespace Uvon_Desktop
                         imagesource.Source = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\noconnection.png", UriKind.Absolute));
                     }));
                 }
+            });
+
+            Task.Run(() =>
+            {
+                UpdateStates();
             });
         }
 
@@ -163,15 +174,15 @@ namespace Uvon_Desktop
             {
                 signal[1] = "ON";
                 Enable.Content = "OFF";
-                motor_brush.Color = Colors.Green;
-                motor_drivers.Background = motor_brush;
+                //motor_brush.Color = Colors.Green;
+                //motor_drivers.Background = motor_brush;
             }
             else if (Enable.Content.ToString() == "OFF")
             {
                 signal[1] = "OFF";
                 Enable.Content = "ON";
-                motor_brush.Color = Colors.Red;
-                motor_drivers.Background = motor_brush;
+                //motor_brush.Color = Colors.Red;
+                //motor_drivers.Background = motor_brush;
             }
         }
 
@@ -223,11 +234,11 @@ namespace Uvon_Desktop
                     case MessageBoxResult.Yes:
                         signal[2] = "1";
                         uv1.Content = "UV 1 Disable";
-                        uv1_brush.Color = Colors.Green;
+                        //uv1_brush.Color = Colors.Green;
                         break;
                     case MessageBoxResult.No:
                         signal[2] = "0";
-                        uv1_brush.Color = Colors.Red;
+                        //uv1_brush.Color = Colors.Red;
                         break;
                 }
             }
@@ -235,9 +246,9 @@ namespace Uvon_Desktop
             {
                 signal[2] = "0";
                 uv1.Content = "UV 1 Enable";
-                uv1_brush.Color = Colors.Red;
+                //uv1_brush.Color = Colors.Red;
             }
-            uv_light_1.Background = uv1_brush;
+            //uv_light_1.Background = uv1_brush;
         }
 
         /// <summary>
@@ -256,11 +267,11 @@ namespace Uvon_Desktop
                     case MessageBoxResult.Yes:
                         signal[3] = "1";
                         uv2.Content = "UV 2 Disable";
-                        uv2_brush.Color = Colors.Green;
+                        //uv2_brush.Color = Colors.Green;
                         break;
                     case MessageBoxResult.No:
                         signal[3] = "0";
-                        uv2_brush.Color = Colors.Red;
+                        //uv2_brush.Color = Colors.Red;
                         break;
                 }
             }
@@ -268,9 +279,9 @@ namespace Uvon_Desktop
             {
                 signal[3] = "0";
                 uv2.Content = "UV 2 Enable";
-                uv2_brush.Color = Colors.Red;
+                //uv2_brush.Color = Colors.Red;
             }
-            uv_light_2.Background = uv2_brush;
+            //uv_light_2.Background = uv2_brush;
         }
 
         #endregion 
@@ -373,6 +384,10 @@ namespace Uvon_Desktop
                         {
                             var status_message = Encoding.UTF8.GetString(bytes).Split('|');
                             line_track_status = status_message[0];
+                            motor_driver_status = status_message[1];
+                            uv1_status = status_message[2];
+                            uv2_status = status_message[3];
+                            Debug.WriteLine(Encoding.UTF8.GetString(bytes));
                         }
                         catch (Exception ex)
                         {
@@ -394,7 +409,7 @@ namespace Uvon_Desktop
                                 line_status_brush.Color = Colors.Wheat;
                                 online_status.Background = line_status_brush;
                             }));
-                        }                    
+                        }   
                     }
                 }
                 catch(Exception exp)
@@ -466,6 +481,85 @@ namespace Uvon_Desktop
                 signal[0] = "0";
             }
         }
+
+
+        /// <summary>
+        /// Updates UI elements according to the Robot's state
+        /// </summary>
+        private void UpdateStates()
+        {
+            string motor_previous_state = "0", uv1_previous_state = "0", uv2_previous_state = "0";
+
+            while (true)
+            {
+                if (motor_driver_status != motor_previous_state)
+                {
+                    if (motor_driver_status == "2")
+                    {
+                        this.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            motor_brush.Color = Colors.Red;
+                            motor_drivers.Background = motor_brush;
+                        }));
+                    }
+                    else if (motor_driver_status == "1")
+                    {
+                        this.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            motor_brush.Color = Colors.Green;
+                            motor_drivers.Background = motor_brush;
+                        }));
+                    }
+                    motor_previous_state = motor_driver_status;
+                }
+
+                if (uv1_status != uv1_previous_state)
+                {
+                    if(uv1_status == "I1")
+                    {
+                        this.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            uv1_brush.Color = Colors.Green;
+                            uv_light_1.Background = uv1_brush;
+                        }));
+                    }
+                    else if(uv1_status == "I0")
+                    {
+                        this.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            uv1_brush.Color = Colors.Red;
+                            uv_light_1.Background = uv1_brush;
+                        }));
+                    }
+
+                    uv1_previous_state = uv1_status;
+                }
+
+                if (uv2_status != uv2_previous_state)
+                {
+                    if (uv2_status == "U1")
+                    {
+                        this.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            uv2_brush.Color = Colors.Green;
+                            uv_light_2.Background = uv2_brush;
+                        }));
+                    }
+                    else if (uv2_status == "U0")
+                    {
+                        this.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            uv2_brush.Color = Colors.Red;
+                            uv_light_2.Background = uv2_brush;
+                        }));
+                    }
+
+                    uv2_previous_state = uv2_status;
+                }
+                Thread.Sleep(250);
+            }
+        }
+
 
         /// <summary>
         /// Closes all connection after clicking on close button

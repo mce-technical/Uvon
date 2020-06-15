@@ -15,7 +15,7 @@ from PIL import Image
 #s.connect((gw[2], 0))
 #own_ip = s.getsockname()[0]
 
-own_ip = "192.168.1.7" #"172.20.14.151" #"192.168.11.128"          
+own_ip = "172.20.14.151"  #"192.168.1.7" #"192.168.11.129"          
 phone_ip = ""                               # this ports must be same as in the android application: Android side uses this ports:
 port_send_image = 55556                         # 55556 - to send image's bytes to client.
 port_get = 55555                                # 55555 - to get motor controlling signals from client.
@@ -61,6 +61,10 @@ line_track_off = b'L0\n'                    #   to disable line tracking mode an
 send_line_track = b''                       #   signal, which must be sent to Arduino
 previous_mode_state = '0'                   #   keeps the previous signal from client
 
+motor_current_state = "0"                   #   the status of the motor drivers
+uv1_current_state = "0"                     #   the status of the UV lamp's power 1st level
+uv2_current_state = "0"                     #   the status of the UV lamp's power 2nd level
+line_tracking_current_state = "0"           #   the status of the line tracking mode 
 #ser = serial.Serial('/dev/ttyACM0')
 #ser.baudrate = 9600
 #ser.timeout = 1
@@ -152,6 +156,7 @@ def Send_Arduino():
     global send_me
     global send_motor_signal, send_line_track
     global send_uv1, send_uv2
+    global motor_current_state, uv1_current_state, uv2_current_state, line_tracking_current_state
     while True:
         time.sleep(0.1)
         if on_off_motors_signal!= previous_state:
@@ -164,6 +169,7 @@ def Send_Arduino():
             previous_state = on_off_motors_signal
             #time.sleep(0.4)
             #ser.write(send_me)
+            #motor_current_state = ser.readline().decode()
             continue 
 
         if motor_signal != previous_motor_state:
@@ -188,6 +194,7 @@ def Send_Arduino():
                 send_uv1 = uv1_off
             #time.sleep(0.4)
             #ser.write(send_uv1)
+            #uv1_current_state = ser.readline().decode()
             previous_uv1_state = uv_signal
         if uv_signal_2 != previous_uv2_state:
             if uv_signal_2 == "1":
@@ -196,6 +203,7 @@ def Send_Arduino():
                 send_uv2 = uv2_off
             #time.sleep(0.4)
             #ser.write(send_uv2)
+            #uv2_current_state = ser.readline().decode()
             previous_uv2_state = uv_signal_2
             continue
         if line_track_signal!= previous_mode_state:
@@ -205,7 +213,8 @@ def Send_Arduino():
                 send_line_track = line_track_off
             previous_mode_state = line_track_signal
             #ser.write(send_line_track)
-            continue                                                                    #??????????
+            #line_tracking_current_state = ser.readline().decode() 
+            continue                                     
 
 
 def Confirm():
@@ -217,6 +226,7 @@ def Confirm():
 
 def Send_Status():
     global close_send_state
+    global motor_current_state, uv1_current_state, uv2_current_state, line_tracking_current_state
     #global ser
     command = b'S\n'
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -224,9 +234,12 @@ def Send_Status():
         #ser.write(command)
         #state = ser.read(20)
         #print(state)
-        sock.sendto(b'1\n', (phone_ip,send_status_port))
+        message = motor_current_state + '|' + uv1_current_state + '|' + uv2_current_state + '|' + line_tracking_current_state
+        message = '1' + '|' + '1' + '|' + '1' + '|' + '1'
+        sock.sendto(message.encode(), (phone_ip,send_status_port))
         time.sleep(1)
-        sock.sendto(b'0\n', (phone_ip,send_status_port))
+        message = '0' + '|' + '0' + '|' + '0' + '|' + '0'
+        sock.sendto(message.encode(), (phone_ip,send_status_port))
         time.sleep(1)
     close_send_state = False
 
@@ -292,5 +305,6 @@ listening = th.Thread(target=Listen)
 listening.start()
 
 while True:
+    print(motor_current_state + ' ' + uv1_current_state + ' ' + uv2_current_state + ' ' + line_tracking_current_state)
     print("UV signal is: " + uv_signal + " , " + uv_signal_2 + colored(' |','green') + " ON/OFF signal is: " + on_off_motors_signal + colored(' |','green') + " Send me: " + str(send_me) + colored(' |','green') + " Previous motor state: " + previous_state + colored(' |','green') + " Motor signal is: " + str(send_motor_signal) + colored(' |','green') + " Line track signal is: " + line_track_signal)
     time.sleep(2)

@@ -15,10 +15,10 @@ namespace Uvon_Desktop
     /// </summary>
     public partial class MainWindow : Window
     {
-        private int scan_interval = 250;
+        private byte scan_interval = 250;
         bool isAutoconnectClicked = false;
         private IPAddress my_address, robot_address;
-        private int port = 55554;
+        private ushort port = 55554;
         private byte[] address_bytes = new byte[1024];
         private Ping myping;
         protected ControlPanel panel;
@@ -136,7 +136,7 @@ namespace Uvon_Desktop
         /// <param name="e"></param>
         private void Scan_Click(object sender, RoutedEventArgs e)
         {
-            var good = int.TryParse(user_input.Text, out scan_interval);
+            var good = byte.TryParse(user_input.Text, out scan_interval);
             if (!good || scan_interval > 255)
             {
                 MessageBox.Show("Incorrect interval", "Warning!!");
