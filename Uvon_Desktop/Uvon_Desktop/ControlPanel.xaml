@@ -51,6 +51,7 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Border CornerRadius="15" Background="#FFE2F0FD" Width="150" Grid.Column="0" Grid.Row="0">
                         <Button x:Name="Enable" Content="ON" BorderThickness="0" Height="55" Width="130" Click="On_Off_Click" FontSize="20" Background="Transparent"/>
@@ -65,6 +66,9 @@
                         <Button Name="Autopilot_button" Content="Line tracking" BorderThickness="0" Height="55" Width="130" Click="Autopilot_button_Click" FontSize="20" Background="Transparent"/>
                     </Border>
                     <Border CornerRadius="15" Background="#FFE2F0FD" Width="150" Grid.Column="4" Grid.Row="0">
+                        <Button Name="camera_switch" Content="Camera 2" BorderThickness="0" Height="55" Width="130" Click="CameraSwitch_Click" FontSize="20" Background="Transparent"/>
+                    </Border>
+                    <Border CornerRadius="15" Background="#FFE2F0FD" Width="150" Grid.Column="5" Grid.Row="0">
                         <Button x:Name="disconnect" Content="Disconnect" BorderThickness="0" Foreground="Red" Width="130" Height="55" VerticalAlignment="Center" Click="Disconnect_Click" FontSize="20" Background="Transparent" HorizontalAlignment="Left" Margin="10,0,0,0"/>
                     </Border>
                 </Grid>

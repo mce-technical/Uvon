@@ -15,7 +15,7 @@ from PIL import Image
 #s.connect((gw[2], 0))
 #own_ip = s.getsockname()[0]
 
-own_ip = "172.20.14.151"  #"192.168.1.7" #"192.168.11.129"          
+own_ip = "192.168.11.129" #"172.20.14.151"  #"192.168.1.7"           
 phone_ip = ""                               # this ports must be same as in the android application: Android side uses this ports:
 port_send_image = 55556                         # 55556 - to send image's bytes to client.
 port_get = 55555                                # 55555 - to get motor controlling signals from client.
@@ -23,6 +23,7 @@ port_listen = 55554                             # 55554 - to listen incoming con
 confirm_port = 45732
 send_status_port = 53784
 
+camera_number = "0"
 on_off_motors_signal = '0'
 motor_signal = ""                           #   any motor controlling command has its specific bytes command (incoming type: byte[], used type: string)
 uv_signal = ""                              #   UV light must be turned ON or OFF, (incoming type: byte[], used type: string)
@@ -79,6 +80,7 @@ def Get_Signal():
     global listening
     global on_off_motors_signal
     global line_track_signal
+    global camera_number
 
     sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
     sock.bind((own_ip,port_get))
@@ -99,11 +101,15 @@ def Get_Signal():
             time.sleep(0.5)
             break
         signal_array = data.decode('utf-8').split('|')
-        motor_signal = signal_array[0]
-        on_off_motors_signal = signal_array[1]
-        uv_signal = signal_array[2]
-        uv_signal_2 = signal_array[3]
-        line_track_signal = signal_array[4]
+        try:
+            motor_signal = signal_array[0]
+            on_off_motors_signal = signal_array[1]
+            uv_signal = signal_array[2]
+            uv_signal_2 = signal_array[3]
+            line_track_signal = signal_array[4]
+            camera_number = signal_array[5]
+        except:
+            print("Something goes wrong...")
         if str(motor_signal) == close_motor_request:
             time.sleep(0.5)
             close_preview_request = True
@@ -119,8 +125,9 @@ def Get_Signal():
 """To send video translation to clients"""
 def Send_Image():
     global close_preview_request
+    global camera_number
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) 
-    video_capturing = cv2.VideoCapture(0)
+    video_capturing = cv2.VideoCapture(int(camera_number))
     isread, img = video_capturing.read()
 
     scale_percent = 60 # percent of original size
@@ -135,7 +142,7 @@ def Send_Image():
 
     print("Sending video frames data... Buffer length: " + str(len(buffer)))
 
-    while close_preview_request == False:        
+    while close_preview_request == False:
         sock.sendto(buffer, (phone_ip,port_send_image))
         time.sleep(0.01)
         isread, img = video_capturing.read()
@@ -303,8 +310,16 @@ def Listen():
 
 listening = th.Thread(target=Listen)
 listening.start()
+camera_previous_number = camera_number
 
 while True:
+    if(camera_previous_number!=camera_number):
+        close_preview_request = True
+        time.sleep(0.3)
+        camera_previous_number = camera_number
+        send_image = th.Thread(target=Send_Image)
+        send_image.start()
+
     print(motor_current_state + ' ' + uv1_current_state + ' ' + uv2_current_state + ' ' + line_tracking_current_state)
     print("UV signal is: " + uv_signal + " , " + uv_signal_2 + colored(' |','green') + " ON/OFF signal is: " + on_off_motors_signal + colored(' |','green') + " Send me: " + str(send_me) + colored(' |','green') + " Previous motor state: " + previous_state + colored(' |','green') + " Motor signal is: " + str(send_motor_signal) + colored(' |','green') + " Line track signal is: " + line_track_signal)
     time.sleep(2)

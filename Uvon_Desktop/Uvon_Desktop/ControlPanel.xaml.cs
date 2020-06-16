@@ -30,7 +30,7 @@ namespace Uvon_Desktop
             uv1_status = "0",
             uv2_status = "0";
 
-        private string[] signal = new string[5];                    //first is motor, second is uv
+        private string[] signal = new string[6];                    //first is motor, second is uv
         bool noconnection;                                          //Keeps the connection state of preview
         bool disconneted;                                           //Keeps the connection state of motor control
 
@@ -58,6 +58,7 @@ namespace Uvon_Desktop
             signal[2] = "0";
             signal[3] = "0";
             signal[4] = "0";
+            signal[5] = "0";
 
             noconnection = false;
             disconneted = false;
@@ -187,6 +188,25 @@ namespace Uvon_Desktop
         }
 
         /// <summary>
+        /// To switch camera 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CameraSwitch_Click(object sender, RoutedEventArgs e)
+        {
+            if(camera_switch.Content.ToString()=="Camera 2")
+            {
+                signal[5] = "1";
+                camera_switch.Content = "Camera 1";
+            }
+            else if (camera_switch.Content.ToString() == "Camera 1")
+            {
+                signal[5] = "0";
+                camera_switch.Content = "Camera 2";
+            }
+        }
+
+        /// <summary>
         /// To disconnect client from server/robot
         /// </summary>
         /// <param name="sender"></param>
@@ -306,9 +326,9 @@ namespace Uvon_Desktop
                         Debug.WriteLine("Connection signal is over");
                         return;
                     }
-                    signal_bytes = Encoding.UTF8.GetBytes(signal[0] + "|" + signal[1] + "|" + signal[2] + "|" + signal[3] + "|" + signal[4]);
+                    signal_bytes = Encoding.UTF8.GetBytes(signal[0] + "|" + signal[1] + "|" + signal[2] + "|" + signal[3] + "|" + signal[4] + "|" + signal[5]);
                     client.Send(signal_bytes, signal_bytes.Length, ip);
-                    Debug.WriteLine("Was sent: " + signal[0] + " " + signal[1] + " " + signal[2] + " " + signal[3] + " " + signal[4]);
+                    Debug.WriteLine("Was sent: " + signal[0] + " " + signal[1] + "|" + signal[2] + "|" + signal[3] + "|" + signal[4] + "|" + signal[5]);
 
                     Thread.Sleep(100);
                 }
@@ -418,6 +438,7 @@ namespace Uvon_Desktop
                 }
             });
         }
+
 
         /// <summary>
         /// This method reads image from byte's array
