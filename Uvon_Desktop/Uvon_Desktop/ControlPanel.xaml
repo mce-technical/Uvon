@@ -39,7 +39,7 @@
             <TextBlock Text="M. Battery" Grid.Row="0" Grid.Column="7" FontSize="15"  Margin="5,0" TextAlignment="Center" Foreground="#FFE2F0FD"/>
             <TextBlock Text="On Line" Grid.Row="0" Grid.Column="8" FontSize="15"  Margin="5,0" TextAlignment="Center" Foreground= "#FFE2F0FD"/>
             <!--"#FF747070"/>-->
-            <Button x:Name="info" Margin="20,0" Width="Auto" Background="Black" BorderThickness="0" Grid.Row="0" Grid.Column="9">
+            <Button x:Name="info" Margin="20,0" Width="Auto" Background="Black" Click="Info_Click" BorderThickness="0" Grid.Row="0" Grid.Column="9">
                 <Image Name="info_image" Source="ImageSources\info.png"/>
             </Button>
 
