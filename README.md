@@ -9,10 +9,10 @@
 3. You can enter Ip address of your host and click on **_Connect_**.
 ![](https://github.com/mce-technical/Uvon/blob/Uvon_Desktop/Screenshots/connect.png)
 ### After connection you will see the robot's control panel.
-1. In control panel you can get camera preview from server/robot, start line tracking or control robot's movements manualy.
+1. In control panel you can get camera preview from server/robot, start line tracking or control robot's movements manually.
 ![](https://github.com/mce-technical/Uvon/blob/Uvon_Desktop/Screenshots/control_page.png)
 2. Also you can turn ON/OFF UV lamp. To turn ON UV lamp you need to enable UV lamp's all two levels of power.
-![](https://github.com/mce-technical/Uvon/blob/Uvon_Desktop/Screenshots/enable_uv.png)
+![](https://github.com/mce-technical/Uvon/blob/Uvon_Desktop/Screenshots/enabe_uv.png)
 3. You can read robot's control instruction in Informational page. To open it you need to click on the _Info_ button.
 ![](https://github.com/mce-technical/Uvon/blob/Uvon_Desktop/Screenshots/info_page.png)
 # Structur
