@@ -3,7 +3,7 @@
 "VSVersion" = "3:800"
 "ProjectType" = "8:{978C614F-708E-4E1A-B201-565925725DBA}"
 "IsWebType" = "8:FALSE"
-"ProjectName" = "8:UvonSetup"
+"ProjectName" = "8:Uvon"
 "LanguageId" = "3:1033"
 "CodePage" = "3:1252"
 "UILanguageId" = "3:1033"
@@ -15,68 +15,68 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_03BFE932E5434987BEEC567D0D46FCE0"
+        "MsmKey" = "8:_06EF9CEC6D3142F3AD410BC480063C71"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_1D1D8F6B00EB4A2899723BAC54185FF7"
+        "MsmKey" = "8:_0D5DA902B4B94070AA966E055AF06E80"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_50910EC91A174D2390F7A9F2FDCAD46F"
+        "MsmKey" = "8:_381852C6CEB3456EA729489E39ACE8BE"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_6C5516B1B9E4498DA5743958FFFD159D"
+        "MsmKey" = "8:_579463332AFC412BB7A9BD9744F78935"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_73EC3D4395174C449C70408405B08D12"
+        "MsmKey" = "8:_99D58379DDDB43899F3C0E3A9F615D84"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_830291432A6248CA8C00615F88217CB1"
+        "MsmKey" = "8:_C8846603682C4F18AF73FF844F4C9C40"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_A017967B12964CF9A3B725DBB8945E83"
+        "MsmKey" = "8:_D5B253EBE4A5429ABFE22CC0D8B2097C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_B50D8F55DEB541A399852F84F78A0C31"
+        "MsmKey" = "8:_DEC097A981F849F79FBF4FB35BA47033"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_C4F9D450A0E446A1B4017F134882D69F"
+        "MsmKey" = "8:_E0779FE07E194AF6942F0E36741FC244"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_D5EFAF911A6648D392F11A370E30F47D"
+        "MsmKey" = "8:_EDA9FDDF4E7E406FBE9FC670592FD7E7"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_1D1D8F6B00EB4A2899723BAC54185FF7"
+        "OwnerKey" = "8:_99D58379DDDB43899F3C0E3A9F615D84"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -87,7 +87,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:Debug\\UvonSetup.msi"
+        "OutputFilename" = "8:Debug\\Uvon.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -97,29 +97,13 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
-            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
-            {
-            "Enabled" = "11:TRUE"
-            "PromptEnabled" = "11:TRUE"
-            "PrerequisitesLocation" = "2:1"
-            "Url" = "8:"
-            "ComponentsUrl" = "8:"
-                "Items"
-                {
-                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
-                    {
-                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
-                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
-                    }
-                }
-            }
         }
         "Release"
         {
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\UvonSetup.msi"
+        "OutputFilename" = "8:Release\\Uvon.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -129,14 +113,6 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
-            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
-            {
-            "Enabled" = "11:TRUE"
-            "PromptEnabled" = "11:TRUE"
-            "PrerequisitesLocation" = "2:1"
-            "Url" = "8:"
-            "ComponentsUrl" = "8:"
-            }
         }
     }
     "Deployable"
@@ -154,7 +130,7 @@
         {
             "LaunchCondition"
             {
-                "{A06ECF26-33A3-4562-8140-9B0E340D4F24}:_726E6EA381C94F279A538291350054E5"
+                "{A06ECF26-33A3-4562-8140-9B0E340D4F24}:_60BE2401CEBD475EAC82A764EC90E4AC"
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
@@ -162,7 +138,7 @@
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=863262"
                 }
-                "{A06ECF26-33A3-4562-8140-9B0E340D4F24}:_98049D78641045E7AB57C20A4FBABAD1"
+                "{A06ECF26-33A3-4562-8140-9B0E340D4F24}:_D56A2C9F12F14E5AA94A5311B9C0499D"
                 {
                 "Name" = "8:.NET Core"
                 "Message" = "8:[VSDNETCOREMSG]"
@@ -176,12 +152,12 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_03BFE932E5434987BEEC567D0D46FCE0"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_06EF9CEC6D3142F3AD410BC480063C71"
             {
-            "SourcePath" = "8:..\\Uvon_Desktop\\bin\\Debug\\netcoreapp3.1\\Uvon_Desktop.pdb"
-            "TargetName" = "8:Uvon_Desktop.pdb"
+            "SourcePath" = "8:..\\Uvon_Desktop\\bin\\Debug\\netcoreapp3.1\\Uvon_Desktop.runtimeconfig.dev.json"
+            "TargetName" = "8:Uvon_Desktop.runtimeconfig.dev.json"
             "Tag" = "8:"
-            "Folder" = "8:_7EB767BB459D41CA9DAA726DC3709CDA"
+            "Folder" = "8:_3A3E5D86825540D9AE12A5A9205FAA6F"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -196,14 +172,74 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1D1D8F6B00EB4A2899723BAC54185FF7"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0D5DA902B4B94070AA966E055AF06E80"
+            {
+            "SourcePath" = "8:..\\Uvon_Desktop\\bin\\Debug\\netcoreapp3.1\\Uvon_Desktop.pdb"
+            "TargetName" = "8:Uvon_Desktop.pdb"
+            "Tag" = "8:"
+            "Folder" = "8:_3A3E5D86825540D9AE12A5A9205FAA6F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_381852C6CEB3456EA729489E39ACE8BE"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\icon.ico"
+            "TargetName" = "8:icon.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_3A3E5D86825540D9AE12A5A9205FAA6F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_579463332AFC412BB7A9BD9744F78935"
+            {
+            "SourcePath" = "8:..\\Uvon_Desktop\\bin\\Debug\\netcoreapp3.1\\Uvon_Desktop.deps.json"
+            "TargetName" = "8:Uvon_Desktop.deps.json"
+            "Tag" = "8:"
+            "Folder" = "8:_3A3E5D86825540D9AE12A5A9205FAA6F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_99D58379DDDB43899F3C0E3A9F615D84"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:Uvon_Desktop, Version=1.1.7.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_1D1D8F6B00EB4A2899723BAC54185FF7"
+                    "_99D58379DDDB43899F3C0E3A9F615D84"
                     {
                     "Name" = "8:Uvon_Desktop.dll"
                     "Attributes" = "3:512"
@@ -212,7 +248,7 @@
             "SourcePath" = "8:..\\Uvon_Desktop\\bin\\Debug\\netcoreapp3.1\\Uvon_Desktop.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_7EB767BB459D41CA9DAA726DC3709CDA"
+            "Folder" = "8:_3A3E5D86825540D9AE12A5A9205FAA6F"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -227,112 +263,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_50910EC91A174D2390F7A9F2FDCAD46F"
-            {
-            "SourcePath" = "8:..\\Uvon_Desktop\\bin\\Debug\\netcoreapp3.1\\Uvon_Desktop.runtimeconfig.json"
-            "TargetName" = "8:Uvon_Desktop.runtimeconfig.json"
-            "Tag" = "8:"
-            "Folder" = "8:_7EB767BB459D41CA9DAA726DC3709CDA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6C5516B1B9E4498DA5743958FFFD159D"
-            {
-            "SourcePath" = "8:..\\Uvon_Desktop\\bin\\Debug\\netcoreapp3.1\\Uvon_Desktop.runtimeconfig.dev.json"
-            "TargetName" = "8:Uvon_Desktop.runtimeconfig.dev.json"
-            "Tag" = "8:"
-            "Folder" = "8:_7EB767BB459D41CA9DAA726DC3709CDA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_73EC3D4395174C449C70408405B08D12"
-            {
-            "SourcePath" = "8:..\\Uvon_Desktop\\bin\\Debug\\netcoreapp3.1\\info.png"
-            "TargetName" = "8:info.png"
-            "Tag" = "8:"
-            "Folder" = "8:_7EB767BB459D41CA9DAA726DC3709CDA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_830291432A6248CA8C00615F88217CB1"
-            {
-            "SourcePath" = "8:..\\icon.ico"
-            "TargetName" = "8:icon.ico"
-            "Tag" = "8:"
-            "Folder" = "8:_7EB767BB459D41CA9DAA726DC3709CDA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B50D8F55DEB541A399852F84F78A0C31"
-            {
-            "SourcePath" = "8:..\\Uvon_Desktop\\bin\\Debug\\netcoreapp3.1\\Uvon_Desktop.deps.json"
-            "TargetName" = "8:Uvon_Desktop.deps.json"
-            "Tag" = "8:"
-            "Folder" = "8:_7EB767BB459D41CA9DAA726DC3709CDA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C4F9D450A0E446A1B4017F134882D69F"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C8846603682C4F18AF73FF844F4C9C40"
             {
             "SourcePath" = "8:..\\Uvon_Desktop\\bin\\Debug\\netcoreapp3.1\\noconnection.png"
             "TargetName" = "8:noconnection.png"
             "Tag" = "8:"
-            "Folder" = "8:_7EB767BB459D41CA9DAA726DC3709CDA"
+            "Folder" = "8:_3A3E5D86825540D9AE12A5A9205FAA6F"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -347,12 +283,52 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D5EFAF911A6648D392F11A370E30F47D"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D5B253EBE4A5429ABFE22CC0D8B2097C"
             {
             "SourcePath" = "8:..\\Uvon_Desktop\\bin\\Debug\\netcoreapp3.1\\Uvon_Desktop.exe"
             "TargetName" = "8:Uvon_Desktop.exe"
             "Tag" = "8:"
-            "Folder" = "8:_7EB767BB459D41CA9DAA726DC3709CDA"
+            "Folder" = "8:_3A3E5D86825540D9AE12A5A9205FAA6F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DEC097A981F849F79FBF4FB35BA47033"
+            {
+            "SourcePath" = "8:..\\Uvon_Desktop\\bin\\Debug\\netcoreapp3.1\\info.png"
+            "TargetName" = "8:info.png"
+            "Tag" = "8:"
+            "Folder" = "8:_3A3E5D86825540D9AE12A5A9205FAA6F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E0779FE07E194AF6942F0E36741FC244"
+            {
+            "SourcePath" = "8:..\\Uvon_Desktop\\bin\\Debug\\netcoreapp3.1\\Uvon_Desktop.runtimeconfig.json"
+            "TargetName" = "8:Uvon_Desktop.runtimeconfig.json"
+            "Tag" = "8:"
+            "Folder" = "8:_3A3E5D86825540D9AE12A5A9205FAA6F"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -373,19 +349,18 @@
         }
         "Folder"
         {
-            "{3C67513D-01DD-4637-8A68-80971EB9504F}:_7EB767BB459D41CA9DAA726DC3709CDA"
+            "{1525181F-901A-416C-8A58-119130FE478E}:_0DBAB133B785480CA8A4D4CBD8E3B07C"
             {
-            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
-            "Name" = "8:#1925"
+            "Name" = "8:#1919"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
-            "Property" = "8:TARGETDIR"
+            "Property" = "8:ProgramMenuFolder"
                 "Folders"
                 {
                 }
             }
-            "{1525181F-901A-416C-8A58-119130FE478E}:_886A2B1F73884D7A98EE466819BA900F"
+            "{1525181F-901A-416C-8A58-119130FE478E}:_214FB474BE2D4FE5915722F1A9498368"
             {
             "Name" = "8:#1916"
             "AlwaysCreate" = "11:FALSE"
@@ -396,13 +371,14 @@
                 {
                 }
             }
-            "{1525181F-901A-416C-8A58-119130FE478E}:_E66FAEFDB858492CB8ED10AF5CDDCDF2"
+            "{3C67513D-01DD-4637-8A68-80971EB9504F}:_3A3E5D86825540D9AE12A5A9205FAA6F"
             {
-            "Name" = "8:#1919"
+            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
+            "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
-            "Property" = "8:ProgramMenuFolder"
+            "Property" = "8:TARGETDIR"
                 "Folders"
                 {
                 }
@@ -422,22 +398,22 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:UvonSetup"
-        "ProductCode" = "8:{1F4BE130-70FE-427F-9AAC-45A7BC8154E3}"
-        "PackageCode" = "8:{CA5C9DA7-DB80-4968-B8A2-BA3C501E9270}"
-        "UpgradeCode" = "8:{87998B3D-0980-4A60-9746-CDC71894086C}"
+        "ProductName" = "8:Uvon"
+        "ProductCode" = "8:{4B45DEB6-CE25-4A5E-B9C5-4F3F64162FC6}"
+        "PackageCode" = "8:{948AE2A8-DE33-4136-BAE1-6D8DA117DDBA}"
+        "UpgradeCode" = "8:{7845C84C-6BAD-44B4-B320-67C52C8890DF}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:MCE"
+        "Manufacturer" = "8:Default Company Name"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:UvonSetup"
+        "Title" = "8:Uvon"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:Serob"
+        "ARPCONTACT" = "8:Default Company Name"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
@@ -456,7 +432,7 @@
             {
                 "Keys"
                 {
-                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_7A8E085870CB4D1A815952C0CF62D6F9"
+                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_F796E46F242F4CA5BAD25248713B68CF"
                     {
                     "Name" = "8:Software"
                     "Condition" = "8:"
@@ -465,7 +441,7 @@
                     "Transitive" = "11:FALSE"
                         "Keys"
                         {
-                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_485BF960FC1C46EF8DE3CC4A0EA3B00B"
+                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_70BCB859999F4EED9928148917C70747"
                             {
                             "Name" = "8:[Manufacturer]"
                             "Condition" = "8:"
@@ -490,7 +466,7 @@
             {
                 "Keys"
                 {
-                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_DB486A1E26F5435196D49C31B8966C83"
+                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_4C453A1DAD9F4B60A8AA7FAFEBB3FAD1"
                     {
                     "Name" = "8:Software"
                     "Condition" = "8:"
@@ -499,7 +475,7 @@
                     "Transitive" = "11:FALSE"
                         "Keys"
                         {
-                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_AE270575286243D59C12B83B521322CB"
+                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_38350BC69B5E4DBBB623782F2314C92D"
                             {
                             "Name" = "8:[Manufacturer]"
                             "Condition" = "8:"
@@ -544,7 +520,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_484393AFD96C44DA8CA82838C4C12C51"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_8DB0BD897032446CA4A5777F74E25230"
             {
             "Name" = "8:Uvon"
             "Arguments" = "8:"
@@ -552,13 +528,13 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_D5EFAF911A6648D392F11A370E30F47D"
-            "Folder" = "8:_886A2B1F73884D7A98EE466819BA900F"
-            "WorkingFolder" = "8:_7EB767BB459D41CA9DAA726DC3709CDA"
-            "Icon" = "8:_830291432A6248CA8C00615F88217CB1"
+            "Target" = "8:_D5B253EBE4A5429ABFE22CC0D8B2097C"
+            "Folder" = "8:_0DBAB133B785480CA8A4D4CBD8E3B07C"
+            "WorkingFolder" = "8:_3A3E5D86825540D9AE12A5A9205FAA6F"
+            "Icon" = "8:_381852C6CEB3456EA729489E39ACE8BE"
             "Feature" = "8:"
             }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_69CB0CF1B83F4825934B73F54DC0FE98"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_C3EDD41A3D82457B9485F7D8E65693FF"
             {
             "Name" = "8:Uvon"
             "Arguments" = "8:"
@@ -566,23 +542,23 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_D5EFAF911A6648D392F11A370E30F47D"
-            "Folder" = "8:_E66FAEFDB858492CB8ED10AF5CDDCDF2"
-            "WorkingFolder" = "8:_7EB767BB459D41CA9DAA726DC3709CDA"
-            "Icon" = "8:_830291432A6248CA8C00615F88217CB1"
+            "Target" = "8:_D5B253EBE4A5429ABFE22CC0D8B2097C"
+            "Folder" = "8:_214FB474BE2D4FE5915722F1A9498368"
+            "WorkingFolder" = "8:_3A3E5D86825540D9AE12A5A9205FAA6F"
+            "Icon" = "8:_381852C6CEB3456EA729489E39ACE8BE"
             "Feature" = "8:"
             }
         }
         "UserInterface"
         {
-            "{DF760B10-853B-4699-99F2-AFF7185B4A62}:_002145D2A4054109A995BC214D57E0F8"
+            "{DF760B10-853B-4699-99F2-AFF7185B4A62}:_09DA3DFB15FC4745B2156D0242D956AE"
             {
             "Name" = "8:#1901"
             "Sequence" = "3:2"
             "Attributes" = "3:2"
                 "Dialogs"
                 {
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_9BA6A117EF4043DDA91F5AC29EA8538A"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_F7E92640CE794D649998AACD54B13FE8"
                     {
                     "Sequence" = "3:100"
                     "DisplayName" = "8:Progress"
@@ -619,64 +595,14 @@
                     }
                 }
             }
-            "{2479F3F5-0309-486D-8047-8187E2CE5BA0}:_1BB2F9AD624048B78A687495296A4924"
-            {
-            "UseDynamicProperties" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "SourcePath" = "8:<VsdDialogDir>\\VsdUserInterface.wim"
-            }
-            "{DF760B10-853B-4699-99F2-AFF7185B4A62}:_2CEFB59C8D8245D8B8CC4A2C6F9028EB"
-            {
-            "Name" = "8:#1902"
-            "Sequence" = "3:1"
-            "Attributes" = "3:3"
-                "Dialogs"
-                {
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_167F8D3540FB45938C6214AFCBB0C308"
-                    {
-                    "Sequence" = "3:100"
-                    "DisplayName" = "8:Finished"
-                    "UseDynamicProperties" = "11:TRUE"
-                    "IsDependency" = "11:FALSE"
-                    "SourcePath" = "8:<VsdDialogDir>\\VsdFinishedDlg.wid"
-                        "Properties"
-                        {
-                            "BannerBitmap"
-                            {
-                            "Name" = "8:BannerBitmap"
-                            "DisplayName" = "8:#1001"
-                            "Description" = "8:#1101"
-                            "Type" = "3:8"
-                            "ContextData" = "8:Bitmap"
-                            "Attributes" = "3:4"
-                            "Setting" = "3:1"
-                            "UsePlugInResources" = "11:TRUE"
-                            }
-                            "UpdateText"
-                            {
-                            "Name" = "8:UpdateText"
-                            "DisplayName" = "8:#1058"
-                            "Description" = "8:#1158"
-                            "Type" = "3:15"
-                            "ContextData" = "8:"
-                            "Attributes" = "3:0"
-                            "Setting" = "3:1"
-                            "Value" = "8:#1258"
-                            "DefaultValue" = "8:#1258"
-                            "UsePlugInResources" = "11:TRUE"
-                            }
-                        }
-                    }
-                }
-            }
-            "{DF760B10-853B-4699-99F2-AFF7185B4A62}:_47E489F2F50549558908B87F5D68BFFD"
+            "{DF760B10-853B-4699-99F2-AFF7185B4A62}:_955AE104DB634CB382512A947ABC6BE5"
             {
             "Name" = "8:#1902"
             "Sequence" = "3:2"
             "Attributes" = "3:3"
                 "Dialogs"
                 {
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_932B9639C6C248B884E44DDFC55615F2"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_F1A40038EACE48CD8A4C5F7C23885F15"
                     {
                     "Sequence" = "3:100"
                     "DisplayName" = "8:Finished"
@@ -700,14 +626,36 @@
                     }
                 }
             }
-            "{DF760B10-853B-4699-99F2-AFF7185B4A62}:_C858511B8A484F619249DE40C65464C0"
+            "{DF760B10-853B-4699-99F2-AFF7185B4A62}:_9CC67CAB6627416DBD3D5009C64642A5"
             {
             "Name" = "8:#1900"
             "Sequence" = "3:1"
             "Attributes" = "3:1"
                 "Dialogs"
                 {
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_08547F26475144A892D3B6BBD4545C70"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_381B7E40AD874B07B2C3D387229E4FF0"
+                    {
+                    "Sequence" = "3:300"
+                    "DisplayName" = "8:Confirm Installation"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdConfirmDlg.wid"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_C15832BF6FE8452BBD34F6CEA342733E"
                     {
                     "Sequence" = "3:200"
                     "DisplayName" = "8:Installation Folder"
@@ -742,7 +690,7 @@
                             }
                         }
                     }
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_27E3F89BBE574628B1A94B7E4A148B3F"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_C98A2D9531D44210B810E22425086E33"
                     {
                     "Sequence" = "3:100"
                     "DisplayName" = "8:Welcome"
@@ -790,66 +738,16 @@
                             }
                         }
                     }
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_A6F324BC49174076B8632288540827DD"
-                    {
-                    "Sequence" = "3:300"
-                    "DisplayName" = "8:Confirm Installation"
-                    "UseDynamicProperties" = "11:TRUE"
-                    "IsDependency" = "11:FALSE"
-                    "SourcePath" = "8:<VsdDialogDir>\\VsdConfirmDlg.wid"
-                        "Properties"
-                        {
-                            "BannerBitmap"
-                            {
-                            "Name" = "8:BannerBitmap"
-                            "DisplayName" = "8:#1001"
-                            "Description" = "8:#1101"
-                            "Type" = "3:8"
-                            "ContextData" = "8:Bitmap"
-                            "Attributes" = "3:4"
-                            "Setting" = "3:1"
-                            "UsePlugInResources" = "11:TRUE"
-                            }
-                        }
-                    }
                 }
             }
-            "{2479F3F5-0309-486D-8047-8187E2CE5BA0}:_ECBA2870DA794CD3A2E910EE67545D1D"
-            {
-            "UseDynamicProperties" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "SourcePath" = "8:<VsdDialogDir>\\VsdBasicDialogs.wim"
-            }
-            "{DF760B10-853B-4699-99F2-AFF7185B4A62}:_F55046F672CE4434B19E015121BB327D"
+            "{DF760B10-853B-4699-99F2-AFF7185B4A62}:_A47BCB3C5D714577840ABC73209B8AA1"
             {
             "Name" = "8:#1900"
             "Sequence" = "3:2"
             "Attributes" = "3:1"
                 "Dialogs"
                 {
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_97FEB132439646CCA2CB2D82EEA426CF"
-                    {
-                    "Sequence" = "3:200"
-                    "DisplayName" = "8:Installation Folder"
-                    "UseDynamicProperties" = "11:TRUE"
-                    "IsDependency" = "11:FALSE"
-                    "SourcePath" = "8:<VsdDialogDir>\\VsdAdminFolderDlg.wid"
-                        "Properties"
-                        {
-                            "BannerBitmap"
-                            {
-                            "Name" = "8:BannerBitmap"
-                            "DisplayName" = "8:#1001"
-                            "Description" = "8:#1101"
-                            "Type" = "3:8"
-                            "ContextData" = "8:Bitmap"
-                            "Attributes" = "3:4"
-                            "Setting" = "3:1"
-                            "UsePlugInResources" = "11:TRUE"
-                            }
-                        }
-                    }
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_9A85A5BAE5B348E7AEB6747F8D695EA3"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_65EE62EDB99747D8BFA85C11221B07D0"
                     {
                     "Sequence" = "3:100"
                     "DisplayName" = "8:Welcome"
@@ -897,7 +795,29 @@
                             }
                         }
                     }
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_E91F310EE6704F7D84E2C694A244DCF5"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_C43847F60B3D44159C5F070FDE380729"
+                    {
+                    "Sequence" = "3:200"
+                    "DisplayName" = "8:Installation Folder"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdAdminFolderDlg.wid"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_CB50587A7BF8442FA1DD8DAACFD31C6C"
                     {
                     "Sequence" = "3:300"
                     "DisplayName" = "8:Confirm Installation"
@@ -921,14 +841,26 @@
                     }
                 }
             }
-            "{DF760B10-853B-4699-99F2-AFF7185B4A62}:_FBACC5FCF3F34F61AD2637F564885FA6"
+            "{2479F3F5-0309-486D-8047-8187E2CE5BA0}:_BBC09055647A406E9C9EA4436A86D15B"
+            {
+            "UseDynamicProperties" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "SourcePath" = "8:<VsdDialogDir>\\VsdUserInterface.wim"
+            }
+            "{2479F3F5-0309-486D-8047-8187E2CE5BA0}:_C46A654D7B43469493C0B38F2BBD40E0"
+            {
+            "UseDynamicProperties" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "SourcePath" = "8:<VsdDialogDir>\\VsdBasicDialogs.wim"
+            }
+            "{DF760B10-853B-4699-99F2-AFF7185B4A62}:_C6034DD192C445FD9259E216A141F3A3"
             {
             "Name" = "8:#1901"
             "Sequence" = "3:1"
             "Attributes" = "3:2"
                 "Dialogs"
                 {
-                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_766AF259603F476493D02B9784AE5EC7"
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_3AE35F0452F34E6F94F4EE89112A423C"
                     {
                     "Sequence" = "3:100"
                     "DisplayName" = "8:Progress"
@@ -965,18 +897,62 @@
                     }
                 }
             }
+            "{DF760B10-853B-4699-99F2-AFF7185B4A62}:_E06BD9A5F2444608ADE7ABEC7B1AE074"
+            {
+            "Name" = "8:#1902"
+            "Sequence" = "3:1"
+            "Attributes" = "3:3"
+                "Dialogs"
+                {
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_4D6763B21FA940D19AD3C01FD64F00B4"
+                    {
+                    "Sequence" = "3:100"
+                    "DisplayName" = "8:Finished"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdFinishedDlg.wid"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "UpdateText"
+                            {
+                            "Name" = "8:UpdateText"
+                            "DisplayName" = "8:#1058"
+                            "Description" = "8:#1158"
+                            "Type" = "3:15"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:1"
+                            "Value" = "8:#1258"
+                            "DefaultValue" = "8:#1258"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                }
+            }
         }
         "MergeModule"
         {
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A017967B12964CF9A3B725DBB8945E83"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_EDA9FDDF4E7E406FBE9FC670592FD7E7"
             {
             "SourcePath" = "8:..\\Uvon_Desktop\\obj\\Debug\\netcoreapp3.1\\Uvon_Desktop.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_7EB767BB459D41CA9DAA726DC3709CDA"
+            "Folder" = "8:_3A3E5D86825540D9AE12A5A9205FAA6F"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"

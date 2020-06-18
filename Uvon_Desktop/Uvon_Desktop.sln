@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Uvon_Desktop", "Uvon_Desktop\Uvon_Desktop.csproj", "{F3631AD1-78AD-4101-8773-903A94B9D98B}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "UvonSetup", "UvonSetup\UvonSetup.vdproj", "{71FA558E-408A-41C1-9F45-8FA8F981D6CE}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Uvon", "Uvon\Uvon.vdproj", "{3A77CE76-175C-4E70-A139-6F9D40747F34}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,8 +17,8 @@ Global
 		{F3631AD1-78AD-4101-8773-903A94B9D98B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3631AD1-78AD-4101-8773-903A94B9D98B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3631AD1-78AD-4101-8773-903A94B9D98B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{71FA558E-408A-41C1-9F45-8FA8F981D6CE}.Debug|Any CPU.ActiveCfg = Debug
-		{71FA558E-408A-41C1-9F45-8FA8F981D6CE}.Release|Any CPU.ActiveCfg = Release
+		{3A77CE76-175C-4E70-A139-6F9D40747F34}.Debug|Any CPU.ActiveCfg = Debug
+		{3A77CE76-175C-4E70-A139-6F9D40747F34}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
