@@ -17,6 +17,7 @@ android.support.v7.widget.RecyclerView;D:\Serob\UVON\Uvon_Android\Uvon\Uvon.Andr
 android.support.v7.widget.Toolbar;D:\Serob\UVON\Uvon_Android\Uvon\Uvon.Android\obj\Release\90\lp\46\jl\res\layout\rootlayout.xml
 android.support.v7.widget.Toolbar;D:\Serob\UVON\Uvon_Android\Uvon\Uvon.Android\obj\Release\90\lp\46\jl\res\layout\shellcontent.xml
 android.support.v7.widget.Toolbar;obj\Release\90\res\layout\toolbar.xml
+attr;D:\Serob\UVON\Uvon_Android\Uvon\Uvon.Android\obj\Release\90\lp\46\jl\res\values\attrs.xml
 background;obj\Release\90\res\mipmap-anydpi-v26\icon.xml
 background;obj\Release\90\res\mipmap-anydpi-v26\icon_round.xml
 bitmap;obj\Release\90\res\drawable\splash_background.xml
@@ -28,6 +29,7 @@ cache-path;D:\Serob\UVON\Uvon_Android\Uvon\Uvon.Android\obj\Release\90\lp\45\jl\
 color;D:\Serob\UVON\Uvon_Android\Uvon\Uvon.Android\obj\Release\90\lp\3\jl\res\values\values.xml
 color;obj\Release\90\res\drawable\splash_background.xml
 color;obj\Release\90\res\values\colors.xml
+declare-styleable;D:\Serob\UVON\Uvon_Android\Uvon\Uvon.Android\obj\Release\90\lp\46\jl\res\values\attrs.xml
 EditText;D:\Serob\UVON\Uvon_Android\Uvon\Uvon.Android\obj\Release\90\lp\3\jl\res\layout\hockeyapp_activity_feedback.xml
 EditText;D:\Serob\UVON\Uvon_Android\Uvon\Uvon.Android\obj\Release\90\lp\3\jl\res\layout\hockeyapp_activity_login.xml
 external-cache-path;D:\Serob\UVON\Uvon_Android\Uvon\Uvon.Android\obj\Release\90\lp\45\jl\res\xml\xamarin_essentials_fileprovider_file_paths.xml
@@ -62,6 +64,7 @@ resources;D:\Serob\UVON\Uvon_Android\Uvon\Uvon.Android\obj\Release\90\lp\3\jl\re
 resources;D:\Serob\UVON\Uvon_Android\Uvon\Uvon.Android\obj\Release\90\lp\3\jl\res\values-ru\values-ru.xml
 resources;D:\Serob\UVON\Uvon_Android\Uvon\Uvon.Android\obj\Release\90\lp\3\jl\res\values-zh\values-zh.xml
 resources;D:\Serob\UVON\Uvon_Android\Uvon\Uvon.Android\obj\Release\90\lp\4\jl\res\values\strings.xml
+resources;D:\Serob\UVON\Uvon_Android\Uvon\Uvon.Android\obj\Release\90\lp\46\jl\res\values\attrs.xml
 resources;D:\Serob\UVON\Uvon_Android\Uvon\Uvon.Android\obj\Release\90\lp\46\jl\res\values\styles.xml
 resources;obj\Release\90\res\values\colors.xml
 resources;obj\Release\90\res\values\styles.xml

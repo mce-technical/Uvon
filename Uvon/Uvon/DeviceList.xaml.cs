@@ -14,8 +14,8 @@ namespace Uvon
     public partial class DeviceList : ContentPage
     {
         private IPAddress robot_ip;
-        private int check_port = 55554;
-        private int confirm_port = 45732;
+        private ushort check_port = 55554;
+        private ushort confirm_port = 45732;
         private string confirm_message = "iletyouconnectme";
         private byte[] own_address_bytes = new byte[1024];
 

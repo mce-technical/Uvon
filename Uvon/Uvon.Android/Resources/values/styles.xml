@@ -20,6 +20,8 @@
     <!-- You can also set colorControlNormal, colorControlActivated
          colorControlHighlight and colorSwitchThumbNormal. -->
     <item name="windowActionModeOverlay">true</item>
+    <!--Here i set the after item tapped color to transparent-->
+    <item name="android:colorActivatedHighlight">@android:color/transparent</item>
 
     <item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
   </style>

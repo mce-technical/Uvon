@@ -38,7 +38,7 @@ namespace Uvon
         /// <param name="port"></param>
         /// <param name="ip"></param>
         /// <param name="address_bytes"></param>
-        public static async void SendCheckingSignal(int port, IPAddress ip, byte[] address_bytes)
+        public static async void SendCheckingSignal(ushort port, IPAddress ip, byte[] address_bytes)
         {
             await Task.Run(() =>
             {
@@ -62,7 +62,7 @@ namespace Uvon
         /// <param name="confirm_port"></param>
         /// <param name="timeout"></param>
         /// <returns></returns>
-        public static byte[] StartConfirmation(int confirm_port, int timeout)
+        public static byte[] StartConfirmation(ushort confirm_port, int timeout)
         {
             byte[] message = new byte[1024];
             try

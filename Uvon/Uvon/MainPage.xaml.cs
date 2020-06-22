@@ -14,15 +14,29 @@ namespace Uvon
     [DesignTimeVisible(true)]
     public partial class MainPage : ContentPage
     {
-        private int get_signal_port = 55555;
-        private int get_status_port = 53784;
-        private string[] signals_array = new string[5];     //first is motor, second is uv
-        private string line_track_status = "0", battery_1_status = "0", battery_2_status = "0";
+        #region Page fields
+
+        private ushort get_signal_port = 55555;             // Port to get connected with Jetson
+        private ushort get_image_port = 55556;
+        private ushort get_status_port = 53784;
+
+        private string[] signals_array = new string[6];     // Signals array to send to Jetson
+        private string online_status = "0",                 // Info about robot's components
+            battery_1_status = "0",
+            battery_2_status = "0",
+            motor_driver_status = "0",
+            uv1_status = "0",
+            uv2_status = "0";
+
         double page_width;
         double element_size;
-        IPAddress robot_address;
-        CancellationTokenSource cancelConnections;
+
+        IPAddress robot_address;                            //Robot/Server IPv4 address
+
+        CancellationTokenSource cancelConnections;          //Cancelation token source and token to terminate other tasks
         CancellationToken token;
+
+        #endregion
 
         public MainPage(IPAddress ip)
         {
@@ -36,26 +50,31 @@ namespace Uvon
                 return;
             }
 
-            cancelConnections = new CancellationTokenSource();        
+            cancelConnections = new CancellationTokenSource();
             token = cancelConnections.Token;
 
             robot_address = ip;
             var im = ImageSource.FromFile("drawable/welcome.png");
 
-            signals_array[0] = "00";                                               //Motor's signal
-            signals_array[1] = "00";                                               //Motor drivers ON/OFF signal
-            signals_array[2] = "0";                                                //UV 1
-            signals_array[3] = "0";                                                //UV 2
-            signals_array[4] = "0";                                                //Line tracking mode on/off   
+            signals_array[0] = "00";                   //Motor's signal
+            signals_array[1] = "00";                   //Motor drivers ON/OFF signal
+            signals_array[2] = "0";                    //UV 1 signal
+            signals_array[3] = "0";                    //UV 2 signal
+            signals_array[4] = "0";                    //Line tracking mode on/off   
+            signals_array[5] = "0";                    //Camera switch signal            
+
             preview.Source = im;
 
-            //info_view.Text = Devices.GetLocalIPAddress();  //uncomment after text Label is uncommented in mainpage.xaml
+            GetImage();    //Starting a new task to get preview from server/robot
 
-            GetImage();    //Starting new task to get preview from server/robot
+            SendSignal();   //Starting a new task to send signal to control motors of robor.
 
-            SendSignal();   //Starting new task to send signal to control motors of robor.
+            GetStatusInfo();    //Starting a new task to get information about robot's components
 
-            GetStatusInfo();
+            Task.Run(() =>      //Starting a new task to update information on UI
+            {
+                UpdateStates();     
+            });
         }
 
 
@@ -78,7 +97,7 @@ namespace Uvon
             base.OnDisappearing();
 
             signals_array[0] = "34";
-            if(signals_array[1] == "ON")
+            if (signals_array[1] == "ON")
             {
                 signals_array[1] = "OFF";
             }
@@ -134,7 +153,7 @@ namespace Uvon
             signals_array[0] = "2";
         }
 
-          
+
         /// <summary>
         /// Right pressed event
         /// </summary>
@@ -198,17 +217,17 @@ namespace Uvon
         /// <param name="e"></param>
         private void Turn_Clicked(object sender, EventArgs e)
         {
-            if(turn.Text == "Turn On")
+            if (turn.Text == "Turn On")
             {
                 signals_array[1] = "ON";
                 turn.Text = "Turn Off";
-                motors_box.BackgroundColor = Color.Green;
+                //motors_box.BackgroundColor = Color.Green;
             }
-            else if(turn.Text == "Turn Off")
+            else if (turn.Text == "Turn Off")
             {
                 signals_array[1] = "OFF";
                 turn.Text = "Turn On";
-                motors_box.BackgroundColor = Color.Red;
+                //motors_box.BackgroundColor = Color.Red;
             }
         }
 
@@ -235,6 +254,25 @@ namespace Uvon
         }
 
         /// <summary>
+        /// To switch camera
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CameraSwitch_Clicked(object sender, EventArgs e)
+        {
+            if (camera_switch.Text == "Camera 2")
+            {
+                signals_array[5] = "1";
+                camera_switch.Text = "Camera 1";
+            }
+            else if (camera_switch.Text == "Camera 1")
+            {
+                signals_array[5] = "0";
+                camera_switch.Text = "Camera 2";
+            }
+        }
+
+        /// <summary>
         /// Works when user clicks on Disconnect button, and closes all connections with server/robot.
         /// </summary>
         /// <param name="sender"></param>
@@ -246,14 +284,14 @@ namespace Uvon
             signals_array[3] = "0";
             signals_array[4] = "0";
 
-            if(signals_array[1] == "ON")
+            if (signals_array[1] == "ON")
             {
                 signals_array[1] = "OFF";
             }
 
             Thread.Sleep(100);
 
-            if(cancelConnections != null)
+            if (cancelConnections != null)
             {
                 cancelConnections.Cancel();
             }
@@ -277,7 +315,7 @@ namespace Uvon
                 if (accept)
                 {
                     signals_array[2] = "1";
-                    uv_light1_box.BackgroundColor = Color.Green;
+                    //uv_light1_box.BackgroundColor = Color.Green;
                 }
                 else
                 {
@@ -288,7 +326,7 @@ namespace Uvon
             {
                 signals_array[2] = "0";
                 switch_uv_2.IsToggled = false;
-                uv_light1_box.BackgroundColor = Color.Red;
+                //uv_light1_box.BackgroundColor = Color.Red;
             }
         }
 
@@ -312,7 +350,7 @@ namespace Uvon
                 if (accept)
                 {
                     signals_array[3] = "1";
-                    uv_light2_box.BackgroundColor = Color.Green;
+                    //uv_light2_box.BackgroundColor = Color.Green;
                 }
                 else
                 {
@@ -321,7 +359,7 @@ namespace Uvon
             }
             else
             {
-                uv_light2_box.BackgroundColor = Color.Red;
+                //uv_light2_box.BackgroundColor = Color.Red;
                 signals_array[3] = "0";
             }
         }
@@ -344,9 +382,9 @@ namespace Uvon
                         client.Close();
                         return;
                     }
-                    signal_data = Encoding.UTF8.GetBytes(signals_array[0] + "|" + signals_array[1] + "|" + signals_array[2] + "|" + signals_array[3] + "|" + signals_array[4]);
+                    signal_data = Encoding.UTF8.GetBytes(signals_array[0] + "|" + signals_array[1] + "|" + signals_array[2] + "|" + signals_array[3] + "|" + signals_array[4] + "|" + signals_array[5]);
                     client.Send(signal_data, signal_data.Length, ip);
-                    //Debug.WriteLine("Was sent: " + signals_array[0] + "|" + signals_array[1] + "|" + signals_array[2] + "|" + signals_array[3] + "|" + signals_array[4]);
+                    //Debug.WriteLine("Was sent: " + signals_array[0] + "|" + signals_array[1] + "|" + signals_array[2] + "|" + signals_array[3] + "|" + signals_array[4] + "|" + signals_array[5]);
                     Thread.Sleep(10);
                 }
             });
@@ -360,7 +398,7 @@ namespace Uvon
             byte[] bytes = new byte[1024];
             await Task.Run(() =>
             {
-                UdpClient client = new UdpClient(get_signal_port + 1);
+                UdpClient client = new UdpClient(get_image_port);
                 IPEndPoint ip = null;
 
                 while (true)
@@ -370,9 +408,9 @@ namespace Uvon
                         client.Close();
                         return;
                     }
-
+                    Thread.Sleep(120);
                     bytes = client.Receive(ref ip);
-
+                    Debug.WriteLine(bytes.Length);
                     //Parse to image
                     Device.BeginInvokeOnMainThread(() =>
                     {
@@ -390,8 +428,8 @@ namespace Uvon
             byte[] bytes = new byte[64];
             await Task.Run(() =>
             {
-                UdpClient client = new UdpClient(get_status_port);
-                IPEndPoint ip = null;
+                UdpClient client = new UdpClient(get_status_port);      //object for UDP connections
+                IPEndPoint ip = null;                                   //IP endpoint of the server
 
                 while (true)
                 {
@@ -401,27 +439,34 @@ namespace Uvon
                         return;
                     }
 
+                    //Listens incoming bytes
                     bytes = client.Receive(ref ip);
+
                     try
                     {
                         string[] status_message = Encoding.UTF8.GetString(bytes).Split('|');
-                        line_track_status = status_message[0];
-                        Debug.WriteLine("Track status is: " + line_track_status);
+                        online_status = status_message[0];
+                        motor_driver_status = status_message[1];
+                        uv1_status = status_message[2];
+                        uv2_status = status_message[3];
+                        battery_1_status = status_message[4];
+                        battery_2_status = status_message[5];
+
+                        Debug.WriteLine(status_message.ToString());
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         Debug.WriteLine(ex.Message);
                     }
-                    //line_track_status = status_message[0];
-                    //TO DO...-----------------------try.. catch----------------------------------------------------------------------------------------
-                    if (line_track_status[0] == '1')
+
+                    if (online_status[0] == '1')
                     {
                         Device.BeginInvokeOnMainThread(() =>
                         {
                             line_status.BackgroundColor = Color.Black;
                         });
                     }
-                    else if(line_track_status[0] == '0')
+                    else if (online_status[0] == '0')
                     {
                         Device.BeginInvokeOnMainThread(() =>
                         {
@@ -443,5 +488,106 @@ namespace Uvon
             return ImageSource.FromStream(() => new MemoryStream(array));
         }
 
+
+        /// <summary>
+        /// Updates UI elements according to the Robot's state
+        /// </summary>
+        private void UpdateStates()
+        {
+            //In those variables we keep the previous state signal from Jetson
+            string motor_previous_state = "0",
+                uv1_previous_state = "0", 
+                uv2_previous_state = "0", 
+                battery1_previous_state = "0",
+                battery2_previous_state = "0";
+
+            while (true)
+            {
+                //Checking if the M. D. status is changed
+                if (motor_driver_status != motor_previous_state)
+                {
+                    if (motor_driver_status == "2")
+                    {
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            motors_box.BackgroundColor = Color.Red;
+                        });
+                    }
+                    else if (motor_driver_status == "1")
+                    {
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            motors_box.BackgroundColor = Color.Green;
+                        });
+                    }
+                    motor_previous_state = motor_driver_status;
+                }
+
+                //Checking if the UV1 status is changed
+                if (uv1_status != uv1_previous_state)
+                {
+                    if (uv1_status == "I1")
+                    {
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            uv_light1_box.BackgroundColor = Color.Green;
+                        });
+                    }
+                    else if (uv1_status == "I0")
+                    {
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            uv_light1_box.BackgroundColor = Color.Red;
+                        });
+                    }
+
+                    uv1_previous_state = uv1_status;
+                }
+
+                //Checking if the UV2 status is changed
+                if (uv2_status != uv2_previous_state)
+                {
+                    if (uv2_status == "U1")
+                    {
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            uv_light2_box.BackgroundColor = Color.Green;
+                        });
+                    }
+                    else if (uv2_status == "U0")
+                    {
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            uv_light2_box.BackgroundColor = Color.Red;
+                        });
+                    }
+
+                    uv2_previous_state = uv2_status;
+                }
+
+                //Checking if the battery 1 state is changed
+                if (battery_1_status != battery1_previous_state)
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        battery_1.Progress = double.Parse(battery_1_status) / 100;
+                    });
+
+                    battery1_previous_state = battery_1_status;
+                }
+
+                //Checking if the battery 2 state is changed
+                if (battery_2_status!= battery2_previous_state)
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        battery_2.Progress = double.Parse(battery_2_status) / 100;
+                    });
+                    battery2_previous_state = battery_2_status;
+                }
+
+                Thread.Sleep(250);
+            }
+        }
     }
 }

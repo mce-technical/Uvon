@@ -6,9 +6,23 @@
              mc:Ignorable="d"
              x:Class="Uvon.Views.BluetoothConnection">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Padding="10">
             <Label x:Name="state" Text=""/>
-            <Button x:Name="Scan" Text="Scan" CornerRadius="20"/>
+            <Button x:Name="Scan" Text="Scan" CornerRadius="20" Clicked="Scan_Clicked"/>
+            <Frame Padding="10" CornerRadius="20">
+                <ListView x:Name="Devices_list" ItemsSource="{Binding devices_list}" ItemTapped="Devices_list_ItemTapped">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.ContextActions>
+                                    <MenuItem Clicked="ConnectDevice" CommandParameter="{Binding .}" Text="Add to favorites " />
+                                </ViewCell.ContextActions>
+                                <Label Text="{Binding .}" />
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Frame>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
