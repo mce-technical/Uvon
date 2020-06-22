@@ -1,3 +1,4 @@
+
 import io
 import os
 import PIL
@@ -68,7 +69,8 @@ motor_current_state = "0"                   #   the status of the motor drivers
 uv1_current_state = "0"                     #   the status of the UV lamp's power 1st level
 uv2_current_state = "0"                     #   the status of the UV lamp's power 2nd level
 line_tracking_current_state = "0"           #   the status of the line tracking mode
-
+battery1_current_state = '0'                #   the status of the first battery
+battery2_current_state = '0'                #   the status of the second battery
 lock = False
 
 line_state = ''
@@ -160,13 +162,12 @@ def Get_Signal():
 def Send_Image():
     global close_preview_request
     global camera_number
-    
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-    if camera_number == '0':
+    if camera_number == '1':
         video_capturing = None
         video_capturing = cv2.VideoCapture(gstreamer_pipeline(flip_method=0), cv2.CAP_GSTREAMER)
-    elif camera_number == '1':
+    elif camera_number == '0':
         video_capturing = None
         video_capturing = cv2.VideoCapture(1)
 
@@ -282,7 +283,7 @@ def Confirm():
 #This function helps to send robot's parts state information to client application
 def Send_Status():
     global close_send_state
-    global motor_current_state, uv1_current_state, uv2_current_state, line_tracking_current_state
+    global motor_current_state, uv1_current_state, uv2_current_state, line_tracking_current_state, battery1_current_state, battery2_current_state
     global ser
     global lock
     command = b'S\n'
@@ -294,9 +295,11 @@ def Send_Status():
             ser.write(command)
             try:
                 online_state = ser.readline().decode()[0]
+                #battery1_current_state = ser.readline().decode().    #TO DO...
+                #battery2_current_state = ser.readline().decode().    #TO DO...
             except:
                 online_state = '0'
-            message = online_state + '|' + str(motor_current_state) + '|' + uv1_current_state + '|' + uv2_current_state
+            message = online_state + '|' + str(motor_current_state) + '|' + uv1_current_state + '|' + uv2_current_state + '|' + battery1_current_state + '|' + battery2_current_state
             sock.sendto(message.encode(), (phone_ip,send_status_port))
             print("STATE MESSAGE: " + message)
             lock = False
@@ -371,10 +374,10 @@ while True:
     if(camera_previous_number!=camera_number):
         close_preview_request = True
         time.sleep(0.4)
+        print("Starting new camera live translation")
         camera_previous_number = camera_number
         send_image = th.Thread(target=Send_Image)
         send_image.start()
     #print(motor_current_state + ' ' + uv1_current_state + ' ' + uv2_current_state + ' ' + line_tracking_current_state)
     print("UV signal is: " + uv_signal + " , " + uv_signal_2 + colored(' |','green') + " ON/OFF signal is: " + on_off_motors_signal + colored(' |','green') + " Send me: " + str(send_me) + colored(' |','green') + " Previous motor state: " + previous_state + colored(' |','green') + " Motor signal is: " + str(send_motor_signal) + colored(' |','green') + " Line track signal is: " + line_track_signal)
     time.sleep(1)
-

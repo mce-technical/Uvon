@@ -67,8 +67,8 @@ motor_current_state = '0'                   #   the status of the motor drivers
 uv1_current_state = '0'                     #   the status of the UV lamp's power 1st level
 uv2_current_state = '0'                     #   the status of the UV lamp's power 2nd level
 line_tracking_current_state = '0'           #   the status of the line tracking mode 
-battery1_current_state = '0'                #   the status of the first battery                                                 #####
-battery2_current_state = '0'                #   the status of the second battery                                                ######
+battery1_current_state = '0'                #   the status of the first battery
+battery2_current_state = '0'                #   the status of the second battery                                          
 
 #ser = serial.Serial('/dev/ttyACM0')
 #ser.baudrate = 9600
