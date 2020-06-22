@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Uvon_Desktop
 {
@@ -16,10 +17,13 @@ namespace Uvon_Desktop
     public partial class MainWindow : Window
     {
         private byte scan_interval = 250;
+        private byte[] address_bytes = new byte[1024];
+
         bool isAutoconnectClicked = false;
+
         private IPAddress my_address, robot_address;
         private ushort port = 55554;
-        private byte[] address_bytes = new byte[1024];
+
         private Ping myping;
         protected ControlPanel panel;
 
@@ -184,12 +188,12 @@ namespace Uvon_Desktop
                 else
                 {
                     Thread.Sleep(1000);
-                    Connect(IPAddress.Parse(available_devices.SelectedItem.ToString()));
+                    ConnectionConfirm(IPAddress.Parse(available_devices.SelectedItem.ToString()));
                 }
             }
             else
             {
-                Connect(this.robot_address);
+                ConnectionConfirm(this.robot_address);
             }
         }
 
@@ -197,7 +201,7 @@ namespace Uvon_Desktop
         /// Sends checking signal and connectes with server/robot
         /// </summary>
         /// <param name="robotAddress"></param>
-        private void Connect(IPAddress robotAddress)
+        private void ConnectionConfirm(IPAddress robotAddress)
         {
             Devices.SendCheckingSignal(this.port, robotAddress, this.address_bytes);
 
@@ -254,6 +258,21 @@ namespace Uvon_Desktop
                     progress.Value = 0;
                 }));
             });
+        }
+
+        /// <summary>
+        /// Binding buttons to keyboard's keys
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Enter:
+                    Connect_Click(new object(), new RoutedEventArgs());
+                    break;
+            }
         }
     }
 }

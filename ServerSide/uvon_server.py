@@ -15,7 +15,7 @@ from PIL import Image
 #s.connect((gw[2], 0))
 #own_ip = s.getsockname()[0]
 
-own_ip = "192.168.10.119" #"172.20.10.2" #"172.20.14.151"  #"192.168.1.7"           
+own_ip = "192.168.11.118" #"172.20.10.2" #"172.20.14.151"  #"192.168.1.7"           
 phone_ip = ""                               # this ports must be same as in the android application: Android side uses this ports:
 port_send_image = 55556                         # 55556 - to send image's bytes to client.
 port_get = 55555                                # 55555 - to get motor controlling signals from client.
@@ -63,10 +63,13 @@ line_track_off = b'L0\n'                    #   to disable line tracking mode an
 send_line_track = b''                       #   signal, which must be sent to Arduino
 previous_mode_state = '0'                   #   keeps the previous signal from client
 
-motor_current_state = "0"                   #   the status of the motor drivers
-uv1_current_state = "0"                     #   the status of the UV lamp's power 1st level
-uv2_current_state = "0"                     #   the status of the UV lamp's power 2nd level
-line_tracking_current_state = "0"           #   the status of the line tracking mode 
+motor_current_state = '0'                   #   the status of the motor drivers
+uv1_current_state = '0'                     #   the status of the UV lamp's power 1st level
+uv2_current_state = '0'                     #   the status of the UV lamp's power 2nd level
+line_tracking_current_state = '0'           #   the status of the line tracking mode 
+battery1_current_state = '0'                #   the status of the first battery                                                 #####
+battery2_current_state = '0'                #   the status of the second battery                                                ######
+
 #ser = serial.Serial('/dev/ttyACM0')
 #ser.baudrate = 9600
 #ser.timeout = 1
@@ -235,7 +238,7 @@ def Confirm():
 #This function helps to send robot's parts state information to client application
 def Send_Status():
     global close_send_state
-    global motor_current_state, uv1_current_state, uv2_current_state, line_tracking_current_state
+    global motor_current_state, uv1_current_state, uv2_current_state, line_tracking_current_state, battery1_current_state, battery2_current_state
     #global ser
     command = b'S\n'
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -244,10 +247,10 @@ def Send_Status():
         #state = ser.read(20)
         #print(state)
         message = motor_current_state + '|' + uv1_current_state + '|' + uv2_current_state + '|' + line_tracking_current_state
-        message = '1' + '|' + '1' + '|' + '1' + '|' + '1'
+        message = '1' + '|' + '1' + '|' + '1' + '|' + '1' + '|' + '30' + '|' + '80'
         sock.sendto(message.encode(), (phone_ip,send_status_port))
         time.sleep(1)
-        message = '0' + '|' + '0' + '|' + '0' + '|' + '0'
+        message = '0' + '|' + '0' + '|' + '0' + '|' + '0' + '|' + '70' + '|' + '20'
         sock.sendto(message.encode(), (phone_ip,send_status_port))
         time.sleep(1)
     close_send_state = False
@@ -274,7 +277,7 @@ def Listen():
     send_me = b''
     sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
     sock.bind((own_ip,port_listen))
-    sock.settimeout(100)
+    sock.settimeout(600)
 
     print("Start listening...")
 

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Uvon_Desktop"
         mc:Ignorable="d"
+        KeyDown="Window_KeyDown"
         Title="UVON" BorderBrush="Black" Height="632" Width="800" ResizeMode="NoResize" Background="#FF111111" WindowStartupLocation="CenterScreen">
     <StackPanel Margin="10">
         <Border Margin="20" Padding="10" CornerRadius="20" Background="#FFFFEB3F">

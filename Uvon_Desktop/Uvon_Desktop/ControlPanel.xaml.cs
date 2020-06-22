@@ -19,36 +19,39 @@ namespace Uvon_Desktop
     /// </summary>
     public partial class ControlPanel : Window
     {
-        private ushort image_port = 55556;                             //The port to get image frames from server/robot
-        private ushort motor_port = 55555;                             //The port to send motor controlling signls to robot
-        private ushort get_status_port = 53784;
+        #region Page fields
 
-        private string line_track_status = "0",                        //The robot's components status
+        private ushort image_port = 55556;                         // The port to get image frames from server/robot
+        private ushort motor_port = 55555;                         // The port to send motor controlling signls to robot
+        private ushort get_status_port = 53784;                    // The port to get info about robot's state 
+
+        private string online_satus = "0",                         // The robot's components status
             battery_1_status = "0", 
             battery_2_status = "0",
             motor_driver_status = "0",
             uv1_status = "0",
             uv2_status = "0";
 
-        private string[] signal = new string[6];                    //first is motor, second is uv
-        bool noconnection;                                          //Keeps the connection state of preview
-        bool disconneted;                                           //Keeps the connection state of motor control
+        private string[] signal = new string[6];                   // signalses array to send the signals as one to Jetson
+        bool noconnection;                                         // Keeps the connection state of preview
+        bool disconneted;                                          // Keeps the connection state of motor control
 
-        UvonInfo infoPage;                                          //information page for users
+        UvonInfo infoPage;                                         // information page for users
 
-        CancellationTokenSource signal_token_source;                //To cancel controlling Task
-        CancellationTokenSource preview_token_source;               //To cancel preview Task
+        CancellationTokenSource signal_token_source;               // To cancel controlling Task
+        CancellationTokenSource preview_token_source;              // To cancel preview Task
         CancellationToken signal_token;
         CancellationToken preview_token;
 
-        private IPAddress robot_address;                            //Ip address of robot/server
+        private IPAddress robot_address;                           // Ip address of robot/server
 
-        SolidColorBrush motor_brush = new SolidColorBrush();        //UI colors
+        SolidColorBrush motor_brush = new SolidColorBrush();       // UI colors
         SolidColorBrush uv1_brush = new SolidColorBrush();
         SolidColorBrush uv2_brush = new SolidColorBrush();
         SolidColorBrush autopilot_brush = new SolidColorBrush();
         SolidColorBrush line_status_brush = new SolidColorBrush();
 
+        #endregion
         public ControlPanel(IPAddress my, IPAddress robot)
         {
             InitializeComponent();
@@ -107,22 +110,22 @@ namespace Uvon_Desktop
 
         #region Control Buttons
 
-        private void Go_Click(object sender, RoutedEventArgs e)
+        private void Forward()
         {        
             signal[0] = "1";
         }
 
-        private void Back_Click(object sender, RoutedEventArgs e)
+        private void Backward()
         {
             signal[0] = "2";
         }
 
-        private void Left_Click(object sender, RoutedEventArgs e)
+        private void TurnLeft()
         {
             signal[0] = "3";
         }
 
-        private void Right_Click(object sender, RoutedEventArgs e)
+        private void TurnRight()
         {
             signal[0] = "4";
         }
@@ -149,6 +152,11 @@ namespace Uvon_Desktop
             autopilot.Background = autopilot_brush;
         }
 
+        /// <summary>
+        /// Opens a window with a simple instructions
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Info_Click(object sender, RoutedEventArgs e)
         {
             if (infoPage == null)
@@ -380,6 +388,9 @@ namespace Uvon_Desktop
             }, preview_token);
         }
 
+        /// <summary>
+        /// Gets information from Jetson (Arduino sensors)
+        /// </summary>
         private async void GetStatusInfo()
         {
             byte[] bytes = new byte[64];
@@ -403,10 +414,12 @@ namespace Uvon_Desktop
                         try
                         {
                             var status_message = Encoding.UTF8.GetString(bytes).Split('|');
-                            line_track_status = status_message[0];
+                            online_satus = status_message[0];
                             motor_driver_status = status_message[1];
                             uv1_status = status_message[2];
                             uv2_status = status_message[3];
+                            battery_1_status = status_message[4];
+                            battery_2_status = status_message[5];
                             Debug.WriteLine(Encoding.UTF8.GetString(bytes));
                         }
                         catch (Exception ex)
@@ -414,7 +427,7 @@ namespace Uvon_Desktop
                             Debug.WriteLine(ex.Message);
                         }
 
-                        if (line_track_status[0] == '1')
+                        if (online_satus[0] == '1')
                         {
                             this.Dispatcher.BeginInvoke(new Action(() =>
                             {
@@ -422,7 +435,7 @@ namespace Uvon_Desktop
                                 online_status.Background = line_status_brush;
                             }));
                         }
-                        else if (line_track_status[0] == '0')
+                        else if (online_satus[0] == '0')
                         {
                             this.Dispatcher.BeginInvoke(new Action(() =>
                             {
@@ -464,21 +477,21 @@ namespace Uvon_Desktop
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key)
             {
                 case Key.Up:
-                    Go_Click(new object(), new RoutedEventArgs());
+                    Forward();
                     break;
                 case Key.Down:
-                    Back_Click(new object(), new RoutedEventArgs());
+                    Backward();
                     break;
                 case Key.Left:
-                    Left_Click(new object(), new RoutedEventArgs());
+                    TurnLeft();
                     break;
                 case Key.Right:
-                    Right_Click(new object(), new RoutedEventArgs());
+                    TurnRight();
                     break;
                 case Key.RightShift:
                     On_Off_Click(new object(), new RoutedEventArgs());
@@ -509,10 +522,16 @@ namespace Uvon_Desktop
         /// </summary>
         private void UpdateStates()
         {
-            string motor_previous_state = "0", uv1_previous_state = "0", uv2_previous_state = "0";
+            //In those variables we keep the previous state signal from Jetson
+            string motor_previous_state = "0",
+                uv1_previous_state = "0",
+                uv2_previous_state = "0",
+                battery1_previous_state = "0",
+                battery2_previous_state = "0";
 
             while (true)
             {
+                //Checking if the M. D. status is changed
                 if (motor_driver_status != motor_previous_state)
                 {
                     if (motor_driver_status == "2")
@@ -534,6 +553,7 @@ namespace Uvon_Desktop
                     motor_previous_state = motor_driver_status;
                 }
 
+                //Checking if the UV1 status is changed
                 if (uv1_status != uv1_previous_state)
                 {
                     if(uv1_status == "I1")
@@ -556,6 +576,7 @@ namespace Uvon_Desktop
                     uv1_previous_state = uv1_status;
                 }
 
+                //Checking if the UV2 status is changed
                 if (uv2_status != uv2_previous_state)
                 {
                     if (uv2_status == "U1")
@@ -577,6 +598,27 @@ namespace Uvon_Desktop
 
                     uv2_previous_state = uv2_status;
                 }
+
+                //Checking if the battery 1 state is changed
+                if(battery_1_status != battery1_previous_state)
+                {
+                    this.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        battery_1.Value = double.Parse(battery_1_status);
+                    }));
+                    battery1_previous_state = battery_1_status;
+                }
+
+                //Checking if the battery 2 state is changed
+                if (battery_2_status != battery2_previous_state)
+                {
+                    this.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        battery_2.Value = double.Parse(battery_2_status);                      
+                    }));
+                    battery2_previous_state = battery_2_status;
+                }
+
                 Thread.Sleep(250);
             }
         }
