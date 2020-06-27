@@ -15,7 +15,7 @@ from PIL import Image
 #s.connect((gw[2], 0))
 #own_ip = s.getsockname()[0]
 
-own_ip = "192.168.11.118" #"172.20.10.2" #"172.20.14.151"  #"192.168.1.7"           
+own_ip = "192.168.10.119" #"172.20.10.2" #"172.20.14.151"  #"192.168.1.7"           
 phone_ip = ""                               # this ports must be same as in the android application: Android side uses this ports:
 port_send_image = 55556                         # 55556 - to send image's bytes to client.
 port_get = 55555                                # 55555 - to get motor controlling signals from client.
@@ -233,7 +233,7 @@ def Confirm():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     for i in range(1,10):
         sock.sendto(buffer, (phone_ip,confirm_port))
-        time.sleep(0.4)
+        time.sleep(0.9)
 
 #This function helps to send robot's parts state information to client application
 def Send_Status():
