@@ -30,9 +30,13 @@ namespace Uvon_Desktop
             battery_2_status = "0",
             motor_driver_status = "0",
             uv1_status = "0",
-            uv2_status = "0";
+            uv2_status = "0",
+            uv_power = "0",
+            main_battery_status = "0",
+            emerg_status = "0",
+            sensores_status = "00000000";
 
-        private string[] signal = new string[6];                   // signalses array to send the signals as one to Jetson
+        private string[] signal = new string[6];                   // signalses array to send all signals as one common signal to Jetson
         bool noconnection;                                         // Keeps the connection state of preview
         bool disconneted;                                          // Keeps the connection state of motor control
 
@@ -48,6 +52,7 @@ namespace Uvon_Desktop
         SolidColorBrush motor_brush = new SolidColorBrush();       // UI colors
         SolidColorBrush uv1_brush = new SolidColorBrush();
         SolidColorBrush uv2_brush = new SolidColorBrush();
+        SolidColorBrush emerg_brush = new SolidColorBrush();
         SolidColorBrush autopilot_brush = new SolidColorBrush();
         SolidColorBrush line_status_brush = new SolidColorBrush();
 
@@ -279,6 +284,11 @@ namespace Uvon_Desktop
             //uv_light_1.Background = uv1_brush;
         }
 
+        private void avoidence_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         /// <summary>
         /// When user clicks on this button, it opens UV light's 2nd level
         /// </summary>
@@ -414,12 +424,16 @@ namespace Uvon_Desktop
                         try
                         {
                             var status_message = Encoding.UTF8.GetString(bytes).Split('|');
-                            online_satus = status_message[0];
-                            motor_driver_status = status_message[1];
-                            uv1_status = status_message[2];
-                            uv2_status = status_message[3];
-                            battery_1_status = status_message[4];
-                            battery_2_status = status_message[5];
+                            motor_driver_status = status_message[0];
+                            uv1_status = status_message[1];
+                            uv2_status = status_message[2];
+                            online_satus = status_message[3];
+                            uv_power = status_message[4];
+                            battery_1_status = status_message[5];
+                            battery_2_status = status_message[6];
+                            main_battery_status = status_message[7];
+                            emerg_status = status_message[8];
+                            sensores_status = status_message[9];
                             Debug.WriteLine(Encoding.UTF8.GetString(bytes));
                         }
                         catch (Exception ex)
@@ -475,7 +489,7 @@ namespace Uvon_Desktop
         /// <summary>
         /// Binding buttons to keyboard's keys
         /// </summary>
-        /// <param name="sender"></param>
+        /// <param name="sender"></param>   
         /// <param name="e"></param>
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
@@ -522,12 +536,15 @@ namespace Uvon_Desktop
         /// </summary>
         private void UpdateStates()
         {
-            //In those variables we keep the previous state signal from Jetson
+            //In these variables we keep the previous state signal from Jetson
             string motor_previous_state = "0",
                 uv1_previous_state = "0",
                 uv2_previous_state = "0",
                 battery1_previous_state = "0",
-                battery2_previous_state = "0";
+                battery2_previous_state = "0",
+                main_battery_previous_state = "0",
+                emergency_status_previous_state = "0",
+                sensores_status_previous_state = "0";
 
             while (true)
             {
@@ -619,6 +636,49 @@ namespace Uvon_Desktop
                     battery2_previous_state = battery_2_status;
                 }
 
+                //Checking if the main battery state is changed
+                if (main_battery_status != main_battery_previous_state)
+                {
+                    this.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        main_battery.Value = double.Parse(main_battery_status);
+                    }));
+                    main_battery_previous_state = main_battery_status;
+                }
+
+                //Checking if the emergency status is changed
+                if(emerg_status!= emergency_status_previous_state)
+                {
+                    this.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        if (emerg_status == "1")
+                        {
+                            this.Dispatcher.BeginInvoke(new Action(() =>
+                            {
+                                emerg_brush.Color = Colors.Green;
+                                emergency_status.Background = emerg_brush;
+                            }));
+                        }
+                        else if (emerg_status == "0")
+                        {
+                            this.Dispatcher.BeginInvoke(new Action(() =>
+                            {
+                                emerg_brush.Color = Colors.Red;
+                                emergency_status.Background = emerg_brush;
+                            }));
+                        }
+
+                        emergency_status_previous_state = emerg_status;
+                    }));
+                }
+
+                //Sensores statuses TO DO...
+
+                //Here set power value in powers texblock
+                this.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    power.Text = uv_power + " " + "W";
+                }));
                 Thread.Sleep(250);
             }
         }
