@@ -78,6 +78,51 @@ ser = serial.Serial('/dev/ttyACM0')         #   ttyACM0 is the name of Arduino i
 ser.baudrate = 9600
 ser.timeout = 1                             #   listening time
 
+#This function helps to get signal from client applications using UDP
+def Get_Signal():
+    global close_preview_request
+    global motor_signal, uv_signal, uv_signal_2, line_track_signal, camera_number, on_off_motors_signal
+    global listening
+    global close_send_state
+
+    sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+    sock.bind((own_ip,port_get))
+    sock.settimeout(10)
+    print("Getting signal from clients...")
+
+    while True:
+        try:
+            data, addr = sock.recvfrom(1024)
+        except:
+            print("No connection... exiting...")
+            uv_signal = "0"
+            uv_signal_2 = "0"
+            motor_signal = "0"
+            on_off_motors_signal = "0"
+            close_preview_request = True
+            close_send_state = True
+            time.sleep(0.5)
+            break
+        signal_array = data.decode('utf-8').split('|')
+        try:
+            motor_signal = signal_array[0]
+            on_off_motors_signal = signal_array[1]
+            uv_signal = signal_array[2]
+            uv_signal_2 = signal_array[3]
+            line_track_signal = signal_array[4]
+            camera_number = signal_array[5]
+        except:
+            print("Something goes wrong...Couldn't get signal")
+        if str(motor_signal) == close_motor_request:
+            close_preview_request = True
+            close_send_state = True
+            break
+
+    if listening.is_alive() == False:
+        listening = th.Thread(target=Listen)
+        listening.start()
+    sock.close()
+
 #This function helps to prepair CSI camera (for ex. Jetson Nano Sony Camera)
 def gstreamer_pipeline(
     capture_width=600,
@@ -105,57 +150,6 @@ def gstreamer_pipeline(
             display_height,
         )
     )
-
-
-#This function helps to get signal from client applications using UDP
-def Get_Signal():
-    global close_preview_request
-    global motor_signal
-    global uv_signal
-    global uv_signal_2
-    global listening
-    global on_off_motors_signal
-    global line_track_signal
-    global close_send_state
-    global camera_number
-
-    sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
-    sock.bind((own_ip,port_get))
-    sock.settimeout(3)
-    print("Getting signal from clients...")
-
-    while True:
-        try:
-            data, addr = sock.recvfrom(1024)
-        except:
-            print("No connection... exiting...")
-            uv_signal = "0"
-            uv_signal_2 = "0"
-            motor_signal = "0"
-            on_off_motors_signal = "0"
-            close_preview_request = True
-            close_send_state = True
-            time.sleep(0.5)
-            break
-        signal_array = data.decode('utf-8').split('|')
-        try:
-            motor_signal = signal_array[0]
-            on_off_motors_signal = signal_array[1]
-            uv_signal = signal_array[2]
-            uv_signal_2 = signal_array[3]
-            line_track_signal = signal_array[4]
-            camera_number = signal_array[5]
-        except:
-            print("Something goes wrong...Couldn't get signal")
-        if str(motor_signal) == close_motor_request or data == None:
-            close_preview_request = True
-            close_send_state = True
-            break
-
-    if listening.is_alive() == False:
-        listening = th.Thread(target=Listen)
-        listening.start()
-    sock.close()
 
 
 #This function helps to send image frames (as video streaming method) to client applications using UDP
@@ -284,18 +278,33 @@ def Send_Status():
     global lock
     command = b'S\n'
     online_state = '0'
+    power_state = '0'
+    main_bat_state = '0'
+    emerg_state = '0'
+    sensores_state = '00000000'
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     while close_send_state == False:
         if lock == False:
             lock = True
             ser.write(command)
             try:
-                online_state = ser.readline().decode()[0]
-                #battery1_current_state = ser.readline().decode().    #TO DO...
-                #battery2_current_state = ser.readline().decode().    #TO DO...
+                mess = ser.readline().decode()
+                online_state = mess[0]
+                power_state = mess[2]
+                battery1_state = mess[4]
+                battery2_state = mess[6]
+                main_bat_state = mess[8]
+                emerg_state = mess[10]
+                sensores_state = mess[12]    
             except:
                 online_state = '0'
-            message = online_state + '|' + str(motor_current_state) + '|' + uv1_current_state + '|' + uv2_current_state + '|' + battery1_current_state + '|' + battery2_current_state
+                power_state = '0'
+                battery1_state = '0'
+                battery2_state = '0'
+                main_bat_state = '0'
+                emerg_state = '0'
+                sensores_state = '00000000'
+            message = str(motor_current_state) + '|' + uv1_current_state + '|' + uv2_current_state + '|' + online_state + '|' + power_state + '|' + battery1_current_state + '|' + battery2_current_state + '|' + main_bat_state + '|' + emerg_state + '|' + sensores_state
             sock.sendto(message.encode(), (phone_ip,send_status_port))
             print("STATE MESSAGE: " + message)
             lock = False
@@ -310,20 +319,17 @@ send_status = th.Thread(target=Send_Status)                     #   Jetson -> Cl
 
 #This function starts with the application and listens to requested connections
 def Listen():
-    global phone_ip
-    global send_image
-    global get_signal
+    global phone_ip, send_image, get_signal
     global send_me_arduino, confirm_you
-    global on_off_signal
-    global send_me, send_status
-    global previous_motor_state
-    previous_motor_state = '00'
+    global on_off_signal, previous_motor_state                  #   We need these variables here to reset its value if connection is lost
+    global send_me, send_status 
+    previous_motor_state = '00'                               
     on_off_signal = '00'
     time.sleep(0.5)
     send_me = b''
     sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
     sock.bind((own_ip,port_listen))
-    sock.settimeout(1000)
+    sock.settimeout(1000)   #   After 1000 seconds it will stop to listen for receiving data
 
     print("Start listening...")
 
@@ -333,7 +339,7 @@ def Listen():
             check_message = data.decode('utf-8').split('.')
             if len(check_message) != 4:
                 continue
-            phone_ip = data.decode('utf-8')
+            phone_ip = data.decode('utf-8')  #change variable name: for ex. set client_ip
             print(phone_ip)
             print("End listening..")
             if confirm_you.is_alive()==False:
@@ -356,9 +362,7 @@ def Listen():
                 send_status = th.Thread(target=Send_Status)
                 send_status.start()
             break
-
-        if get_signal.is_alive() == False and send_image.is_alive() == False:
-            phone_ip = ""
+        
         time.sleep(0.1)
 
 
