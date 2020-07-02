@@ -15,7 +15,7 @@ from PIL import Image
 #s.connect((gw[2], 0))
 #own_ip = s.getsockname()[0]
 
-own_ip = "192.168.10.119" #"172.20.10.2" #"172.20.14.151"  #"192.168.1.7"           
+own_ip = "172.20.12.64" #"172.20.14.151"  #"192.168.1.7"           
 phone_ip = ""                               # this ports must be same as in the android application: Android side uses this ports:
 port_send_image = 55556                         # 55556 - to send image's bytes to client.
 port_get = 55555                                # 55555 - to get motor controlling signals from client.
@@ -247,10 +247,10 @@ def Send_Status():
         #state = ser.read(20)
         #print(state)
         message = motor_current_state + '|' + uv1_current_state + '|' + uv2_current_state + '|' + line_tracking_current_state
-        message = '1' + '|' + '1' + '|' + '1' + '|' + '1' + '|' + '30' + '|' + '80'
+        message = '1' + '|' + 'I1' + '|' + 'U1' + '|' + '1' + '|' + '30' + '|' + '80' + '|' + '40' + '|' + '20' + '|' + '0' + '|' + '01010000'
         sock.sendto(message.encode(), (phone_ip,send_status_port))
         time.sleep(1)
-        message = '0' + '|' + '0' + '|' + '0' + '|' + '0' + '|' + '70' + '|' + '20'
+        message = '2' + '|' + 'I0' + '|' + 'U0' + '|' + '0' + '|' + '70' + '|' + '20' + '|' + '90' + '|' + '70' + '|' + '1' + '|' + '11110010'
         sock.sendto(message.encode(), (phone_ip,send_status_port))
         time.sleep(1)
     close_send_state = False
