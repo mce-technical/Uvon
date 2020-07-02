@@ -1,7 +1,5 @@
-﻿using System;
-using Uvon.Views;
+﻿using Uvon.Views;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace Uvon
 {

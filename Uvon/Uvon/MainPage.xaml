@@ -8,25 +8,25 @@
     <StackLayout Orientation="Vertical" Padding="10" Spacing="10">
         <Frame Padding="6" CornerRadius="15">
             <StackLayout Orientation="Horizontal" HeightRequest="55" Spacing="10">
-                <StackLayout x:Name="stack1" Orientation="Vertical" WidthRequest="35" >
+                <StackLayout x:Name="stack1" Orientation="Vertical" WidthRequest="25" >
                     <Label Text="M. D" FontSize="13" HorizontalOptions="Center" TextColor="Black"/>
                     <BoxView x:Name="motors_box" CornerRadius="20" BackgroundColor="Red" HeightRequest="10" VerticalOptions="EndAndExpand"/>
                 </StackLayout>
-                <StackLayout Orientation="Vertical" WidthRequest="35">
+                <StackLayout Orientation="Vertical" WidthRequest="25">
                     <Label Text="UV 1" FontSize="13" HorizontalOptions="Center" TextColor="Black"/>
                     <BoxView x:Name="uv_light1_box" CornerRadius="20" BackgroundColor="Red" HeightRequest="10" VerticalOptions="EndAndExpand"/>
                 </StackLayout>
-                <StackLayout Orientation="Vertical" WidthRequest="35">
+                <StackLayout Orientation="Vertical" WidthRequest="25">
                     <Label Text="UV 2" FontSize="13" HorizontalOptions="Center" TextColor="Black"/>
                     <BoxView x:Name="uv_light2_box" CornerRadius="20" BackgroundColor="Red" HeightRequest="10" VerticalOptions="EndAndExpand"/>
                 </StackLayout>
-                <StackLayout Orientation="Vertical" WidthRequest="35">
+                <StackLayout Orientation="Vertical" WidthRequest="25">
                     <Label Text="L. T" FontSize="13" HorizontalOptions="Center" TextColor="Black"/>
                     <BoxView x:Name="autopilot_box" CornerRadius="20" BackgroundColor="Red" HeightRequest="10" VerticalOptions="EndAndExpand"/>
                 </StackLayout>
-                <StackLayout Orientation="Vertical" WidthRequest="35">
+                <StackLayout Orientation="Vertical" WidthRequest="25">
                     <Label Text="Em. stat" FontSize="13" HorizontalOptions="Center" TextColor="Black"/>
-                    <BoxView x:Name="emergency_status_box" CornerRadius="20" BackgroundColor="Red" HeightRequest="10" VerticalOptions="EndAndExpand"/>
+                    <BoxView x:Name="emergency_status_box" CornerRadius="20" BackgroundColor="Green" HeightRequest="10" VerticalOptions="EndAndExpand"/>
                 </StackLayout>
                 <StackLayout Orientation="Vertical" WidthRequest="20">
                     <Label Text="Bat 1" FontSize="13" HorizontalOptions="Center" TextColor="Black"/>
@@ -35,6 +35,14 @@
                 <StackLayout Orientation="Vertical" WidthRequest="25">
                     <Label Text="Bat 2" FontSize="13" HorizontalOptions="Center" TextColor="Black"/>
                     <ProgressBar  x:Name="battery_2" Progress="0.5" HeightRequest="20" VerticalOptions="EndAndExpand" ProgressColor="Green"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical" WidthRequest="25">
+                    <Label Text="M. bat" FontSize="13" HorizontalOptions="Center" TextColor="Black"/>
+                    <ProgressBar  x:Name="main_battery" Progress="0.5" HeightRequest="20" VerticalOptions="EndAndExpand" ProgressColor="Green"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical" WidthRequest="25">
+                    <Label Text="Power" FontSize="13" HorizontalOptions="Center" TextColor="Black"/>
+                    <Label Text=" W" x:Name="uv_power" FontSize="9" VerticalOptions="EndAndExpand"/>
                 </StackLayout>
                 <StackLayout Orientation="Vertical" WidthRequest="20">
                     <Label Text="On Line" FontSize="9" HorizontalOptions="Center" TextColor="Black"/>

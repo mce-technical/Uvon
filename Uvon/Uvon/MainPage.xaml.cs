@@ -22,11 +22,15 @@ namespace Uvon
 
         private string[] signals_array = new string[6];     // Signals array to send to Jetson
         private string online_status = "0",                 // Info about robot's components
-            battery_1_status = "0",
-            battery_2_status = "0",
+            battery_1_state = "0",
+            battery_2_state = "0",
             motor_driver_status = "0",
             uv1_status = "0",
-            uv2_status = "0";
+            uv2_status = "0",
+            main_battery_state = "0",
+            uv_power_state = "0",
+            emerg_state = "0",
+            sensores_state = "00000000";
 
         double page_width;
         double element_size;
@@ -426,6 +430,7 @@ namespace Uvon
         private async void GetStatusInfo()
         {
             byte[] bytes = new byte[64];
+
             await Task.Run(() =>
             {
                 UdpClient client = new UdpClient(get_status_port);      //object for UDP connections
@@ -445,12 +450,17 @@ namespace Uvon
                     try
                     {
                         string[] status_message = Encoding.UTF8.GetString(bytes).Split('|');
-                        online_status = status_message[0];
-                        motor_driver_status = status_message[1];
-                        uv1_status = status_message[2];
-                        uv2_status = status_message[3];
-                        battery_1_status = status_message[4];
-                        battery_2_status = status_message[5];
+                       
+                        motor_driver_status = status_message[0];
+                        uv1_status = status_message[1];
+                        uv2_status = status_message[2];
+                        online_status = status_message[3];
+                        uv_power_state = status_message[4];
+                        battery_1_state = status_message[5];
+                        battery_2_state = status_message[6];
+                        main_battery_state = status_message[7];
+                        emerg_state = status_message[8];
+                        sensores_state = status_message[9];
 
                         Debug.WriteLine(status_message.ToString());
                     }
@@ -496,10 +506,13 @@ namespace Uvon
         {
             //In those variables we keep the previous state signal from Jetson
             string motor_previous_state = "0",
-                uv1_previous_state = "0", 
-                uv2_previous_state = "0", 
+                uv1_previous_state = "0",
+                uv2_previous_state = "0",
                 battery1_previous_state = "0",
-                battery2_previous_state = "0";
+                battery2_previous_state = "0",
+                main_battery_previous_state = "0",
+                emerg_previous_state = "0",
+                sensores_previous_state = "00000000";
 
             while (true)
             {
@@ -566,26 +579,61 @@ namespace Uvon
                 }
 
                 //Checking if the battery 1 state is changed
-                if (battery_1_status != battery1_previous_state)
+                if (battery_1_state != battery1_previous_state)
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        battery_1.Progress = double.Parse(battery_1_status) / 100;
+                        battery_1.Progress = double.Parse(battery_1_state) / 100;
                     });
 
-                    battery1_previous_state = battery_1_status;
+                    battery1_previous_state = battery_1_state;
                 }
 
                 //Checking if the battery 2 state is changed
-                if (battery_2_status!= battery2_previous_state)
+                if (battery_2_state!= battery2_previous_state)
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        battery_2.Progress = double.Parse(battery_2_status) / 100;
+                        battery_2.Progress = double.Parse(battery_2_state) / 100;
                     });
-                    battery2_previous_state = battery_2_status;
+                    battery2_previous_state = battery_2_state;
                 }
 
+                //Checking if the main battery state is changed
+                if (main_battery_state != main_battery_previous_state)
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        main_battery.Progress = double.Parse(main_battery_state) / 100;
+                    });
+                    main_battery_previous_state = main_battery_state;
+                }
+
+                //Checking if the M. D. status is changed
+                if (emerg_state!=emerg_previous_state)
+                {
+                    if (emerg_state == "1")
+                    {
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            emergency_status_box.BackgroundColor = Color.Red;
+                        });
+                    }
+                    else if (emerg_state == "0")
+                    {
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            emergency_status_box.BackgroundColor = Color.Green;
+                        });
+                    }
+                    emerg_previous_state = emerg_state;
+                }
+
+                //Here set power value in powers box
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    uv_power.Text = uv_power_state + " W";
+                });
                 Thread.Sleep(250);
             }
         }
