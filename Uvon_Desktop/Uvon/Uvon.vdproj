@@ -15,31 +15,43 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_06EF9CEC6D3142F3AD410BC480063C71"
+        "MsmKey" = "8:_110FB6B0FAED4750A6CB07D7B9E13A04"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_0D5DA902B4B94070AA966E055AF06E80"
+        "MsmKey" = "8:_A495A12A9F924C3EBDA5C3C26CC2B842"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_381852C6CEB3456EA729489E39ACE8BE"
+        "MsmKey" = "8:_AF834A45129348A69E28CC6DD7898987"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_579463332AFC412BB7A9BD9744F78935"
+        "MsmKey" = "8:_B46B3D93A68C44E59F4235372174CD07"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_99D58379DDDB43899F3C0E3A9F615D84"
+        "MsmKey" = "8:_B95E79AE82FC49279C80213A38F76986"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BE2E47F5FE9C48248AFC4CC803BE7004"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C230B65DBF86440D902EFD14AF0010A5"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -51,32 +63,20 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_D5B253EBE4A5429ABFE22CC0D8B2097C"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_DEC097A981F849F79FBF4FB35BA47033"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_E0779FE07E194AF6942F0E36741FC244"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_EDA9FDDF4E7E406FBE9FC670592FD7E7"
+        "MsmKey" = "8:_F0BFE4846C564EB7AFAFBE91275F42E0"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_99D58379DDDB43899F3C0E3A9F615D84"
+        "OwnerKey" = "8:_110FB6B0FAED4750A6CB07D7B9E13A04"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -97,6 +97,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -113,6 +129,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -152,7 +176,38 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_06EF9CEC6D3142F3AD410BC480063C71"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_110FB6B0FAED4750A6CB07D7B9E13A04"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Uvon_Desktop, Version=1.1.7.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_110FB6B0FAED4750A6CB07D7B9E13A04"
+                    {
+                    "Name" = "8:Uvon_Desktop.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\Uvon_Desktop\\bin\\Debug\\netcoreapp3.1\\Uvon_Desktop.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_3A3E5D86825540D9AE12A5A9205FAA6F"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A495A12A9F924C3EBDA5C3C26CC2B842"
             {
             "SourcePath" = "8:..\\Uvon_Desktop\\bin\\Debug\\netcoreapp3.1\\Uvon_Desktop.runtimeconfig.dev.json"
             "TargetName" = "8:Uvon_Desktop.runtimeconfig.dev.json"
@@ -172,7 +227,7 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0D5DA902B4B94070AA966E055AF06E80"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AF834A45129348A69E28CC6DD7898987"
             {
             "SourcePath" = "8:..\\Uvon_Desktop\\bin\\Debug\\netcoreapp3.1\\Uvon_Desktop.pdb"
             "TargetName" = "8:Uvon_Desktop.pdb"
@@ -192,10 +247,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_381852C6CEB3456EA729489E39ACE8BE"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B46B3D93A68C44E59F4235372174CD07"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\icon.ico"
-            "TargetName" = "8:icon.ico"
+            "SourcePath" = "8:..\\Uvon_Desktop\\bin\\Debug\\netcoreapp3.1\\Uvon_Desktop.exe"
+            "TargetName" = "8:Uvon_Desktop.exe"
             "Tag" = "8:"
             "Folder" = "8:_3A3E5D86825540D9AE12A5A9205FAA6F"
             "Condition" = "8:"
@@ -212,7 +267,7 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_579463332AFC412BB7A9BD9744F78935"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B95E79AE82FC49279C80213A38F76986"
             {
             "SourcePath" = "8:..\\Uvon_Desktop\\bin\\Debug\\netcoreapp3.1\\Uvon_Desktop.deps.json"
             "TargetName" = "8:Uvon_Desktop.deps.json"
@@ -232,21 +287,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_99D58379DDDB43899F3C0E3A9F615D84"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BE2E47F5FE9C48248AFC4CC803BE7004"
             {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Uvon_Desktop, Version=1.1.7.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_99D58379DDDB43899F3C0E3A9F615D84"
-                    {
-                    "Name" = "8:Uvon_Desktop.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Uvon_Desktop\\bin\\Debug\\netcoreapp3.1\\Uvon_Desktop.dll"
-            "TargetName" = "8:"
+            "SourcePath" = "8:..\\icon.ico"
+            "TargetName" = "8:icon.ico"
             "Tag" = "8:"
             "Folder" = "8:_3A3E5D86825540D9AE12A5A9205FAA6F"
             "Condition" = "8:"
@@ -283,26 +327,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D5B253EBE4A5429ABFE22CC0D8B2097C"
-            {
-            "SourcePath" = "8:..\\Uvon_Desktop\\bin\\Debug\\netcoreapp3.1\\Uvon_Desktop.exe"
-            "TargetName" = "8:Uvon_Desktop.exe"
-            "Tag" = "8:"
-            "Folder" = "8:_3A3E5D86825540D9AE12A5A9205FAA6F"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DEC097A981F849F79FBF4FB35BA47033"
             {
             "SourcePath" = "8:..\\Uvon_Desktop\\bin\\Debug\\netcoreapp3.1\\info.png"
@@ -323,7 +347,7 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E0779FE07E194AF6942F0E36741FC244"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F0BFE4846C564EB7AFAFBE91275F42E0"
             {
             "SourcePath" = "8:..\\Uvon_Desktop\\bin\\Debug\\netcoreapp3.1\\Uvon_Desktop.runtimeconfig.json"
             "TargetName" = "8:Uvon_Desktop.runtimeconfig.json"
@@ -400,7 +424,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Uvon"
         "ProductCode" = "8:{4B45DEB6-CE25-4A5E-B9C5-4F3F64162FC6}"
-        "PackageCode" = "8:{948AE2A8-DE33-4136-BAE1-6D8DA117DDBA}"
+        "PackageCode" = "8:{682FAFBD-930C-41D6-B52A-5B3D667900FC}"
         "UpgradeCode" = "8:{7845C84C-6BAD-44B4-B320-67C52C8890DF}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -408,12 +432,12 @@
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:Default Company Name"
+        "Manufacturer" = "8:MCE"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:Uvon"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:Default Company Name"
+        "ARPCONTACT" = "8:Serob"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
@@ -520,7 +544,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_8DB0BD897032446CA4A5777F74E25230"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_0C72045343474898A5B81B0378EA6F0F"
             {
             "Name" = "8:Uvon"
             "Arguments" = "8:"
@@ -528,24 +552,24 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_D5B253EBE4A5429ABFE22CC0D8B2097C"
-            "Folder" = "8:_0DBAB133B785480CA8A4D4CBD8E3B07C"
-            "WorkingFolder" = "8:_3A3E5D86825540D9AE12A5A9205FAA6F"
-            "Icon" = "8:_381852C6CEB3456EA729489E39ACE8BE"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_C3EDD41A3D82457B9485F7D8E65693FF"
-            {
-            "Name" = "8:Uvon"
-            "Arguments" = "8:"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_D5B253EBE4A5429ABFE22CC0D8B2097C"
+            "Target" = "8:_B46B3D93A68C44E59F4235372174CD07"
             "Folder" = "8:_214FB474BE2D4FE5915722F1A9498368"
             "WorkingFolder" = "8:_3A3E5D86825540D9AE12A5A9205FAA6F"
-            "Icon" = "8:_381852C6CEB3456EA729489E39ACE8BE"
+            "Icon" = "8:_BE2E47F5FE9C48248AFC4CC803BE7004"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_70A76BAA0D09421EA5FADAA225EEDE6E"
+            {
+            "Name" = "8:Uvon"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_B46B3D93A68C44E59F4235372174CD07"
+            "Folder" = "8:_0DBAB133B785480CA8A4D4CBD8E3B07C"
+            "WorkingFolder" = "8:_3A3E5D86825540D9AE12A5A9205FAA6F"
+            "Icon" = "8:_BE2E47F5FE9C48248AFC4CC803BE7004"
             "Feature" = "8:"
             }
         }
@@ -947,7 +971,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_EDA9FDDF4E7E406FBE9FC670592FD7E7"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_C230B65DBF86440D902EFD14AF0010A5"
             {
             "SourcePath" = "8:..\\Uvon_Desktop\\obj\\Debug\\netcoreapp3.1\\Uvon_Desktop.dll"
             "TargetName" = "8:"

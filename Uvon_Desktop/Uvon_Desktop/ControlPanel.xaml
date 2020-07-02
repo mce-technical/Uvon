@@ -92,10 +92,10 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Label Name="one" Grid.Row="0" Grid.Column="0" Margin="5,0" Background ="Red"/>
-                        <Label Name="two" Grid.Row="0" Grid.Column="3" Margin="5,0" Background ="Red"/>
-                        <Label Name="three" Grid.Row="2" Grid.Column="0" Margin="5,0" Background ="Red"/>
-                        <Label Name="four" Grid.Row="2" Grid.Column="3" Margin="5,0" Background ="Red"/>
+                        <Label Name="sensor_one" Grid.Row="0" Grid.Column="0" Margin="5,0" Background ="Snow"/>
+                        <Label Name="sensor_two" Grid.Row="0" Grid.Column="3" Margin="5,0" Background ="Snow"/>
+                        <Label Name="sensor_three" Grid.Row="2" Grid.Column="0" Margin="5,0" Background ="Snow"/>
+                        <Label Name="sensor_four" Grid.Row="2" Grid.Column="3" Margin="5,0" Background ="Snow"/>
                     </Grid>
                 </Border>
 
@@ -114,10 +114,10 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Label Name="five" Grid.Row="0" Grid.Column="0" Margin="5,0" Background ="Red"/>
-                        <Label Name="six" Grid.Row="0" Grid.Column="3" Margin="5,0" Background ="Red"/>
-                        <Label Name="seven" Grid.Row="2" Grid.Column="0" Margin="5,0" Background ="Red"/>
-                        <Label Name="eight" Grid.Row="2" Grid.Column="3" Margin="5,0" Background ="Red"/>
+                        <Label Name="sensor_five" Grid.Row="0" Grid.Column="0" Margin="5,0" Background ="Snow"/>
+                        <Label Name="sensor_six" Grid.Row="0" Grid.Column="3" Margin="5,0" Background ="Snow"/>
+                        <Label Name="sensor_seven" Grid.Row="2" Grid.Column="0" Margin="5,0" Background ="Snow"/>
+                        <Label Name="sensor_eight" Grid.Row="2" Grid.Column="3" Margin="5,0" Background ="Snow"/>
                     </Grid>
                 </Border>
                 <Border CornerRadius="15" Background="#FFE2F0FD" Width="150" Height="55" Grid.Row="4">

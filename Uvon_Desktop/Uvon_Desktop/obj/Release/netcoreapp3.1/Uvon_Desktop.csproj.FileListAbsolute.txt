@@ -45,4 +45,3 @@ D:\Serob\UVON\Uvon_Desktop\Uvon_Desktop\Uvon_Desktop\obj\Release\netcoreapp3.1\U
 D:\Serob\UVON\Uvon_Desktop\Uvon_Desktop\Uvon_Desktop\obj\Release\netcoreapp3.1\Uvon_Desktop.genruntimeconfig.cache
 C:\Users\serob\Desktop\Uvon_MCE\Uvon_Desktop\Uvon_Desktop\Uvon_Desktop\obj\Release\netcoreapp3.1\UvonInfo.g.cs
 C:\Users\serob\Desktop\Uvon_MCE\Uvon_Desktop\Uvon_Desktop\Uvon_Desktop\obj\Release\netcoreapp3.1\UvonInfo.baml
-C:\Users\serob\Desktop\Uvon_MCE\Uvon_Desktop\Uvon_Desktop\Uvon_Desktop\obj\Release\netcoreapp3.1\Uvon_Desktop.csprojAssemblyReference.cache

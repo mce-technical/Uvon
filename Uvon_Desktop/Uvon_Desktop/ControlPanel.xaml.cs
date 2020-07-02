@@ -26,7 +26,7 @@ namespace Uvon_Desktop
         private ushort get_status_port = 53784;                    // The port to get info about robot's state 
 
         private string online_satus = "0",                         // The robot's components status
-            battery_1_status = "0", 
+            battery_1_status = "0",
             battery_2_status = "0",
             motor_driver_status = "0",
             uv1_status = "0",
@@ -34,7 +34,7 @@ namespace Uvon_Desktop
             uv_power = "0",
             main_battery_status = "0",
             emerg_status = "0",
-            sensores_status = "00000000";
+            sensores_status = "10010001";
 
         private string[] signal = new string[6];                   // signalses array to send all signals as one common signal to Jetson
         bool noconnection;                                         // Keeps the connection state of preview
@@ -49,14 +49,23 @@ namespace Uvon_Desktop
 
         private IPAddress robot_address;                           // Ip address of robot/server
 
-        SolidColorBrush motor_brush = new SolidColorBrush();       // UI colors
+        SolidColorBrush motor_brush = new SolidColorBrush();       // UI label colors
         SolidColorBrush uv1_brush = new SolidColorBrush();
         SolidColorBrush uv2_brush = new SolidColorBrush();
         SolidColorBrush emerg_brush = new SolidColorBrush();
         SolidColorBrush autopilot_brush = new SolidColorBrush();
         SolidColorBrush line_status_brush = new SolidColorBrush();
+        SolidColorBrush sensor_1 = new SolidColorBrush();
+        SolidColorBrush sensor_2 = new SolidColorBrush();
+        SolidColorBrush sensor_3 = new SolidColorBrush();
+        SolidColorBrush sensor_4 = new SolidColorBrush();
+        SolidColorBrush sensor_5 = new SolidColorBrush();
+        SolidColorBrush sensor_6 = new SolidColorBrush();
+        SolidColorBrush sensor_7 = new SolidColorBrush();
+        SolidColorBrush sensor_8 = new SolidColorBrush();
 
         #endregion
+
         public ControlPanel(IPAddress my, IPAddress robot)
         {
             InitializeComponent();
@@ -116,7 +125,7 @@ namespace Uvon_Desktop
         #region Control Buttons
 
         private void Forward()
-        {        
+        {
             signal[0] = "1";
         }
 
@@ -207,7 +216,7 @@ namespace Uvon_Desktop
         /// <param name="e"></param>
         private void CameraSwitch_Click(object sender, RoutedEventArgs e)
         {
-            if(camera_switch.Content.ToString()=="Camera 2")
+            if (camera_switch.Content.ToString() == "Camera 2")
             {
                 signal[5] = "1";
                 camera_switch.Content = "Camera 1";
@@ -456,10 +465,10 @@ namespace Uvon_Desktop
                                 line_status_brush.Color = Colors.Wheat;
                                 online_status.Background = line_status_brush;
                             }));
-                        }   
+                        }
                     }
                 }
-                catch(Exception exp)
+                catch (Exception exp)
                 {
                     Debug.WriteLine(exp.Message);
                 }
@@ -532,7 +541,7 @@ namespace Uvon_Desktop
 
 
         /// <summary>
-        /// Updates UI elements according to the Robot's state
+        /// Updates UI elements according to the Robot's state using state signals from Jetson
         /// </summary>
         private void UpdateStates()
         {
@@ -544,7 +553,115 @@ namespace Uvon_Desktop
                 battery2_previous_state = "0",
                 main_battery_previous_state = "0",
                 emergency_status_previous_state = "0",
-                sensores_status_previous_state = "0";
+                sensores_status_previous_state = "00000000";
+
+            //New task to update parktronic system (update UI for sensores)
+            Task.Run(() =>
+            {
+                while (true)
+                {
+                    Thread.Sleep(250);
+                    if (sensores_status != sensores_status_previous_state)  //Check if states are changed or not
+                    {
+                        //Change objects in Main thread from this thread
+                        this.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            switch (sensores_status[0])
+                            {
+                                case '0':
+                                    sensor_1.Color = Colors.Snow;
+                                    break;
+                                case '1':
+                                    sensor_1.Color = Colors.Red;
+                                    break;
+                            }
+
+                            switch (sensores_status[1])
+                            {
+                                case '0':
+                                    sensor_2.Color = Colors.Snow;
+                                    break;
+                                case '1':
+                                    sensor_2.Color = Colors.Red;
+                                    break;
+                            }
+
+                            switch (sensores_status[2])
+                            {
+                                case '0':
+                                    sensor_3.Color = Colors.Snow;
+                                    break;
+                                case '1':
+                                    sensor_3.Color = Colors.Red;
+                                    break;
+                            }
+
+                            switch (sensores_status[3])
+                            {
+                                case '0':
+                                    sensor_4.Color = Colors.Snow;
+                                    break;
+                                case '1':
+                                    sensor_4.Color = Colors.Red;
+                                    break;
+                            }
+
+                            switch (sensores_status[4])
+                            {
+                                case '0':
+                                    sensor_5.Color = Colors.Snow;
+                                    break;
+                                case '1':
+                                    sensor_5.Color = Colors.Red;
+                                    break;
+                            }
+
+                            switch (sensores_status[5])
+                            {
+                                case '0':
+                                    sensor_6.Color = Colors.Snow;
+                                    break;
+                                case '1':
+                                    sensor_6.Color = Colors.Red;
+                                    break;
+                            }
+
+                            switch (sensores_status[6])
+                            {
+                                case '0':
+                                    sensor_7.Color = Colors.Snow;
+                                    break;
+                                case '1':
+                                    sensor_7.Color = Colors.Red;
+                                    break;
+                            }
+
+                            switch (sensores_status[7])
+                            {
+                                case '0':
+                                    sensor_8.Color = Colors.Snow;
+                                    break;
+                                case '1':
+                                    sensor_8.Color = Colors.Red;
+                                    break;
+                            }
+
+                            sensor_one.Background = sensor_1;
+                            sensor_two.Background = sensor_2;
+                            sensor_three.Background = sensor_3;
+                            sensor_four.Background = sensor_4;
+                            sensor_five.Background = sensor_5;
+                            sensor_six.Background = sensor_6;
+                            sensor_seven.Background = sensor_7;
+                            sensor_eight.Background = sensor_8;
+
+                        }));
+
+                        //Set the previous state to the current state
+                        sensores_status_previous_state = sensores_status;
+                    }
+                }
+            });
 
             while (true)
             {
@@ -567,13 +684,15 @@ namespace Uvon_Desktop
                             motor_drivers.Background = motor_brush;
                         }));
                     }
+
+                    //Set the previous state to the current state
                     motor_previous_state = motor_driver_status;
                 }
 
                 //Checking if the UV1 status is changed
                 if (uv1_status != uv1_previous_state)
                 {
-                    if(uv1_status == "I1")
+                    if (uv1_status == "I1")
                     {
                         this.Dispatcher.BeginInvoke(new Action(() =>
                         {
@@ -581,7 +700,7 @@ namespace Uvon_Desktop
                             uv_light_1.Background = uv1_brush;
                         }));
                     }
-                    else if(uv1_status == "I0")
+                    else if (uv1_status == "I0")
                     {
                         this.Dispatcher.BeginInvoke(new Action(() =>
                         {
@@ -590,6 +709,7 @@ namespace Uvon_Desktop
                         }));
                     }
 
+                    //Set the previous state to the current state
                     uv1_previous_state = uv1_status;
                 }
 
@@ -613,16 +733,19 @@ namespace Uvon_Desktop
                         }));
                     }
 
+                    //Set the previous state to the current state
                     uv2_previous_state = uv2_status;
                 }
 
                 //Checking if the battery 1 state is changed
-                if(battery_1_status != battery1_previous_state)
+                if (battery_1_status != battery1_previous_state)
                 {
                     this.Dispatcher.BeginInvoke(new Action(() =>
                     {
                         battery_1.Value = double.Parse(battery_1_status);
                     }));
+
+                    //Set the previous state to the current state
                     battery1_previous_state = battery_1_status;
                 }
 
@@ -631,8 +754,10 @@ namespace Uvon_Desktop
                 {
                     this.Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        battery_2.Value = double.Parse(battery_2_status);                      
+                        battery_2.Value = double.Parse(battery_2_status);
                     }));
+
+                    //Set the previous state to the current state
                     battery2_previous_state = battery_2_status;
                 }
 
@@ -643,11 +768,13 @@ namespace Uvon_Desktop
                     {
                         main_battery.Value = double.Parse(main_battery_status);
                     }));
+
+                    //Set the previous state to the current state
                     main_battery_previous_state = main_battery_status;
                 }
 
                 //Checking if the emergency status is changed
-                if(emerg_status!= emergency_status_previous_state)
+                if (emerg_status != emergency_status_previous_state)
                 {
                     this.Dispatcher.BeginInvoke(new Action(() =>
                     {
@@ -668,17 +795,17 @@ namespace Uvon_Desktop
                             }));
                         }
 
+                        //Set the previous state to the current state
                         emergency_status_previous_state = emerg_status;
                     }));
                 }
-
-                //Sensores statuses TO DO...
 
                 //Here set power value in powers texblock
                 this.Dispatcher.BeginInvoke(new Action(() =>
                 {
                     power.Text = uv_power + " " + "W";
                 }));
+
                 Thread.Sleep(250);
             }
         }
@@ -692,7 +819,7 @@ namespace Uvon_Desktop
         {
             signal[0] = "34";
 
-            if(signal[1] == "ON")
+            if (signal[1] == "ON")
             {
                 signal[1] = "OFF";
             }
