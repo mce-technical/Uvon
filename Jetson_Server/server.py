@@ -170,7 +170,7 @@ def Send_Image():
 
     if camera_number == '0':
         video_capturing = None
-        video_capturing = cv2.VideoCapture(1) #gstreamer_pipeline(flip_method=0), cv2.CAP_GSTREAMER)
+        video_capturing = cv2.VideoCapture(gstreamer_pipeline(flip_method=0), cv2.CAP_GSTREAMER)
     elif camera_number == '1':
         video_capturing = None
         video_capturing = cv2.VideoCapture(1)
